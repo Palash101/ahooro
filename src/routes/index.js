@@ -19,6 +19,7 @@ import {
 import SignIn from "../sign-in";
 import Home from "../Home";
 import UploadData from "../upload-data";
+import PrivacyPolicy from "../privacy-policy";
 
 // const PrivateRoutes = () => {
 //   const user = useRecoilValue(userState);
@@ -45,6 +46,7 @@ const AppRoutes = () => {
         <Route exact path="/" element={<SignIn />} />
         <Route exact path="/home" element={<Home />} />
         <Route exact path="/upload-data" element={<UploadData />} />
+        <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         {/* <Route element={<PrivateRoutes />}>
         <Route exact path="/home" element={<SignIn />} />
         </Route> */}

@@ -13,13 +13,22 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import CallIcon from '@mui/icons-material/Call';
 import Button from '@mui/material/Button';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import { useRef, useState, useEffect } from 'react';
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact'];
 
 export default function NavBar(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [width, setWidth] = useState(null)
+    console.log("width: ", width);
+    const ref = useRef(null)
+    console.log("ref: ", ref);
+
+    useEffect(() => {
+        setWidth(ref.current.clientWidth)
+    }, [width])
 
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
@@ -58,7 +67,7 @@ export default function NavBar(props) {
                             <MenuIcon />
                         </IconButton>
                         <Box
-                            sx={{ display: { xs: 'none', sm: 'block' } }}
+                            sx={{ display: { xs: 'none', sm: 'block' }, width: width }}
                         >
                             <img src="assets/image/Logo.png" alt='' />
                         </Box>
@@ -69,7 +78,7 @@ export default function NavBar(props) {
                                 </Button>
                             ))}
                         </Box>
-                        <Box sx={{ display: "flex", alignContent: "center" }}>
+                        <Box ref={ref} sx={{ display: "flex", alignContent: "center" }}>
                             <Box>
                                 <IconButton>
                                     <CallIcon />

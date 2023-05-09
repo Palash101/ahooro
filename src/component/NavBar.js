@@ -80,7 +80,7 @@ export default function NavBar(props) {
                         </Box>
                         <Box ref={ref} sx={{ display: "flex", alignContent: "center" }}>
                             <Box>
-                                <IconButton>
+                                <IconButton href="tel:+6666666666">
                                     <CallIcon />
                                 </IconButton>
                             </Box>

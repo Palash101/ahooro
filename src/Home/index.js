@@ -8,8 +8,10 @@ import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import Buttons from '../component/Button'
+import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
+    const navigate = useNavigate()
     return (
         <>
             <NavBar />
@@ -210,7 +212,7 @@ export default function Home() {
                         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                             <Button sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Quienes somos</Button>
                             <Button sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Aviso Legal</Button>
-                            <Button sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Política de Privacidad</Button>
+                            <Button onClick={() => navigate('/privacy-policy')} sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Política de Privacidad</Button>
                         </Box>
                     </Box>
                     <Box sx={{ textAlign: "center" }}>

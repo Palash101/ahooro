@@ -6,11 +6,23 @@ import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 function UploadData() {
-    const [state, setState] = useState()
-    console.log("state: ", state);
+    const [file, setFile] = useState()
     const handleChange = event => {
-        setState({ file: event.target.files[0] });
+        setFile(event.target.files[0] );
     };
+    const handleClick = () =>{
+        const formData =  new FormData()
+        formData.append('file',file);
+        fetch('https://us-central1-ahoraahorro-7ac91.cloudfunctions.net/function-1',{
+            method:"POST",
+            body:formData,
+            headers:{
+            }    
+        })
+        .then((res)=>res.text())
+        .then(data=>console.log(data))
+        .catch(err=>console.log(err))
+    }
     return (
         <>
             <Box sx={{ height: "97vh", p: 1 }}>
@@ -63,8 +75,8 @@ function UploadData() {
                                     />
                                     Choose file to upload
                                 </Button>
-                                {state ?
-                                    <Typography sx={{ fontSize: "15px", color: "green" }}>{state.file.name}</Typography>
+                                {file ?
+                                    <Typography sx={{ fontSize: "15px", color: "green" }}>{file.name}</Typography>
                                     :
                                     <Typography sx={{ fontSize: "15px", color: "red" }}>Choose a file</Typography>
                                 }
@@ -92,7 +104,7 @@ function UploadData() {
                                     label="Todo"
                                     labelPlacement="start"
                                 />
-                                <Button sx={{ mt: 1 }} variant='contained'>Upload File</Button>
+                                <Button onClick={handleClick} sx={{ mt: 1 }} variant='contained'>Upload File</Button>
                             </Box>
                         </Box>
                     </Box>

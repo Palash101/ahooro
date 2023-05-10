@@ -4,25 +4,60 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 function UploadData() {
     const [file, setFile] = useState()
+    console.log("file: ", file);
+    const [open, setOpen] = useState(false);
     const handleChange = event => {
-        setFile(event.target.files[0] );
+        setFile(event.target.files[0]);
     };
-    const handleClick = () =>{
-        const formData =  new FormData()
-        formData.append('file',file);
-        fetch('https://us-central1-ahoraahorro-7ac91.cloudfunctions.net/function-1',{
-            method:"POST",
-            body:formData,
-            headers:{
-            }    
-        })
-        .then((res)=>res.text())
-        .then(data=>console.log(data))
-        .catch(err=>console.log(err))
+    const handleClick = () => {
+        const formData = new FormData()
+        formData.append('file', file);
+        if (file) {
+            fetch('https://us-central1-ahoraahorro-7ac91.cloudfunctions.net/function-1', {
+                method: "POST",
+                body: formData,
+                headers: {
+                }
+            })
+                .then((res) => res.text())
+                .then(data => {
+                    if (data) {
+                        setOpen(true);
+                    }
+                    console.log(data)
+                    setFile(undefined)
+                })
+                .catch(err => console.log(err))
+        }
+
     }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    const action = (
+        <>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </>
+    );
     return (
         <>
             <Box sx={{ height: "97vh", p: 1 }}>
@@ -110,6 +145,14 @@ function UploadData() {
                     </Box>
                 </Box>
             </Box>
+            <Snackbar
+                open={open}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                autoHideDuration={4000}
+                onClose={handleClose}
+                message="File Uploaded successfully"
+                action={action}
+            />
         </>
     );
 }

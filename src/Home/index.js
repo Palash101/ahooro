@@ -9,9 +9,12 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import Buttons from '../component/Button'
 import { useNavigate } from 'react-router-dom'
+import { db } from '../config/firebaseConfig'
 
 export default function Home() {
     const navigate = useNavigate()
+    console.log("db: ", db);
+
     return (
         <>
             <NavBar />
@@ -27,7 +30,7 @@ export default function Home() {
                         backgroundSize: "70%",
                         backgroundPositionX: "right",
                         backgroundPositionY: "150px",
-                        height: "900px"
+                        height: { md: "900px", xs: "auto" }
                     }}>
                         <Grid container>
                             <Grid item xs={12} md={7} sx={{ textAlign: { xs: "center", md: "left" } }}>

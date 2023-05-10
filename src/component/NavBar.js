@@ -15,10 +15,13 @@ import CallIcon from '@mui/icons-material/Call';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useRef, useState, useEffect } from 'react';
+import Buttons from './Button';
+import { useNavigate } from 'react-router-dom';
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact'];
 
 export default function NavBar(props) {
+    const navigate = useNavigate()
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [width, setWidth] = useState(null)
@@ -33,6 +36,9 @@ export default function NavBar(props) {
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
     };
+    const loginClick = () => {
+        navigate('/sign-in')
+    }
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -67,7 +73,7 @@ export default function NavBar(props) {
                             <MenuIcon />
                         </IconButton>
                         <Box
-                            sx={{ display: { xs: 'none', sm: 'block' }, width: width }}
+                            sx={{ display: { xs: 'none', sm: 'flex' }, width: width, alignItems: "center" }}
                         >
                             <img src="assets/image/Logo.png" alt='' />
                         </Box>
@@ -89,6 +95,9 @@ export default function NavBar(props) {
                                 <Typography variant='caption'>Atendemos de 9:00 a 20:00</Typography>
                             </Box>
                         </Box>
+                    </Box>
+                    <Box>
+                        <Buttons onClick={loginClick}>Login</Buttons>
                     </Box>
                 </Toolbar>
             </AppBar>

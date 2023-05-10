@@ -2,8 +2,33 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
+import { useState } from 'react';
+import { UserEmailLogin } from '../controller/AuthController';
+import { useNavigate } from 'react-router-dom';
+
 
 function SignIn() {
+    const [loginEmail, setLoginEmail] = useState("")
+    const [loginPassword, setLoginPassword] = useState("")
+    const navigate = useNavigate()
+
+    const handleLogin = async () => {
+        if (loginEmail && loginPassword) {
+            const result = await UserEmailLogin(loginEmail, loginPassword)
+            console.log(result, 'ress')
+            if (result.success === true) {
+                localStorage.setItem("user", JSON.stringify(result.userData));
+                navigate("/upload-data")
+            }
+            else {
+                alert("Login and Password are incorrect")
+            }
+        }
+        else {
+            alert("please enter email and password")
+        }
+    }
+
     return (
         <>
             <Box sx={{ height: "97vh", p: 1 }}>
@@ -33,7 +58,7 @@ function SignIn() {
                                     required
                                     size="small"
                                     type='email'
-                                // onChange={(e) => setLoginEmail(e.target.value)}
+                                    onChange={(e) => setLoginEmail(e.target.value)}
                                 />
                                 <Typography variant='subtitle2' mb={1}>Contraseña</Typography>
                                 <TextField
@@ -41,11 +66,11 @@ function SignIn() {
                                     required
                                     size="small"
                                     type='password'
-                                // onChange={(e) => setLoginPassword(e.target.value)}
+                                    onChange={(e) => setLoginPassword(e.target.value)}
                                 />
                             </Box>
                             <Box sx={{ display: "flex", justifyContent: "flex-end", pt: "20px" }}>
-                                <Button variant='contained'>
+                                <Button onClick={handleLogin} variant='contained'>
                                     Acceder
                                 </Button>
                             </Box>

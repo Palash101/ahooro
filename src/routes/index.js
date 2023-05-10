@@ -2,8 +2,8 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  // Outlet,
-  // Navigate,
+  Outlet,
+  Navigate,
 } from "react-router-dom";
 // import { useRecoilValue } from "recoil";
 // import { userState } from "../recoil/atom/userState";
@@ -21,13 +21,13 @@ import Home from "../Home";
 import UploadData from "../upload-data";
 import PrivacyPolicy from "../privacy-policy";
 
-// const PrivateRoutes = () => {
-//   const user = useRecoilValue(userState);
-//   if (!user) {
-//     return <Navigate to="/sign-in" />;
-//   }
-//   return <Outlet />;
-// };
+const PrivateRoutes = () => {
+  const user = localStorage.getItem("user");
+  if (!user) {
+    return <Navigate to="/" />;
+  }
+  return <Outlet />;
+};
 
 // const OtherRoutes = () =>{
 
@@ -43,13 +43,12 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<SignIn />} />
-        <Route exact path="/home" element={<Home />} />
-        <Route exact path="/upload-data" element={<UploadData />} />
+        <Route exact path="/sign-in" element={<SignIn />} />
+        <Route exact path="/" element={<Home />} />
         <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
-        {/* <Route element={<PrivateRoutes />}>
-        <Route exact path="/home" element={<SignIn />} />
-        </Route> */}
+        <Route element={<PrivateRoutes />}>
+          <Route exact path="/upload-data" element={<UploadData />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

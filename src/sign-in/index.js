@@ -44,7 +44,7 @@ function SignIn() {
                         py: "8px", px: "16px"
                     }}>
                         <Box sx={{
-                            width: { md: "25%", xs: "100%" },
+                            width: { md: "25%", xs: "85%" },
                             position: "absolute",
                             top: "50%",
                             left: "50%",

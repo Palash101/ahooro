@@ -7,10 +7,12 @@ import Typography from '@mui/material/Typography';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import { useNavigate } from 'react-router-dom';
 
 function UploadData() {
     const [file, setFile] = useState()
     console.log("file: ", file);
+    const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const handleChange = event => {
         setFile(event.target.files[0]);
@@ -140,6 +142,7 @@ function UploadData() {
                                     labelPlacement="start"
                                 />
                                 <Button onClick={handleClick} sx={{ mt: 1 }} variant='contained'>Upload File</Button>
+                                <Button onClick={() => navigate('/')} sx={{ mt: 1, textTransform: "none" }} variant='text'>Back to Home page</Button>
                             </Box>
                         </Box>
                     </Box>

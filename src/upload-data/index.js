@@ -40,7 +40,7 @@ function UploadData() {
 
     }
 
-    const handleClose = (event, reason) => {
+    const handleClose = (reason) => {
         if (reason === 'clickaway') {
             return;
         }

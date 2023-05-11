@@ -16,12 +16,13 @@ export default function Home() {
     const [phone, setPhone] = useState("")
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({});
-    // const [alert, setAlert] = useState(false)
+    const [alert, setAlert] = useState(false)
     console.log("data: ", data);
     const [checked, setChecked] = useState(false);
     const [policy, setPolicy] = useState(false);
     const navigate = useNavigate()
     const SavedData = () => {
+        console.log("data set", phone);
         if (policy) {
             fetch('https://api.ipify.org?format=json', {
                 method: "GET",
@@ -40,7 +41,7 @@ export default function Home() {
                 })
         }
         else {
-            alert("true")
+            setAlert(true)
         }
     };
     const AcceptPolicy = () => {
@@ -273,12 +274,13 @@ export default function Home() {
                 </Box>
                 <PrivacyPolicy open={open} setOpen={setOpen} AcceptPolicy={AcceptPolicy} />
             </Box >
-            {/* <Snackbar
+            <Snackbar
                 open={alert}
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                autoHideDuration={1000}
+                autoHideDuration={2000}
                 message="Accept policy first"
-            /> */}
+                onClose={() => setAlert(false)}
+            />
         </>
     )
 }

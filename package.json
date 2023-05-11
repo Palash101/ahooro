@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "firebase": "^9.21.0",
     "get-ip": "^2.0.0",
+    "internal-ip": "^7.0.0",
     "iplocation": "^7.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

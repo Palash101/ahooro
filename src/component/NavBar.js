@@ -43,7 +43,7 @@ export default function NavBar(props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Box sx={{ display: "flex", alignItems: "center",justifyContent:"center",py:1 }}>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", py: 1 }}>
                 <img src="assets/image/Logo.png" alt='' />
             </Box>
             <Divider />
@@ -105,15 +105,16 @@ export default function NavBar(props) {
                             {user ?
                                 <Box sx={{ display: { md: "flex", xs: "none" }, alignItems: "center", columnGap: 2 }}>
 
-                                    <Buttons onClick={() => {
+                                    {/* <Buttons onClick={() => {
                                         localStorage.clear()
                                         setUser(null)
-                                    }}>Logout</Buttons>
+                                    }}>Logout</Buttons> */}
                                     <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
                                 </Box>
 
                                 :
-                                <Buttons onClick={loginClick}>Login</Buttons>
+                                // <Buttons onClick={loginClick}>Login</Buttons>
+                                <></>
                             }
                         </Box>
                     </Box>
@@ -134,7 +135,7 @@ export default function NavBar(props) {
                     }}
                 >
                     {drawer}
-                    <Box>
+                    {/* <Box>
                         {user ?
                             <Buttons sx={{ width: "100%", height: "50px" }} onClick={() => {
                                 localStorage.clear()
@@ -143,7 +144,7 @@ export default function NavBar(props) {
                             :
                             <Buttons sx={{ width: "100%", height: "50px" }} onClick={loginClick}>Login</Buttons>
                         }
-                    </Box>
+                    </Box> */}
                 </Drawer>
             </Box>
             <Toolbar />

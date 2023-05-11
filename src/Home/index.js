@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NavBar from '../component/NavBar'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -8,12 +8,52 @@ import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import Buttons from '../component/Button'
+import Snackbar from '@mui/material/Snackbar';
 import { useNavigate } from 'react-router-dom'
-import { db } from '../config/firebaseConfig'
-
+import PrivacyPolicy from '../component/Modal/privacyPolicy'
+// const ipLocation = require("ip-location");
 export default function Home() {
+    const [phone, setPhone] = useState("")
+    const [open, setOpen] = useState(false);
+    const [data, setData] = useState({});
+    // const [alert, setAlert] = useState(false)
+    console.log("data: ", data);
+    const [checked, setChecked] = useState(false);
+    const [policy, setPolicy] = useState(false);
     const navigate = useNavigate()
-    console.log("db: ", db);
+    const SavedData = () => {
+        if (policy) {
+            fetch('https://api.ipify.org?format=json', {
+                method: "GET",
+                headers: {
+                }
+            })
+                .then((res) => res.text())
+                .then(data => {
+                    if (data) {
+                        const myData = JSON.parse(data)
+                        setData({ ...myData, phone: phone })
+                        setChecked(false)
+                        setPolicy(false)
+                    }
+                    console.log(data)
+                })
+        }
+        else {
+            alert("true")
+        }
+    };
+    const AcceptPolicy = () => {
+        setPolicy(true)
+        setOpen(false);
+        setChecked(true)
+    }
+    const handleChange = (event) => {
+        setOpen(true);
+        if (policy) {
+            setChecked(event.target.checked);
+        }
+    };
 
     return (
         <>
@@ -49,23 +89,28 @@ export default function Home() {
                                                 required
                                                 size="small"
                                                 type='phone'
-                                            // onChange={(e) => setLoginEmail(e.target.value)}
+                                                onChange={(e) => setPhone(e.target.value)}
                                             />
                                         </Box>
                                     </Grid>
                                     <Grid item xs={12} md={6}>
                                         <Box sx={{ px: 1, height: "100%" }}>
-                                            <Buttons sx={{
-                                                height: "100%", width: "100%",
-                                            }}>Llámame</Buttons>
+                                            <Buttons
+                                                onClick={SavedData}
+                                                sx={{
+                                                    height: "100%", width: "100%",
+                                                }}>
+                                                Llámame
+                                            </Buttons>
                                         </Box>
                                     </Grid>
                                 </Grid>
-                                <Box component="ul">
-                                    <Box sx={{ fontSize: "12px", color: "#4A4A4A" }} component="li">
-                                        Acepto la política de privacidad y doy mis datos <br />para que me contacte la empresa XXXXX
-                                    </Box>
-                                </Box>
+                                <FormControlLabel sx={{ ml: 0, fontSize: "11px", color: "#7E868E", maxWidth: "400px", mt: 2 }} control={
+                                    <Checkbox
+                                        checked={checked}
+                                        onChange={handleChange}
+                                    />} label="Acepto la política de privacidad y doy mis datos para que me contacte la empresa XXXXX" />
+
                             </Grid>
                         </Grid>
                     </Box>
@@ -185,17 +230,21 @@ export default function Home() {
                                             required
                                             size="small"
                                             type='phone'
-                                        // onChange={(e) => setLoginEmail(e.target.value)}
+                                            onChange={(e) => setPhone(e.target.value)}
                                         />
                                     </Box>
                                 </Grid>
                                 <Grid item xs={12} md={6}>
-                                    <Box sx={{ px: 1, height: "100%" }}>
+                                    <Box onClick={SavedData} sx={{ px: 1, height: "100%" }}>
                                         <Buttons sx={{ height: "100%", width: "100%" }}>Llámame</Buttons>
                                     </Box>
                                 </Grid>
                             </Grid>
-                            <FormControlLabel sx={{ fontSize: "12px", color: "#7E868E" }} control={<Checkbox defaultChecked />} label="Acepto la política de privacidad y doy mis datos para que me contacte la empresa XXXXX" />
+                            <FormControlLabel sx={{ fontSize: "11px", color: "#7E868E" }} control={
+                                <Checkbox
+                                    checked={checked}
+                                    onChange={handleChange}
+                                />} label="Acepto la política de privacidad y doy mis datos para que me contacte la empresa XXXXX" />
                         </Box>
                     </Box>
                     <Box sx={{
@@ -222,7 +271,14 @@ export default function Home() {
                         <Typography sx={{ fontSize: "12px" }}>© dominio.com, 2021 | o el año que sea y algunos datos legales o fiscales para engañar</Typography>
                     </Box>
                 </Box>
+                <PrivacyPolicy open={open} setOpen={setOpen} AcceptPolicy={AcceptPolicy} />
             </Box >
+            {/* <Snackbar
+                open={alert}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                autoHideDuration={1000}
+                message="Accept policy first"
+            /> */}
         </>
     )
 }

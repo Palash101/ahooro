@@ -48,9 +48,7 @@ export default function NavBar(props) {
             </Box>
             <Divider />
             <List>
-                {user &&
-                    <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
-                }
+                <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
                 {navItems.map((item) => (
                     <ListItem key={item} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center' }}>
@@ -102,20 +100,15 @@ export default function NavBar(props) {
                             </Box>
                         </Box>
                         <Box sx={{ display: { md: "flex", xs: "none" } }} ref={ref}>
-                            {user ?
-                                <Box sx={{ display: { md: "flex", xs: "none" }, alignItems: "center", columnGap: 2 }}>
+                            <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
 
-                                    {/* <Buttons onClick={() => {
+                                {/* <Buttons onClick={() => {
                                         localStorage.clear()
                                         setUser(null)
                                     }}>Logout</Buttons> */}
-                                    <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
-                                </Box>
-
-                                :
-                                // <Buttons onClick={loginClick}>Login</Buttons>
-                                <></>
-                            }
+                                <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
+                            </Box>
+                            {/* // <Buttons onClick={loginClick}>Login</Buttons> */}
                         </Box>
                     </Box>
                 </Toolbar>

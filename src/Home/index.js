@@ -9,7 +9,6 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import Buttons from '../component/Button'
 import Snackbar from '@mui/material/Snackbar';
-import { useNavigate } from 'react-router-dom'
 import PrivacyPolicy from '../component/Modal/privacyPolicy'
 import { createLead } from '../controller/AuthController'
 import PageLoader from '../component/pageLoader'
@@ -20,7 +19,6 @@ export default function Home() {
     const [alert, setAlert] = useState(false)
     const [loading, setLoading] = useState(false)
     const [checked, setChecked] = useState(false);
-    const navigate = useNavigate()
 
     const SavedData = async () => {
         if (checked) {

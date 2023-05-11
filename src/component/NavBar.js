@@ -43,7 +43,9 @@ export default function NavBar(props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <img src="assets/image/Logo.png" alt='' />
+            <Box sx={{ display: "flex", alignItems: "center",justifyContent:"center",py:1 }}>
+                <img src="assets/image/Logo.png" alt='' />
+            </Box>
             <Divider />
             <List>
                 {user &&

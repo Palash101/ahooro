@@ -74,6 +74,9 @@ function SignIn() {
                                     Acceder
                                 </Button>
                             </Box>
+                            <Box sx={{ display: 'flex', justifyContent: "center" }}>
+                                <Button onClick={() => navigate('/')} sx={{ mt: 2, textTransform: "none" }} variant='text'>Back to Home page</Button>
+                            </Box>
                         </Box>
                     </Box>
                 </Box>

@@ -11,49 +11,48 @@ import Buttons from '../component/Button'
 import Snackbar from '@mui/material/Snackbar';
 import { useNavigate } from 'react-router-dom'
 import PrivacyPolicy from '../component/Modal/privacyPolicy'
-// const ipLocation = require("ip-location");
+import { createLead } from '../controller/AuthController'
+import PageLoader from '../component/pageLoader'
+
 export default function Home() {
     const [phone, setPhone] = useState("")
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState({});
     const [alert, setAlert] = useState(false)
-    console.log("data: ", data);
+    const [loading, setLoading] = useState(false)
     const [checked, setChecked] = useState(false);
-    const [policy, setPolicy] = useState(false);
     const navigate = useNavigate()
-    const SavedData = () => {
-        console.log("data set", phone);
-        if (policy) {
+
+    const SavedData = async () => {
+        if (checked) {
+            setLoading(true)
             fetch('https://api.ipify.org?format=json', {
                 method: "GET",
                 headers: {
                 }
             })
-                .then((res) => res.text())
-                .then(data => {
-                    if (data) {
-                        const myData = JSON.parse(data)
-                        setData({ ...myData, phone: phone })
-                        setChecked(false)
-                        setPolicy(false)
+                .then((res) => res.json())
+                .then(async (data) => {
+                    console.log(data, 'ip')
+
+                    const ts = new Date();
+
+                    const d = {
+                        ip: data.ip,
+                        phone: phone,
+                        timeStamp: ts,
                     }
-                    console.log(data)
+                    const result = await createLead(d)
+                    console.log(result, 'result')
+                    setChecked(false)
+                    setLoading(false)
                 })
         }
         else {
             setAlert(true)
         }
     };
-    const AcceptPolicy = () => {
-        setPolicy(true)
-        setOpen(false);
-        setChecked(true)
-    }
     const handleChange = (event) => {
-        setOpen(true);
-        if (policy) {
-            setChecked(event.target.checked);
-        }
+        setChecked(event.target.checked);
     };
 
     return (
@@ -106,12 +105,12 @@ export default function Home() {
                                         </Box>
                                     </Grid>
                                 </Grid>
-                                <FormControlLabel sx={{ ml: 0, fontSize: "11px", color: "#7E868E", maxWidth: "400px", mt: 2 }} control={
-                                    <Checkbox
-                                        checked={checked}
-                                        onChange={handleChange}
-                                    />} label="Acepto la política de privacidad y doy mis datos para que me contacte la empresa XXXXX" />
-
+                                <Box sx={{ display: "flex", maxWidth: "500px", mt: 2 }}>
+                                    <FormControlLabel sx={{ ml: 0 }} control={
+                                        <Checkbox checked={checked} onChange={handleChange} />} />
+                                    <Box>
+                                        <Box sx={{ fontSize: "14px", color: "#7E868E", }}>Acepto la <Box component="span" onClick={() => setOpen(true)} sx={{ color: "blue", cursor: "pointer" }}>política de privacidad</Box> y doy mis datos para que me contacte la empresa XXXXX</Box></Box>
+                                </Box>
                             </Grid>
                         </Grid>
                     </Box>
@@ -241,11 +240,15 @@ export default function Home() {
                                     </Box>
                                 </Grid>
                             </Grid>
-                            <FormControlLabel sx={{ fontSize: "11px", color: "#7E868E" }} control={
-                                <Checkbox
-                                    checked={checked}
-                                    onChange={handleChange}
-                                />} label="Acepto la política de privacidad y doy mis datos para que me contacte la empresa XXXXX" />
+                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: { md: "center", xs: "left" } }}>
+                                <FormControlLabel sx={{ ml: 0 }} control={
+                                    <Checkbox
+                                        checked={checked}
+                                        onChange={handleChange}
+                                    />} />
+                                <Box>
+                                    <Box sx={{ fontSize: "14px", color: "#7E868E", }}>Acepto la <Box component="span" onClick={() => setOpen(true)} sx={{ color: "blue", cursor: "pointer" }}>política de privacidad</Box> y doy mis datos para que me contacte la empresa XXXXX</Box></Box>
+                            </Box>
                         </Box>
                     </Box>
                     <Box sx={{
@@ -265,22 +268,25 @@ export default function Home() {
                         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                             <Button sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Quienes somos</Button>
                             <Button sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Aviso Legal</Button>
-                            <Button onClick={() => navigate('/privacy-policy')} sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Política de Privacidad</Button>
+                            <Button onClick={() => setOpen(true)} sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Política de Privacidad</Button>
                         </Box>
                     </Box>
                     <Box sx={{ textAlign: "center" }}>
                         <Typography sx={{ fontSize: "12px" }}>© dominio.com, 2021 | o el año que sea y algunos datos legales o fiscales para engañar</Typography>
                     </Box>
                 </Box>
-                <PrivacyPolicy open={open} setOpen={setOpen} AcceptPolicy={AcceptPolicy} />
+                <PrivacyPolicy open={open} setOpen={setOpen} />
             </Box >
             <Snackbar
                 open={alert}
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 autoHideDuration={2000}
-                message="Accept policy first"
+                message="Please accept Privacy and Terms"
                 onClose={() => setAlert(false)}
             />
+            {loading &&
+                <PageLoader />
+            }
         </>
     )
 }

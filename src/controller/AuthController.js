@@ -1,19 +1,14 @@
 // import { db } from "../config/firebaseConfig";
 import { auth } from "../config/firebaseConfig";
 import {
-    // createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    // sendEmailVerification,
-    // sendPasswordResetEmail,
-    // signInWithPopup,
-    // GoogleAuthProvider,
-    // FacebookAuthProvider,
-    // OAuthProvider
+
 } from "firebase/auth";
+import { db } from "../config/firebaseConfig";
 import {
-    // addDoc,
-    // collection,
-    // doc,
+    addDoc,
+    collection,
+    doc,
     // getDoc,
     // getDocs,
     // query,
@@ -48,4 +43,19 @@ export const UserEmailLogin = async (loginEmail, loginPassword) => {
         return resp
 
     }
+}
+
+export const createLead = async (data) =>{
+    console.log(data,'auth')
+    try{
+        const ref = await  addDoc(collection(db,"users"),data)
+        console.log(ref,'data added')
+        return {success:true, ref}
+    }
+    catch(err){
+        console.log(err,'error')
+        return{success:false,err:err}
+
+    }
+
 }

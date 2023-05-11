@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 
-export default function PrivacyPolicy({ open, setOpen, scroll, AcceptPolicy }) {
+export default function PrivacyPolicy({ open, setOpen, scroll }) {
 
     const handleClose = () => {
         setOpen(false);
@@ -99,7 +99,7 @@ export default function PrivacyPolicy({ open, setOpen, scroll, AcceptPolicy }) {
                 </DialogContent>
                 <DialogActions>
                     <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                        <Buttons onClick={AcceptPolicy}>Aceptar</Buttons>
+                        <Buttons onClick={handleClose} >Close</Buttons>
                     </Box>
                 </DialogActions>
             </Dialog>

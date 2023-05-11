@@ -12,37 +12,39 @@ import Snackbar from '@mui/material/Snackbar';
 import { useNavigate } from 'react-router-dom'
 import PrivacyPolicy from '../component/Modal/privacyPolicy'
 // const ipLocation = require("ip-location");
+import { createLead } from '../controller/AuthController'
+
 export default function Home() {
     const [phone, setPhone] = useState("")
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState({});
     // const [alert, setAlert] = useState(false)
-    console.log("data: ", data);
     const [checked, setChecked] = useState(false);
     const [policy, setPolicy] = useState(false);
     const navigate = useNavigate()
-    const SavedData = () => {
+
+    const SavedData = async() => {
         if (policy) {
             fetch('https://api.ipify.org?format=json', {
                 method: "GET",
                 headers: {
                 }
             })
-                .then((res) => res.text())
-                .then(data => {
-                    if (data) {
-                        const myData = JSON.parse(data)
-                        setData({ ...myData, phone: phone })
+                .then((res) => res.json())
+                .then(async (data) => {
+                    console.log(data,'ip')
+                    const d =  {ip:data.ip,phone: phone}
+                    // console.log(data.ip,'data')
+                        const result = await createLead(d)
+                        console.log(result,'result')
                         setChecked(false)
                         setPolicy(false)
-                    }
-                    console.log(data)
                 })
         }
         else {
-            alert("true")
+            alert("Please accept Privacy and Terms")
         }
     };
+    
     const AcceptPolicy = () => {
         setPolicy(true)
         setOpen(false);

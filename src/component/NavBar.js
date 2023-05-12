@@ -15,17 +15,17 @@ import CallIcon from '@mui/icons-material/Call';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useRef, useState, useEffect } from 'react';
-// import Buttons from './Button';
-// import { useNavigate } from 'react-router-dom';
+import Buttons from './Button';
+import { useNavigate } from 'react-router-dom';
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact'];
 
 export default function NavBar(props) {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [width, setWidth] = useState(null)
-    // const [user, setUser] = useState(localStorage.getItem("user"))
+    const [user, setUser] = useState(localStorage.getItem("user"))
     const ref = useRef(null)
 
     useEffect(() => {
@@ -35,9 +35,9 @@ export default function NavBar(props) {
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
     };
-    // const loginClick = () => {
-    //     navigate('/sign-in')
-    // }
+    const loginClick = () => {
+        navigate('/sign-in')
+    }
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -46,7 +46,9 @@ export default function NavBar(props) {
             </Box>
             <Divider />
             <List>
-                {/* <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons> */}
+                {user &&
+                    <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
+                }
                 {navItems.map((item) => (
                     <ListItem key={item} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center' }}>
@@ -92,22 +94,25 @@ export default function NavBar(props) {
                                     <CallIcon />
                                 </IconButton>
                             </Box>
-                            <Box ref={ref} sx={{ display: "flex", flexDirection: "column" }}>
+                            <Box sx={{ display: "flex", flexDirection: "column" }}>
                                 <Typography variant='BUTTON'>666-6666-666</Typography>
                                 <Typography variant='caption'>Atendemos de 9:00 a 20:00</Typography>
                             </Box>
                         </Box>
-                        {/* <Box sx={{ display: { md: "flex", xs: "none" } }}>
-                            <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
+                        <Box ref={ref} sx={{ display: { md: "flex", xs: "none" } }}>
+                            {user ?
+                                <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
 
-                                <Buttons onClick={() => {
+                                    <Buttons onClick={() => {
                                         localStorage.clear()
                                         setUser(null)
                                     }}>Logout</Buttons>
-                                <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
-                            </Box>
-                            // <Buttons onClick={loginClick}>Login</Buttons>
-                        </Box> */}
+                                    <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
+                                </Box>
+                                : <Buttons onClick={loginClick}>Login</Buttons>
+                            }
+
+                        </Box>
                     </Box>
                 </Toolbar>
             </AppBar>
@@ -126,7 +131,7 @@ export default function NavBar(props) {
                     }}
                 >
                     {drawer}
-                    {/* <Box>
+                    <Box>
                         {user ?
                             <Buttons sx={{ width: "100%", height: "50px" }} onClick={() => {
                                 localStorage.clear()
@@ -135,7 +140,7 @@ export default function NavBar(props) {
                             :
                             <Buttons sx={{ width: "100%", height: "50px" }} onClick={loginClick}>Login</Buttons>
                         }
-                    </Box> */}
+                    </Box>
                 </Drawer>
             </Box>
             <Toolbar />

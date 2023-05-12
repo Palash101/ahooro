@@ -141,8 +141,8 @@ function UploadData() {
                                     label="Todo"
                                     labelPlacement="start"
                                 />
-                                <Button onClick={handleClick} sx={{ mt: 1 }} variant='contained'>Upload File</Button>
-                                <Button onClick={() => navigate('/')} sx={{ mt: 1, textTransform: "none" }} variant='text'>Back to Home page</Button>
+                                <Button onClick={handleClick} sx={{ mt: 1 }} variant='contained'>Subir archivo</Button>
+                                <Button onClick={() => navigate('/')} sx={{ mt: 1, textTransform: "none" }} variant='text'>Volver a la página de inicio</Button>
                             </Box>
                         </Box>
                     </Box>
@@ -153,7 +153,7 @@ function UploadData() {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 autoHideDuration={4000}
                 onClose={handleClose}
-                message="File Uploaded successfully"
+                message="Documento cargado exitosamente"
                 action={action}
             />
         </>

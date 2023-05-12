@@ -21,11 +21,11 @@ function SignIn() {
                 navigate("/upload-data")
             }
             else {
-                alert("Login and Password are incorrect")
+                alert("El inicio de sesión y la contraseña son incorrectos")
             }
         }
         else {
-            alert("please enter email and password")
+            alert("por favor ingrese correo electrónico y contraseña")
         }
     }
 
@@ -75,7 +75,7 @@ function SignIn() {
                                 </Button>
                             </Box>
                             <Box sx={{ display: 'flex', justifyContent: "center" }}>
-                                <Button onClick={() => navigate('/')} sx={{ mt: 2, textTransform: "none" }} variant='text'>Back to Home page</Button>
+                                <Button onClick={() => navigate('/')} sx={{ mt: 2, textTransform: "none" }} variant='text'>Volver a la página de inicio</Button>
                             </Box>
                         </Box>
                     </Box>

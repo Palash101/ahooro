@@ -19,42 +19,62 @@ export default function Home() {
     const [alert, setAlert] = useState(false)
     const [loading, setLoading] = useState(false)
     const [checked, setChecked] = useState(false);
-    const [checkedMsg, setCheckedMsg] = useState("Please accept Privacy and Terms")
-    console.log("checked: ", checked);
+    const [checkedMsg, setCheckedMsg] = useState("")
+
+    const getLocation = (ip) => {
+        return fetch(`https://ipapi.co/${ip}/json/`, {
+            method: "GET",
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                return data
+            })
+    }
 
     const SavedData = async () => {
-        if (checked) {
-            setLoading(true)
-            fetch('https://api.ipify.org?format=json', {
-                method: "GET",
-                headers: {
-                }
-            })
-                .then((res) => res.json())
-                .then(async (data) => {
-                    console.log(data, 'ip')
-
-                    const ts = new Date();
-
-                    const d = {
-                        ip: data.ip,
-                        phone: phone,
-                        timeStamp: ts,
-                    }
-                    const result = await createLead(d)
-                    if (result.success) {
-                        setCheckedMsg("uploaded successfully")
-                        setAlert(true)
-                        setPhone("")
-                        setChecked(false)
-                        setLoading(false)
-                    }
-                    else {
-                        setLoading(false)
+        if (phone) {
+            if (checked) {
+                setLoading(true)
+                fetch('https://api.ipify.org?format=json', {
+                    method: "GET",
+                    headers: {
                     }
                 })
+                    .then((res) => res.json())
+                    .then(async (data) => {
+                        const { city, region } = await getLocation(data.ip)
+                        console.log(region, "loc")
+                        const ts = new Date();
+
+                        const d = {
+                            ip: data.ip,
+                            phone: phone,
+                            timeStamp: ts,
+                            city: city,
+                            region: region
+                        }
+                        const result = await createLead(d)
+                        console.log(result, "lead")
+                        if (result.success) {
+                            setLoading(false)
+                            setCheckedMsg("subido con éxito")
+                            setAlert(true)
+                            setPhone("")
+                            setChecked(false)
+                        }
+                        else {
+                            setLoading(false)
+                        }
+                    })
+            }
+            else {
+                setCheckedMsg("¡Por favor, debe aceptar la política de privacidad!")
+                setAlert(true)
+            }
         }
         else {
+            setCheckedMsg("Por favor, introduzca un número de teléfono")
             setAlert(true)
         }
     };

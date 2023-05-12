@@ -33,7 +33,7 @@ export default function Home() {
     }
 
     const SavedData = async () => {
-        if (phone) {
+        if (phone && (phone.match('[0-9]{10}'))) {
             if (checked) {
                 setLoading(true)
                 fetch('https://api.ipify.org?format=json', {
@@ -74,7 +74,7 @@ export default function Home() {
             }
         }
         else {
-            setCheckedMsg("Por favor, introduzca un número de teléfono")
+            setCheckedMsg("Por favor ingrese un número de teléfono válido")
             setAlert(true)
         }
     };

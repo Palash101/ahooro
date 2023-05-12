@@ -55,7 +55,6 @@ export const createLead = async (data) =>{
     catch(err){
         console.log(err,'error')
         return{success:false,err:err}
-
     }
 
 }

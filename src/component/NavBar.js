@@ -15,17 +15,17 @@ import CallIcon from '@mui/icons-material/Call';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useRef, useState, useEffect } from 'react';
-import Buttons from './Button';
-import { useNavigate } from 'react-router-dom';
+// import Buttons from './Button';
+// import { useNavigate } from 'react-router-dom';
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact'];
 
 export default function NavBar(props) {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [width, setWidth] = useState(null)
-    const [user, setUser] = useState(localStorage.getItem("user"))
+    // const [user, setUser] = useState(localStorage.getItem("user"))
     const ref = useRef(null)
 
     useEffect(() => {
@@ -35,9 +35,9 @@ export default function NavBar(props) {
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
     };
-    const loginClick = () => {
-        navigate('/sign-in')
-    }
+    // const loginClick = () => {
+    //     navigate('/sign-in')
+    // }
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -92,22 +92,22 @@ export default function NavBar(props) {
                                     <CallIcon />
                                 </IconButton>
                             </Box>
-                            <Box sx={{ display: "flex", flexDirection: "column" }}>
+                            <Box ref={ref} sx={{ display: "flex", flexDirection: "column" }}>
                                 <Typography variant='BUTTON'>666-6666-666</Typography>
                                 <Typography variant='caption'>Atendemos de 9:00 a 20:00</Typography>
                             </Box>
                         </Box>
-                        <Box sx={{ display: { md: "flex", xs: "none" } }} ref={ref}>
+                        {/* <Box sx={{ display: { md: "flex", xs: "none" } }}>
                             <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
 
-                                {/* <Buttons onClick={() => {
+                                <Buttons onClick={() => {
                                         localStorage.clear()
                                         setUser(null)
-                                    }}>Logout</Buttons> */}
-                                {/* <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons> */}
+                                    }}>Logout</Buttons>
+                                <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
                             </Box>
-                            {/* // <Buttons onClick={loginClick}>Login</Buttons> */}
-                        </Box>
+                            // <Buttons onClick={loginClick}>Login</Buttons>
+                        </Box> */}
                     </Box>
                 </Toolbar>
             </AppBar>

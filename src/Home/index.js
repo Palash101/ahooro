@@ -19,6 +19,8 @@ export default function Home() {
     const [alert, setAlert] = useState(false)
     const [loading, setLoading] = useState(false)
     const [checked, setChecked] = useState(false);
+    const [checkedMsg, setCheckedMsg] = useState("Please accept Privacy and Terms")
+    console.log("checked: ", checked);
 
     const SavedData = async () => {
         if (checked) {
@@ -40,9 +42,16 @@ export default function Home() {
                         timeStamp: ts,
                     }
                     const result = await createLead(d)
-                    setChecked(false)
-                    setPhone("")
-                    setLoading(false)
+                    if (result.success) {
+                        setCheckedMsg("uploaded successfully")
+                        setAlert(true)
+                        setPhone("")
+                        setChecked(false)
+                        setLoading(false)
+                    }
+                    else {
+                        setLoading(false)
+                    }
                 })
         }
         else {
@@ -280,7 +289,7 @@ export default function Home() {
                 open={alert}
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 autoHideDuration={2000}
-                message="Please accept Privacy and Terms"
+                message={checkedMsg}
                 onClose={() => setAlert(false)}
             />
             {loading &&

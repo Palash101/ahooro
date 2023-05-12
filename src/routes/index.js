@@ -46,7 +46,7 @@ const AppRoutes = () => {
         {/* <Route exact path="/sign-in" element={<SignIn />} /> */}
         <Route exact path="/" element={<Home />} />
         <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route exact path="/upload-data" element={<UploadData />} />
+        {/* <Route exact path="/upload-data" element={<UploadData />} /> */}
         <Route element={<PrivateRoutes />}>
         </Route>
       </Routes>

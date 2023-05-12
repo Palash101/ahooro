@@ -26,9 +26,7 @@ export default function NavBar(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [width, setWidth] = useState(null)
     const [user, setUser] = useState(localStorage.getItem("user"))
-    console.log("width: ", width);
     const ref = useRef(null)
-    console.log("ref: ", ref);
 
     useEffect(() => {
         setWidth(ref.current.clientWidth)
@@ -48,7 +46,7 @@ export default function NavBar(props) {
             </Box>
             <Divider />
             <List>
-                <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
+                {/* <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons> */}
                 {navItems.map((item) => (
                     <ListItem key={item} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center' }}>
@@ -106,7 +104,7 @@ export default function NavBar(props) {
                                         localStorage.clear()
                                         setUser(null)
                                     }}>Logout</Buttons> */}
-                                <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
+                                {/* <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons> */}
                             </Box>
                             {/* // <Buttons onClick={loginClick}>Login</Buttons> */}
                         </Box>

@@ -40,8 +40,8 @@ export default function Home() {
                         timeStamp: ts,
                     }
                     const result = await createLead(d)
-                    console.log(result, 'result')
                     setChecked(false)
+                    setPhone("")
                     setLoading(false)
                 })
         }
@@ -87,6 +87,7 @@ export default function Home() {
                                                 required
                                                 size="small"
                                                 type='phone'
+                                                value={phone}
                                                 onChange={(e) => setPhone(e.target.value)}
                                             />
                                         </Box>

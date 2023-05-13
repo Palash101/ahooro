@@ -46,9 +46,9 @@ export default function NavBar(props) {
             </Box>
             <Divider />
             <List>
-                {user &&
+                {/* {user &&
                     <Buttons onClick={() => navigate('/upload-data')}>Upload Data</Buttons>
-                }
+                } */}
                 {navItems.map((item) => (
                     <ListItem key={item} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center' }}>
@@ -94,12 +94,12 @@ export default function NavBar(props) {
                                     <CallIcon />
                                 </IconButton>
                             </Box>
-                            <Box sx={{ display: "flex", flexDirection: "column" }}>
+                            <Box ref={ref} sx={{ display: "flex", flexDirection: "column" }}>
                                 <Typography variant='BUTTON'>666-6666-666</Typography>
                                 <Typography variant='caption'>Atendemos de 9:00 a 20:00</Typography>
                             </Box>
                         </Box>
-                        <Box ref={ref} sx={{ display: { md: "flex", xs: "none" } }}>
+                        {/* <Box ref={ref} sx={{ display: { md: "flex", xs: "none" } }}>
                             {user ?
                                 <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
 
@@ -112,7 +112,7 @@ export default function NavBar(props) {
                                 : <Buttons onClick={loginClick}>Login</Buttons>
                             }
 
-                        </Box>
+                        </Box> */}
                     </Box>
                 </Toolbar>
             </AppBar>
@@ -131,7 +131,7 @@ export default function NavBar(props) {
                     }}
                 >
                     {drawer}
-                    <Box>
+                    {/* <Box>
                         {user ?
                             <Buttons sx={{ width: "100%", height: "50px" }} onClick={() => {
                                 localStorage.clear()
@@ -140,7 +140,7 @@ export default function NavBar(props) {
                             :
                             <Buttons sx={{ width: "100%", height: "50px" }} onClick={loginClick}>Login</Buttons>
                         }
-                    </Box>
+                    </Box> */}
                 </Drawer>
             </Box>
             <Toolbar />

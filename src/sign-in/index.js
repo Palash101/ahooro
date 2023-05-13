@@ -5,11 +5,15 @@ import { Button } from '@mui/material';
 import { useState } from 'react';
 import { UserEmailLogin } from '../controller/AuthController';
 import { useNavigate } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
+
 
 
 function SignIn() {
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
+    const [alert, setAlert] = useState(false)
+    const [checkedMsg, setCheckedMsg] = useState("")
     const navigate = useNavigate()
 
     const handleLogin = async () => {
@@ -21,11 +25,13 @@ function SignIn() {
                 navigate("/upload-data")
             }
             else {
-                alert("El inicio de sesión y la contraseña son incorrectos")
+                setCheckedMsg("El inicio de sesión y la contraseña son incorrectos")
+                setAlert(true)
             }
         }
         else {
-            alert("por favor ingrese correo electrónico y contraseña")
+            setCheckedMsg("por favor ingrese correo electrónico y contraseña")
+            setAlert(true)
         }
     }
 
@@ -74,13 +80,20 @@ function SignIn() {
                                     Acceder
                                 </Button>
                             </Box>
-                            <Box sx={{ display: 'flex', justifyContent: "center" }}>
+                            {/* <Box sx={{ display: 'flex', justifyContent: "center" }}>
                                 <Button onClick={() => navigate('/')} sx={{ mt: 2, textTransform: "none" }} variant='text'>Volver a la página de inicio</Button>
-                            </Box>
+                            </Box> */}
                         </Box>
                     </Box>
                 </Box>
             </Box>
+            <Snackbar
+                open={alert}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                autoHideDuration={2000}
+                message={checkedMsg}
+                onClose={() => setAlert(false)}
+            />
         </>
     );
 }

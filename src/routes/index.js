@@ -17,9 +17,8 @@ import {
 // import ProjectCreate from "../screens/user/project/create";
 // import ProjectEdit from "../screens/user/project/edit";
 import SignIn from "../sign-in";
-import Home from "../Home";
+// import Home from "../Home";
 import UploadData from "../upload-data";
-import PrivacyPolicy from "../privacy-policy";
 
 const PrivateRoutes = () => {
   const user = localStorage.getItem("user");
@@ -43,11 +42,10 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/sign-in" element={<SignIn />} />
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route exact path="/" element={<SignIn />} />
+        {/* <Route exact path="/" element={<Home />} /> */}
         <Route element={<PrivateRoutes />}>
-        <Route exact path="/upload-data" element={<UploadData />} />
+          <Route exact path="/upload-data" element={<UploadData />} />
         </Route>
       </Routes>
     </BrowserRouter>

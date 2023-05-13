@@ -1,8 +1,8 @@
 import Box from '@mui/material/Box';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
+// import Switch from '@mui/material/Switch';
+// import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState } from 'react';
-import { Button } from '@mui/material';
+import Buttons from '../component/Button';
 import Typography from '@mui/material/Typography';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 
 function UploadData() {
-    const [file, setFile] = useState()
+    const [file, setFile] = useState(undefined)
     console.log("file: ", file);
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
@@ -36,6 +36,9 @@ function UploadData() {
                     setFile(undefined)
                 })
                 .catch(err => console.log(err))
+        }
+        else {
+            console.log("file not found")
         }
 
     }
@@ -90,7 +93,7 @@ function UploadData() {
                                 rowGap: 1
                             }}>
                                 <img src="/assets/image/cloudUpload.png" alt='file' width="80px" />
-                                <Button sx={{ position: "relative", width: "60%" }} variant='contained'>
+                                <Buttons sx={{ position: "relative", width: "60%" }} variant='contained'>
                                     <input accept=".csv,.xls,.xlsx"
                                         style={{
                                             position: "absolute",
@@ -111,7 +114,7 @@ function UploadData() {
                                         onChange={handleChange}
                                     />
                                     Choose file to upload
-                                </Button>
+                                </Buttons>
                                 {file ?
                                     <Typography sx={{ fontSize: "15px", color: "green" }}>{file.name}</Typography>
                                     :
@@ -127,7 +130,7 @@ function UploadData() {
                                 pt: "20px",
                                 alignItems: "center"
                             }}>
-                                <FormControlLabel
+                                {/* <FormControlLabel
                                     sx={{ width: "30%", justifyContent: "space-between" }}
                                     value="numeros"
                                     control={<Switch color="primary" />}
@@ -140,9 +143,13 @@ function UploadData() {
                                     control={<Switch color="primary" />}
                                     label="Todo"
                                     labelPlacement="start"
-                                />
-                                <Button onClick={handleClick} sx={{ mt: 1 }} variant='contained'>Subir archivo</Button>
-                                <Button onClick={() => navigate('/')} sx={{ mt: 1, textTransform: "none" }} variant='text'>Volver a la página de inicio</Button>
+                                /> */}
+                                <Buttons onClick={handleClick} sx={{ my: 1 }} variant='contained'>Subir archivo</Buttons>
+                                {/* <Button onClick={() => navigate('/')} sx={{ mt: 1, textTransform: "none" }} variant='text'>Volver a la página de inicio</Button> */}
+                                <Buttons onClick={() => {
+                                    localStorage.clear()
+                                    navigate("/")
+                                }}>Logout</Buttons>
                             </Box>
                         </Box>
                     </Box>

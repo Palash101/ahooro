@@ -144,7 +144,7 @@ export default function Home() {
                     </Box>
                 </Box>
                 {/* Section2 */}
-                {/* <Box sx={{
+                <Box sx={{
                     background: "linear-gradient(270deg, #82C5B6, #FBFAE1)"
                 }}>
                     <Box sx={{
@@ -237,9 +237,9 @@ export default function Home() {
                             </Grid>
                         </Grid>
                     </Box>
-                </Box> */}
+                </Box>
                 {/* Section3 */}
-                {/* <Box sx={{
+                <Box sx={{
                     background: "linear-gradient(45deg, #82C5B6, #FBFAE1)"
                 }}>
                     <Box sx={{
@@ -286,9 +286,9 @@ export default function Home() {
                         height: { md: "750px", xs: "300px", },
                         backgroundSize: { md: "auto", xs: "contain" }
                     }}></Box>
-                </Box> */}
+                </Box>
                 {/* Section4 */}
-                {/* <Box sx={{
+                <Box sx={{
                     background: "linear-gradient(45deg, #82C5B6, #FBFAE1)",
                     p: 2
                 }}>
@@ -302,7 +302,7 @@ export default function Home() {
                     <Box sx={{ textAlign: "center" }}>
                         <Typography sx={{ fontSize: "12px" }}>© dominio.com, 2021 | o el año que sea y algunos datos legales o fiscales para engañar</Typography>
                     </Box>
-                </Box> */}
+                </Box>
                 <PrivacyPolicy open={open} setOpen={setOpen} />
             </Box >
             <Snackbar

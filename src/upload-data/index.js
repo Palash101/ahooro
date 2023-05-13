@@ -112,6 +112,7 @@ function UploadData() {
                                         type="file"
                                         name='...'
                                         onChange={handleChange}
+                                        onClick={event => event.target.value = null}
                                     />
                                     Choose file to upload
                                 </Buttons>

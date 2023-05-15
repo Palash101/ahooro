@@ -114,14 +114,14 @@ function UploadData() {
                                         onChange={handleChange}
                                         onClick={event => event.target.value = null}
                                     />
-                                    Choose file to upload
+                                    Selecciona archivo
                                 </Buttons>
                                 {file ?
                                     <Typography sx={{ fontSize: "15px", color: "green" }}>{file.name}</Typography>
                                     :
-                                    <Typography sx={{ fontSize: "15px", color: "red" }}>Choose a file</Typography>
+                                    <Typography sx={{ fontSize: "15px", color: "red" }}>Elige un archivo</Typography>
                                 }
-                                <Typography sx={{ fontSize: "15px" }}>or drag and drop them here</Typography>
+                                <Typography sx={{ fontSize: "15px" }}>o arrastra y suéltalos aquí</Typography>
                                 <Typography sx={{ fontSize: "15px", fontWeight: 600 }}>.csv or .xlsx</Typography>
                             </Box>
                             <Box sx={{
@@ -150,7 +150,7 @@ function UploadData() {
                                 <Buttons onClick={() => {
                                     localStorage.clear()
                                     navigate("/")
-                                }}>Logout</Buttons>
+                                }}>Cerrar Sesión</Buttons>
                             </Box>
                         </Box>
                     </Box>

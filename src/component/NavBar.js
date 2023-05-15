@@ -11,33 +11,33 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
-import CallIcon from '@mui/icons-material/Call';
+// import CallIcon from '@mui/icons-material/Call';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 import { useRef, useState, useEffect } from 'react';
-import Buttons from './Button';
-import { useNavigate } from 'react-router-dom';
+// import Buttons from './Button';
+// import { useNavigate } from 'react-router-dom';
 const drawerWidth = 240;
 const navItems = ['Home', 'About', 'Contact'];
 
 export default function NavBar(props) {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [width, setWidth] = useState(null)
-    const [user, setUser] = useState(localStorage.getItem("user"))
-    const ref = useRef(null)
+    // const [width, setWidth] = useState(null)
+    // const [user, setUser] = useState(localStorage.getItem("user"))
+    // const ref = useRef(null)
 
-    useEffect(() => {
-        setWidth(ref.current.clientWidth)
-    }, [width])
+    // useEffect(() => {
+    //     setWidth(ref.current.clientWidth)
+    // }, [width])
 
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
     };
-    const loginClick = () => {
-        navigate('/sign-in')
-    }
+    // const loginClick = () => {
+    //     navigate('/sign-in')
+    // }
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -67,7 +67,7 @@ export default function NavBar(props) {
             <AppBar sx={{ backgroundColor: "#82C5B6" }} component="nav">
                 <Toolbar>
                     <Box sx={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "space-between", px: { md: "150px", xs: 2 } }}>
-                        <IconButton
+                        {/* <IconButton
                             color="inherit"
                             aria-label="open drawer"
                             edge="start"
@@ -75,20 +75,24 @@ export default function NavBar(props) {
                             sx={{ mr: 2, display: { sm: 'none' } }}
                         >
                             <MenuIcon />
-                        </IconButton>
+                        </IconButton> */}
                         <Box
-                            sx={{ display: { xs: 'none', sm: 'flex' }, width: width, alignItems: "center" }}
+                            sx={{
+                                display: { xs: 'none', sm: 'flex' },
+                                // width: width,
+                                alignItems: "center"
+                            }}
                         >
                             <img src="assets/image/Logo.png" alt='' />
                         </Box>
-                        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                        {/* <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                             {navItems.map((item) => (
                                 <Button key={item} sx={{ color: '#fff' }}>
                                     {item}
                                 </Button>
                             ))}
-                        </Box>
-                        <Box sx={{ display: "flex", alignContent: "center" }}>
+                        </Box> */}
+                        {/* <Box sx={{ display: "flex", alignContent: "center" }}>
                             <Box>
                                 <IconButton href="tel:+6666666666">
                                     <CallIcon />
@@ -98,7 +102,7 @@ export default function NavBar(props) {
                                 <Typography variant='BUTTON'>666-6666-666</Typography>
                                 <Typography variant='caption'>Atendemos de 9:00 a 20:00</Typography>
                             </Box>
-                        </Box>
+                        </Box> */}
                         {/* <Box ref={ref} sx={{ display: { md: "flex", xs: "none" } }}>
                             {user ?
                                 <Box sx={{ display: "flex", alignItems: "center", columnGap: 2 }}>
@@ -116,7 +120,7 @@ export default function NavBar(props) {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Box component="nav">
+            {/* <Box component="nav">
                 <Drawer
                     container={container}
                     variant="temporary"
@@ -131,7 +135,7 @@ export default function NavBar(props) {
                     }}
                 >
                     {drawer}
-                    {/* <Box>
+                    <Box>
                         {user ?
                             <Buttons sx={{ width: "100%", height: "50px" }} onClick={() => {
                                 localStorage.clear()
@@ -140,9 +144,9 @@ export default function NavBar(props) {
                             :
                             <Buttons sx={{ width: "100%", height: "50px" }} onClick={loginClick}>Login</Buttons>
                         }
-                    </Box> */}
+                    </Box>
                 </Drawer>
-            </Box>
+            </Box> */}
             <Toolbar />
         </>
     )

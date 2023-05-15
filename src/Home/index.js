@@ -4,7 +4,6 @@ import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import Buttons from '../component/Button'
@@ -33,7 +32,7 @@ export default function Home() {
     }
 
     const SavedData = async () => {
-        if (phone && (phone.match('[0-9]{10}'))) {
+        if (phone) {
             if (checked) {
                 setLoading(true)
                 fetch('https://api.ipify.org?format=json', {

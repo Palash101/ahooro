@@ -55,7 +55,6 @@ export default function Home() {
                             region: region
                         }
                         const result = await createLead(d)
-                        console.log(result, "lead")
                         if (result.success) {
                             setLoading(false)
                             setCheckedMsg("subido con éxito")

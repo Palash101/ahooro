@@ -10,7 +10,7 @@ export default function PageLoader() {
                 right: "0",
                 left: "0",
                 bottom: "0",
-                zIndex: "99",
+                zIndex: "9999",
                 textAlign: "center",
             }}
         >

@@ -8,12 +8,12 @@ import { db } from "../config/firebaseConfig";
 import {
     addDoc,
     collection,
+    where,
     // doc,
     // getDoc,
-    // getDocs,
-    // query,
+    getDocs,
+    query,
     // deleteDoc,
-    // where,
     // updateDoc,
     // setDoc,
     // getStorage,
@@ -45,16 +45,38 @@ export const UserEmailLogin = async (loginEmail, loginPassword) => {
     }
 }
 
-export const createLead = async (data) =>{
-    console.log(data,'auth')
-    try{
-        const ref = await  addDoc(collection(db,"users"),data)
-        console.log(ref,'data added')
-        return {success:true, ref}
+export const createLead = async (data) => {
+    console.log(data, 'auth')
+    try {
+        const ref = await addDoc(collection(db, "users"), data)
+        console.log(ref, 'data added')
+        return { success: true, ref }
     }
-    catch(err){
-        console.log(err,'error')
-        return{success:false,err:err}
+    catch (err) {
+        console.log(err, 'error')
+        return { success: false, err: err }
     }
+}
+
+export const SearchDoc = async (search) => {
+    console.log(search, 'search')
+    const ref = collection(db, "users")
+    const q = query(ref, where('phone', '==', search))
+    const querySnapshot = await getDocs(q);
+    let data = []
+    querySnapshot.forEach((doc) => {
+        data.push(doc.data());
+    });
+    // console.log(data, 'data added')
+    if (data.length) {
+        return { success: true, data: data }
+    }
+    else {
+        return { success: false }
+    }
+
+}
+
+export const AddNewNumber = async (phone) => {
 
 }

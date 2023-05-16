@@ -5,22 +5,87 @@ import { useState } from 'react';
 import Buttons from '../component/Button';
 import Typography from '@mui/material/Typography';
 import Snackbar from '@mui/material/Snackbar';
+import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
+import styled from '@emotion/styled';
+import SearchIcon from '@mui/icons-material/Search';
+import { SearchDoc } from '../controller/AuthController';
+import ShowSearch from '../component/Modal/showSearch';
+import PageLoader from '../component/pageLoader';
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
+import AddNumber from '../component/Modal/addNumber';
+
+
+const Search = styled('div')(() => ({
+    position: 'relative',
+    // borderRadius: theme.shape.borderRadius,
+    width: '100%',
+    // [theme.breakpoints.up('sm')]: {
+    //   marginLeft: theme.spacing(1),
+    //   width: 'auto',
+    // },
+}));
+
+const StyledInputBase = styled(InputBase)(() => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+        //   padding: theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        //   paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+        //   transition: theme.transitions.create('width'),
+        width: '100%',
+        //   [theme.breakpoints.up('sm')]: {
+        //     width: '12ch',
+        //     '&:focus': {
+        //       width: '20ch',
+        //     },
+        //   },
+    },
+}));
 
 function UploadData() {
     const [file, setFile] = useState(undefined)
+    const [search, setSearch] = useState("")
+    const [data, setData] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false)
+    const [addModalOpen, setAddModalOpen] = useState(false)
+    const [massage, setMassage] = useState("")
     console.log("file: ", file);
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const handleChange = event => {
         setFile(event.target.files[0]);
     };
+
+    const HandleSearch = async () => {
+        if (search) {
+            setLoading(true)
+            const value = await SearchDoc(search)
+            if (value.success) {
+                setData(value.data)
+                setModalOpen(true)
+            }
+            else {
+                console.log("wrong search")
+                setMassage("Datos no encontrados")
+                setOpen(true);
+            }
+            setLoading(false)
+        }
+        else {
+            setMassage("Por favor ingrese el valor para la búsqueda")
+            setOpen(true);
+        }
+    }
     const handleClick = () => {
         const formData = new FormData()
         formData.append('file', file);
         if (file) {
+            setLoading(true)
             fetch('https://us-central1-ahoraahorro-7ac91.cloudfunctions.net/function-1', {
                 method: "POST",
                 body: formData,
@@ -30,7 +95,9 @@ function UploadData() {
                 .then((res) => res.text())
                 .then(data => {
                     if (data) {
+                        setMassage("Documento cargado exitosamente")
                         setOpen(true);
+                        setLoading(false)
                     }
                     console.log(data)
                     setFile(undefined)
@@ -38,16 +105,13 @@ function UploadData() {
                 .catch(err => console.log(err))
         }
         else {
-            console.log("file not found")
+            setMassage("Seleccione un archivo")
+            setOpen(true);
         }
 
     }
 
     const handleClose = (reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
         setOpen(false);
     };
 
@@ -75,8 +139,20 @@ function UploadData() {
                     <Box sx={{
                         boxSizing: "border-box",
                         background: " rgba(255, 255, 255, 0.5)",
-                        py: "8px", px: "16px"
+                        py: "8px", px: "16px",
                     }}>
+                        <Fab
+                            onClick={() => setAddModalOpen(true)}
+                            sx={{
+                                position: "absolute",
+                                top: { md: 16, xs: "unset" },
+                                bottom: { md: "unset", xs: 35 },
+                                right: 16,
+                                textTransform: "none"
+                            }} variant="extended">
+                            <AddIcon sx={{ mr: 1 }} />
+                            Add Number
+                        </Fab>
                         <Box sx={{
                             width: { md: "40%", xs: "90%" },
                             position: "absolute",
@@ -84,13 +160,45 @@ function UploadData() {
                             left: "50%",
                             transform: "translate(-50%, -50%)",
                         }}>
+                            <Box component="form">
+                                <Search>
+                                    <Box sx={{
+                                        width: "100%",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        marginBottom: 2,
+                                    }}>
+                                        <Box>
+                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono</Typography>
+                                            <Box sx={{
+                                                border: "1px solid black",
+                                                borderRadius: "8px",
+                                                px: 1,
+                                                py: "2px"
+                                            }}>
+                                                <StyledInputBase
+                                                    type='search'
+                                                    name='Search'
+                                                    placeholder='Enter phone number'
+                                                    onChange={(e) => setSearch(e.target.value)}
+                                                />
+                                                <IconButton onClick={HandleSearch} size='small'>
+                                                    <SearchIcon />
+                                                </IconButton>
+                                            </Box>
+                                        </Box>
+                                    </Box>
+                                </Search>
+                                {/* <FontAwesomeIcon className='search-icon' icon={faSearch} size="1x"/> */}
+                            </Box>
                             <Box sx={{
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
                                 border: "1px dashed black",
                                 padding: "50px",
-                                rowGap: 1
+                                rowGap: 1,
                             }}>
                                 <img src="/assets/image/cloudUpload.png" alt='file' width="80px" />
                                 <Buttons sx={{ position: "relative", width: "60%" }} variant='contained'>
@@ -161,9 +269,12 @@ function UploadData() {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 autoHideDuration={4000}
                 onClose={handleClose}
-                message="Documento cargado exitosamente"
+                message={massage}
                 action={action}
             />
+            <ShowSearch data={data} setModalOpen={setModalOpen} modalOpen={modalOpen} />
+            <AddNumber setAddModalOpen={setAddModalOpen} addModalOpen={addModalOpen} />
+            {loading && <PageLoader />}
         </>
     );
 }

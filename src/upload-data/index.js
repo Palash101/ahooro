@@ -49,6 +49,7 @@ const StyledInputBase = styled(InputBase)(() => ({
 function UploadData() {
     const [file, setFile] = useState(undefined)
     const [search, setSearch] = useState("")
+    console.log("search: ", search);
     const [data, setData] = useState("")
     const [loading, setLoading] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
@@ -115,6 +116,12 @@ function UploadData() {
         setOpen(false);
     };
 
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            HandleSearch()
+        }
+    }
+
     const action = (
         <>
             <IconButton
@@ -148,7 +155,9 @@ function UploadData() {
                                 top: { md: 16, xs: "unset" },
                                 bottom: { md: "unset", xs: 35 },
                                 right: 16,
-                                textTransform: "none"
+                                textTransform: "none",
+                                color:"white",
+                                background: "linear-gradient(265.77deg, #005280 -6.06%, #0D816C 108.54%);"
                             }} variant="extended">
                             <AddIcon sx={{ mr: 1 }} />
                             Add Number
@@ -160,7 +169,7 @@ function UploadData() {
                             left: "50%",
                             transform: "translate(-50%, -50%)",
                         }}>
-                            <Box component="form">
+                            <Box component="Box">
                                 <Search>
                                     <Box sx={{
                                         width: "100%",
@@ -182,6 +191,7 @@ function UploadData() {
                                                     name='Search'
                                                     placeholder='Enter phone number'
                                                     onChange={(e) => setSearch(e.target.value)}
+                                                    onKeyDown={handleKeyDown}
                                                 />
                                                 <IconButton onClick={HandleSearch} size='small'>
                                                     <SearchIcon />

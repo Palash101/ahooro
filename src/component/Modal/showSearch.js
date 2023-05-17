@@ -34,7 +34,7 @@ export default function ShowSearch({ modalOpen, setModalOpen, data }) {
                     aria-labelledby="scroll-dialog-title"
                     aria-describedby="scroll-dialog-description"
                 >
-                    <DialogContent sx={{ p: 0, maxWidth: "100%",minHeight:"400px" }} >
+                    <DialogContent sx={{ p: 0, maxWidth: "100%", minHeight: "300px", maxHeight: "400px" }} >
                         <Box sx={{
                             borderRadius: "12px",
                             width: "100%",
@@ -48,7 +48,7 @@ export default function ShowSearch({ modalOpen, setModalOpen, data }) {
                                 <TableContainer sx={{ width: "100%" }} component={Box}>
                                     <Table aria-label="simple table">
                                         <TableHead>
-                                            <TableRow>
+                                            <TableRow sx={{ ".MuiTableCell-root": { fontWeight: 600 } }}>
                                                 <TableCell>Phone</TableCell>
                                                 <TableCell align="left">City</TableCell>
                                                 <TableCell align="left">IP</TableCell>

@@ -2,7 +2,7 @@ import React from 'react'
 import Dialog from '@mui/material/Dialog';
 import Buttons from '../Button';
 import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
+import DialogContent from '@mui/material/DialogContent';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -34,7 +34,7 @@ export default function ShowSearch({ modalOpen, setModalOpen, data }) {
                     aria-labelledby="scroll-dialog-title"
                     aria-describedby="scroll-dialog-description"
                 >
-                    <Box sx={{ p: 0, maxWidth: "100%" }} >
+                    <DialogContent sx={{ p: 0, maxWidth: "100%",minHeight:"400px" }} >
                         <Box sx={{
                             borderRadius: "12px",
                             width: "100%",
@@ -76,7 +76,7 @@ export default function ShowSearch({ modalOpen, setModalOpen, data }) {
                                 </TableContainer>
                             </Box>
                         </Box>
-                    </Box>
+                    </DialogContent>
                     <DialogActions>
                         <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
                             <Buttons onClick={handleClose} >Close</Buttons>

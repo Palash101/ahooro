@@ -31,10 +31,10 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### How to Deploy on Gcloud app engine
 
-1. First build project using npm run build
+1. First build project using `npm run build`
 2. Then create new folder and copy paste build folder in it
 3. create app.yaml file
-4. run gcloud app deploy
+4. run `gcloud app deploy`
 
 
 ### Folder Structre after build

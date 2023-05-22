@@ -42,3 +42,14 @@ Folder Structre after build
     app.yaml
 
 
+```
+runtime: nodejs16
+handlers:
+  - url: /
+    static_files: build/index.html
+    upload: build/index.html
+  - url: /(.*)$
+    static_files: build/\1
+    upload: build/(.*)
+
+```

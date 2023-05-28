@@ -11,6 +11,7 @@ import Snackbar from '@mui/material/Snackbar';
 import PrivacyPolicy from '../component/Modal/privacyPolicy'
 import { createLead } from '../controller/AuthController'
 import PageLoader from '../component/pageLoader'
+import CookieBot from 'react-cookiebot'
 
 export default function Home() {
     const [phone, setPhone] = useState("")
@@ -303,6 +304,7 @@ export default function Home() {
                     </Box>
                 </Box> */}
                 <PrivacyPolicy open={open} setOpen={setOpen} />
+                <CookieBot domainGroupId='6be1ca9c-e0da-4b9c-8ace-c65228feaf1b' />
             </Box >
             <Snackbar
                 open={alert}

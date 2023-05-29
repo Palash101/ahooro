@@ -147,7 +147,6 @@ export default function NavBar(props) {
                     </Box>
                 </Drawer>
             </Box> */}
-            <Toolbar />
         </>
     )
 }

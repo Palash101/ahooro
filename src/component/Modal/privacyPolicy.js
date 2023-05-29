@@ -47,52 +47,37 @@ export default function PrivacyPolicy({ open, setOpen, scroll }) {
                             overflow: "hidden",
                             boxSizing: "border-box",
                             background: "white",
-                            p: 2
+                            py: 2,
+                            px: { md: "100px", xs: 2 }
                         }}>
-                            <Box sx={{ overflowY: "auto", height: "90%" }}>
-                                <Typography variant='body2'>Plantilla de Política de Privacidad</Typography>
-                                <Typography variant='body2'>TITULAR te informa sobre su Política de Privacidad respecto del tratamiento y protección de los datos de carácter personal de los usuarios y clientes que puedan ser recabados por la navegación o contratación de servicios a través del sitio Web DIRECCIÓN-WEB.</Typography>
-                                <Typography variant='body2'>En este sentido, el Titular garantiza el cumplimiento de la normativa vigente en materia de protección de datos personales, reflejada en la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y de Garantía de Derechos Digitales (LOPD GDD). Cumple también con el Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo de 27 de abril de 2016 relativo a la protección de las personas físicas (RGPD).</Typography>
-                                <Typography variant='body2'>El uso de sitio Web implica la aceptación de esta Política de Privacidad así como las condiciones incluidas en el Aviso Legal.</Typography>
+                            <Box component="ul" sx={{ overflowY: "auto", height: "90%", listStyle: "decimal" }}>
+                                <Box component="li" sx={{ fontWeight: 700, py: 1 }}>Plantilla de Política de Privacidad</Box>
+                                <Typography>La siguiente información sobre nuestra Política de Privacidad refleja el compromiso de ALTEL COMUNICACIONES XXI SL, (en adelante HARTODEPAGAR), como responsable del tratamiento, por mantener y garantizar relaciones comerciales seguras mediante la protección de los datos personales, garantizando el derecho a la privacidad de cada uno de los usuarios de nuestros servicios. En este documento explicamos cómo utilizamos los datos personales durante el uso de nuestros servicios.</Typography>
+                                <Box component="li" sx={{ fontWeight: 700, py: 1 }}>Definición de dato personal</Box>
+                                <Typography>Como "Dato Personal" debemos entender cualquier información concerniente a una persona física identificada o identificable. Entre otros, se incluyen el nombre, apellidos, la dirección postal y electrónica, así como el número de teléfono.</Typography>
+                                <Box component="li" sx={{ fontWeight: 700, py: 1 }}>Tratamientos y finalidades de los datos recogidos</Box>
+                                <Typography>Cualquier dato personal que nos facilite al visitar nuestro portal web será tratado de conformidad con las normas de protección de datos y sólo serán recogidos, tratados y utilizados para fines lícitos, legítimos e informados. Por ello, detallamos todas las finalidades con las que ALTEL COMUNICACIONES XXI SL utiliza datos personales:</Typography>
                                 <Box component="ul">
-                                    <Box component="li">
-                                        Identidad del responsable</Box>
-                                    <Box component="li">
-                                        Titular: TITULAR
-                                    </Box>
-                                    <Box component="li">
-                                        DATOS-DEL-COLEGIO-PROFESIONAL
-                                    </Box>
-                                    <Box component="li">
-                                        NIF/CIF: NIF
-                                    </Box>
-                                    <Box component="li">
-                                        Domicilio: DIRECCIÓN-POSTAL
-                                    </Box>
-                                    <Box component="li">
-                                        Correo electrónico: CORREO-ELECTRÓNICO
-                                    </Box>
-                                    <Box component="li">
-                                        Sitio Web: DIRECCIÓN-WEB
-                                    </Box>
+                                    <Box sx={{ listStyle: "none", fontWeight: 700, py: 1 }} component="li">- Por el envío de formularios de contacto o correos electrónicos:</Box>
                                 </Box>
-                                <Typography variant='body2'>Principios aplicados en el tratamiento de datos</Typography>
-                                <Typography variant='body2'>En el tratamiento de tus datos personales, el Titular aplicará los siguientes principios que se ajustan a las exigencias del nuevo reglamento europeo de protección de datos:</Typography>
-                                <Typography variant='body2'>Plantilla de Política de Privacidad</Typography>
-                                <Box component="ul">
-                                    <Box component="li">Principio de licitud, lealtad y transparencia: El Titular siempre requerirá el consentimiento para el tratamiento de tus datos personales que puede ser para uno o varios fines específicos sobre los que te informará previamente con absoluta transparencia.</Box>
-                                    <Box component="li">Principio de minimización de datos: El Titular te solicitará solo los datos estrictamente necesarios para el fin o los fines que los solicita.</Box>
-                                    <Box component="li">Principio de limitación del plazo de conservación: Los datos se mantendrán durante el tiempo estrictamente necesario para el fin o los fines del tratamiento.El Titular te informará del plazo de conservación correspondiente según la finalidad. En el caso de suscripciones, el Titular revisará periódicamente las listas y eliminará aquellos registros inactivos durante un tiempo considerable.</Box>
-                                    <Box component="li">Principio de integridad y confidencialidad: Tus datos serán tratados de tal manera que su seguridad, confidencialidad e integridad esté garantizada. Debes saber que el Titular toma las precauciones necesarias para evitar el acceso no autorizado o uso indebido de los datos de sus usuarios por parte de terceros.</Box>
+                                <Box sx={{ listStyle: "disc", pb: 1 }} component="ul">
+                                    <Box component="li">Finalidad: Poder responder a las consultas planteadas y ponerse en contacto con el usuario para remitirle información comercial sobre tarifas de servicios de telefonía y conexión a internet.</Box>
+                                    <Box component="li">Legitimación: La base legítima con la que se tratarán los datos reside en la ejecución de las medidas precontractuales solicitadas y/o el consentimiento prestado.</Box>
+                                    <Box component="li">Plazos de conservación: Los datos serán conservados durante el tiempo necesario para responder a las cuestiones planteadas, durante un plazo máximo de un año para aquellos supuestos que no deriven en una acción comercial.</Box>
                                 </Box>
-                                <Typography variant='body2'>Obtención de datos personales</Typography>
-                                <Typography variant='body2'>Para navegar por SITIO-WEB no es necesario que facilites ningún dato personal. Los casos en los que sí proporcionas tus datos personales son los siguientes:</Typography>
-                                <Typography variant='body2'>ELIMINA LOS QUE NO USES:</Typography>
-                                <Box component="ul">
-                                    <Box component="li">Al contactar a través de los formularios de contacto o enviar un correo electrónico.</Box>
-                                    <Box component="li">Al realizar un comentario en un artículo o página.</Box>
-                                    <Box component="li">Al inscribirte en un formulario de suscripción o un boletín que el Titular gestion</Box>
-                                </Box>
+                                <Typography pb={1}>Desde HARTODEPAGAR informaremos a todos los usuarios el carácter no obligatorio de la recogida de determinados datos de carácter personal, salvo en los campos que se indique lo contrario. No obstante, la no cumplimentación de dichos datos podrá impedir a HARTODEPAGAR prestar todos aquellos Servicios vinculados a tales datos, liberándonos de toda responsabilidad por la no prestación o prestación incompleta de estos Servicios.</Typography>
+                                <Typography pb={1}>Corresponde al usuario la obligación de facilitar los datos de manera veraz y mantenerlos actualizados, por lo que HARTODEPAGAR se reserva el derecho de excluir de los servicios y proceder a la cancelación del servicio a todo usuario que haya facilitado datos falsos, sin perjuicio de las demás acciones que procedan en Derecho.Sus datos personales NO serán comunicados a ninguna otra empresa. En el caso de que fuera necesario comunicar su información a otra entidad, se solicitaría su consentimiento expreso antes de realizar la comunicación.</Typography>
+                                <Box component="li" sx={{ fontWeight: 700, py: 1 }}>Seguridad de sus datos personales</Box>
+                                <Typography>HARTODEPAGAR tiene una preocupación especial por garantizar la seguridad de sus datos personales. Sus datos son almacenados en nuestros sistemas de información, donde hemos adoptado e implantado medidas de seguridad, técnicas y organizativas, para prevenir cualquier pérdida o uso no autorizado por terceros, por ejemplo nuestros portales web utilizan protocolos de cifrado de datos Https.</Typography>
+                                <Box component="li" sx={{ fontWeight: 700, py: 1 }}>Información sobre la Utilización de cookies</Box>
+                                <Typography>Por el mero hecho de visitar el presente portal web o utilizar los servicios de HARTODEPAGAR no queda registrado de forma automática ningún dato de carácter personal que identifique a un Usuario. También le informamos que durante la navegación por el Sitio Web no se utilizan cookies o tecnologías similares.</Typography>
+                                <Box component="li" sx={{ fontWeight: 700, py: 1 }}>Derechos de los usuarios. </Box>
+                                <Typography>Todos los usuarios pueden ejercitar cualquier de los derechos otorgados por la normativa de protección de datos, como el derecho de acceso, rectificación, limitación del tratamiento, supresión, portabilidad de datos y oposición que le asisten mediante escrito dirigido a la dirección electrónica a nuestro delegado de protección de datos info@hartodepagar.com. Y en el caso de que lo estime oportuno podrá presentar reclamación ante la Agencia Española de Protección.</Typography>
+                                <Box component="li" sx={{ fontWeight: 700, py: 1 }}>¿No desea recibir información de nosotros o desea revocar su consentimiento?</Box>
+                                <Typography>Cualquier usuario puede oponerse al uso de su información para fines publicitarios, investigaciones de mercado o desarrollo de encuestas de satisfacción, así como revocar su consentimiento en cualquier momento (sin efecto retroactivo). Para ello, deberá enviar un correo electrónico a la dirección info@hartodepagar.com.  Cuando reciba publicidad por correo electrónico, también podrá oponer desde dicho correo electrónico, pinchando en el enlace incluido en el mismo y siguiendo las instrucciones que le sean facilitadas. </Typography>
+                                <Box component="li" sx={{ fontWeight: 700, py: 1 }}>Cambios a la Política de Privacidad.</Box>
+                                <Typography>Nuestra Política de Privacidad podrá sufrir actualizaciones, debidas a cambios y necesidades legales, así como debidas a mejoras y cambios incluidos en la forma de ofrecer y prestar nuestros servicios. Por ello, le recomendamos que visite y acceda a nuestra Política de Privacidad periódicamente, para poder tener acceso y conocer los últimos cambios que hayan podido ser incorporados. En caso de que dichos cambios guarden relación con el consentimiento prestado por el usuario, en tal caso le será enviada una notificación independiente y por separado para recavarlo nuevamente.</Typography>
+                                <Typography>Si durante la lectura le ha surgido alguna duda o cuestión sobre nuestra Política de Privacidad o quiere ejercitar algún derecho o acción relativa a sus datos personales, por favor póngase en contacto con nosotros en la siguiente dirección de correo electrónico info@hartodepagar.com.</Typography>
                             </Box>
                         </Box>
                     </Box>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import NavBar from '../component/NavBar'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -7,15 +7,19 @@ import Typography from '@mui/material/Typography'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import Buttons from '../component/Button'
+import { Button } from '@mui/material'
 import Snackbar from '@mui/material/Snackbar';
 import PrivacyPolicy from '../component/Modal/privacyPolicy'
 import { createLead } from '../controller/AuthController'
 import PageLoader from '../component/pageLoader'
 import CookieBot from 'react-cookiebot'
-
+import LegalWarning from '../component/Modal/legalWarning'
+import CookiesPolicy from '../component/Modal/cookiesPolicy'
 export default function Home() {
     const [phone, setPhone] = useState("")
     const [open, setOpen] = useState(false);
+    const [open2, setOpen2] = useState(false);
+    const [open3, setOpen3] = useState(false);
     const [alert, setAlert] = useState(false)
     const [loading, setLoading] = useState(false)
     const [checked, setChecked] = useState(false);
@@ -85,43 +89,47 @@ export default function Home() {
     return (
         <>
             <NavBar />
-            <Box>
+            <Box sx={{ height: "100vh", overflow: "hidden" }}>
                 {/* Section1 */}
                 <Box sx={{
-                    background: "linear-gradient(45deg, #82C5B6, #FBFAE1)"
+                    background: "linear-gradient(45deg, #82C5B6, #FBFAE1)",
+                    height: "100%",
                 }}>
                     <Box sx={{
-                        p: { md: "150px", xs: 1 },
-                        backgroundImage: { md: "url('assets/image/Banner.png')", xs: 'none' },
+                        p: { md: "80px", xs: 1 },
+                        backgroundImage: { md: "url('assets/image/facturon.png')", xs: 'none' },
                         backgroundRepeat: "no-repeat",
                         backgroundSize: "70%",
-                        backgroundPositionX: "right",
-                        backgroundPositionY: "150px",
-                        height: { md: "900px", xs: "auto" }
+                        backgroundPositionX: "left",
+                        backgroundPositionY: "bottom",
+                        height: "100%",
+
                     }}>
                         <Grid container>
-                            <Grid item xs={12} md={7} sx={{ textAlign: { xs: "center", md: "left" } }}>
-                                <Typography sx={{ fontSize: "54px", fontWeight: 900, color: "#091C06", mb: 3 }} variant='h3'>¿Harto de pagar tanto en la factura de teléfono?</Typography>
-                                <Typography sx={{ fontSize: "20px", fontWeight: 600, color: "#091C06", mb: 3 }} variant='h6'>Te hacemos la mejor oferta de telefonía de todo el mercado. Te llamamos ahora mismo y en 15 minutos estarás pagando mucho menos de lo que pagas ahora.</Typography>
+                            <Grid item xs={12} md={6}></Grid>
+                            <Grid item xs={12} md={6} sx={{ textAlign: { xs: "center", md: "left" }, pt: {md:"4vh",xs:"70px"} }}>
+                                <Typography sx={{ fontSize: { md: "3vw", xs: "20px" }, fontWeight: 900, color: "#091C06", mb: 3 }} variant='h3'>¿Harto de pagar tanto en la factura de teléfono?</Typography>
+                                <Typography sx={{ fontSize: { md: "1vw", xs: "15px" }, fontWeight: 600, color: "#091C06", mb: 3, pr: { md: "18vw", xs: 0 } }} variant='h6'>Te hacemos la mejor oferta de telefonía de todo el mercado. Te llamamos ahora mismo y en 15 minutos estarás pagando mucho menos de lo que pagas ahora.</Typography>
                             </Grid>
                         </Grid>
                         <Grid container>
+                            <Grid item xs={12} md={6}></Grid>
                             <Grid item xs={12} md={6}>
-                                <Grid rowGap={1} container>
-                                    <Grid item xs={12} md={6}>
+                                <Grid rowGap={1} sx={{ pr: { md: "15vw", xs: 0 } }} container>
+                                    <Grid item xs={12} md={7}>
                                         <Box sx={{ px: 1, height: "100%" }}>
                                             <TextField
                                                 fullWidth
                                                 sx={{ backgroundColor: "white" }}
                                                 required
-                                                size="small"
                                                 type='phone'
+                                                size='small'
                                                 value={phone}
                                                 onChange={(e) => setPhone(e.target.value)}
                                             />
                                         </Box>
                                     </Grid>
-                                    <Grid item xs={12} md={6}>
+                                    <Grid item xs={12} md={5}>
                                         <Box sx={{ px: 1, height: "100%" }}>
                                             <Buttons
                                                 onClick={SavedData}
@@ -137,7 +145,7 @@ export default function Home() {
                                     <FormControlLabel sx={{ ml: 0 }} control={
                                         <Checkbox checked={checked} onChange={handleChange} />} />
                                     <Box>
-                                        <Box sx={{ fontSize: "14px", color: "#7E868E", }}>Acepto la <Box component="span" onClick={() => setOpen(true)} sx={{ color: "blue", cursor: "pointer" }}>política de privacidad</Box> y doy mis datos para que me contacte la empresa XXXXX</Box></Box>
+                                        <Box sx={{ fontSize: "12px", color: "#7E868E", }}>Acepto los términos del <Box component="span" onClick={() => setOpen2(true)} sx={{ cursor: "pointer", color: "blue" }}>Aviso legaly</Box> de la <Box onClick={() => setOpen(true)} component="span" sx={{ cursor: "pointer", color: "blue" }}>Política de Privacidad</Box>para que ALTEL COMUNICACIONES XXI, SL trate mis datos con la finalidad de gestionar mi solicitud de información y recibir comunicaciones comerciales. También quedo informado que podré ejercitar los derechos que otorga la normativa de protección de datos siguiendo lo establecido en la política de privacidad.</Box></Box>
                                 </Box>
                             </Grid>
                         </Grid>
@@ -288,22 +296,27 @@ export default function Home() {
                     }}></Box>
                 </Box> */}
                 {/* Section4 */}
-                {/* <Box sx={{
+                <Box sx={{
                     background: "linear-gradient(45deg, #82C5B6, #FBFAE1)",
-                    p: 2
+                    p: 1,
+                    position: "fixed",
+                    width: "100%",
+                    bottom: 0,
                 }}>
-                    <Box sx={{ width: { md: "25%", xs: "100%" }, mx: "auto", mb: 2 }}>
+                    <Box sx={{ width: { md: "35%", xs: "100%" }, mx: "auto", mb: 2 }}>
                         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                            <Button sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Quienes somos</Button>
-                            <Button sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Aviso Legal</Button>
+                            <Button onClick={() => setOpen2(true)} sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Aviso Legal</Button>
                             <Button onClick={() => setOpen(true)} sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Política de Privacidad</Button>
+                            <Button onClick={() => setOpen3(true)} sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Política de Cookies</Button>
                         </Box>
                     </Box>
                     <Box sx={{ textAlign: "center" }}>
                         <Typography sx={{ fontSize: "12px" }}>© dominio.com, 2021 | o el año que sea y algunos datos legales o fiscales para engañar</Typography>
                     </Box>
-                </Box> */}
+                </Box>
                 <PrivacyPolicy open={open} setOpen={setOpen} />
+                <LegalWarning open={open2} setOpen={setOpen2} />
+                <CookiesPolicy open={open3} setOpen={setOpen3} />
                 <CookieBot domainGroupId='6be1ca9c-e0da-4b9c-8ace-c65228feaf1b' />
             </Box >
             <Snackbar

@@ -160,7 +160,7 @@ function UploadData() {
                                 background: "linear-gradient(265.77deg, #005280 -6.06%, #0D816C 108.54%);"
                             }} variant="extended">
                             <AddIcon sx={{ mr: 1 }} />
-                            Add Number
+                            Añadir número
                         </Fab>
                         <Box sx={{
                             width: { md: "40%", xs: "90%" },
@@ -189,7 +189,7 @@ function UploadData() {
                                                 <StyledInputBase
                                                     type='search'
                                                     name='Search'
-                                                    placeholder='Enter phone number'
+                                                    placeholder='Introduce número de teléfono'
                                                     onChange={(e) => setSearch(e.target.value)}
                                                     onKeyDown={handleKeyDown}
                                                 />

@@ -58,22 +58,42 @@ export const createLead = async (data) => {
     }
 }
 
+// export const SearchDoc = async (search) => {
+//     console.log(search, 'search')
+//     const ref = collection(db, "users")
+//     const q = query(ref, where('phone', '==', search))
+//     const querySnapshot = await getDocs(q);
+//     let data = []
+//     querySnapshot.forEach((doc) => {
+//         data.push(doc.data());
+//     });
+//     // console.log(data, 'data added')
+//     if (data.length) {
+//         return { success: true, data: data }
+//     }
+//     else {
+//         return { success: false }
+//     }
+
+// }
+
 export const SearchDoc = async (search) => {
-    console.log(search, 'search')
-    const ref = collection(db, "users")
-    const q = query(ref, where('phone', '==', search))
-    const querySnapshot = await getDocs(q);
-    let data = []
-    querySnapshot.forEach((doc) => {
-        data.push(doc.data());
-    });
-    // console.log(data, 'data added')
-    if (data.length) {
-        return { success: true, data: data }
-    }
-    else {
+    const url = 'https://europe-west3-authconfigurator.cloudfunctions.net/search?phone='+search
+    return fetch(url,{
+        method:"GET"
+    })
+    .then((res)=>res.json())
+    .then((data)=>{
+        if(data.length){
+            return { success: true, data: data }
+        }
+        else{
+            return { success: false }
+        }
+    })
+    .catch((err)=>{
         return { success: false }
-    }
+    })
 
 }
 

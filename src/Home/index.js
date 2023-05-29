@@ -3,6 +3,8 @@ import NavBar from '../component/NavBar'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
+import InputAdornment from '@mui/material/InputAdornment'
+import PhoneIcon from '@mui/icons-material/Phone';
 import Typography from '@mui/material/Typography'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
@@ -24,7 +26,6 @@ export default function Home() {
     const [loading, setLoading] = useState(false)
     const [checked, setChecked] = useState(false);
     const [checkedMsg, setCheckedMsg] = useState("")
-
     const getLocation = (ip) => {
         return fetch(`https://ipapi.co/${ip}/json/`, {
             method: "GET",
@@ -62,7 +63,7 @@ export default function Home() {
                         console.log(result, "lead")
                         if (result.success) {
                             setLoading(false)
-                            setCheckedMsg("subido con éxito")
+                            setCheckedMsg("Pronto, nos ponemos en contácto con usted")
                             setAlert(true)
                             setPhone("")
                             setChecked(false)
@@ -107,9 +108,9 @@ export default function Home() {
                     }}>
                         <Grid container>
                             <Grid item xs={12} md={6}></Grid>
-                            <Grid item xs={12} md={6} sx={{ textAlign: { xs: "center", md: "left" }, pt: {md:"4vh",xs:"70px"} }}>
+                            <Grid item xs={12} md={6} sx={{ textAlign: { xs: "center", md: "left" }, pt: { md: "4vh", xs: "70px" } }}>
                                 <Typography sx={{ fontSize: { md: "3vw", xs: "20px" }, fontWeight: 900, color: "#091C06", mb: 3 }} variant='h3'>¿Harto de pagar tanto en la factura de teléfono?</Typography>
-                                <Typography sx={{ fontSize: { md: "1vw", xs: "15px" }, fontWeight: 600, color: "#091C06", mb: 3, pr: { md: "18vw", xs: 0 } }} variant='h6'>Te hacemos la mejor oferta de telefonía de todo el mercado. Te llamamos ahora mismo y en 15 minutos estarás pagando mucho menos de lo que pagas ahora.</Typography>
+                                <Typography sx={{ fontSize: { md: "1vw", xs: "15px" }, fontWeight: 600, color: "#091C06", mb: 3, pr: { md: "12vw", xs: 0 } }} variant='h6'>Te hacemos la mejor oferta de telefonía de todo el mercado. Te llamamos ahora mismo y en 15 minutos estarás pagando mucho menos de lo que pagas ahora.</Typography>
                             </Grid>
                         </Grid>
                         <Grid container>
@@ -122,8 +123,16 @@ export default function Home() {
                                                 fullWidth
                                                 sx={{ backgroundColor: "white" }}
                                                 required
+                                                placeholder='Mi teléfono'
                                                 type='phone'
                                                 size='small'
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">
+                                                            <PhoneIcon sx={{ fontSize: "18px" }} />
+                                                        </InputAdornment>
+                                                    )
+                                                }}
                                                 value={phone}
                                                 onChange={(e) => setPhone(e.target.value)}
                                             />
@@ -145,7 +154,7 @@ export default function Home() {
                                     <FormControlLabel sx={{ ml: 0 }} control={
                                         <Checkbox checked={checked} onChange={handleChange} />} />
                                     <Box>
-                                        <Box sx={{ fontSize: "12px", color: "#7E868E", }}>Acepto los términos del <Box component="span" onClick={() => setOpen2(true)} sx={{ cursor: "pointer", color: "blue" }}>Aviso legaly</Box> de la <Box onClick={() => setOpen(true)} component="span" sx={{ cursor: "pointer", color: "blue" }}>Política de Privacidad</Box>para que ALTEL COMUNICACIONES XXI, SL trate mis datos con la finalidad de gestionar mi solicitud de información y recibir comunicaciones comerciales. También quedo informado que podré ejercitar los derechos que otorga la normativa de protección de datos siguiendo lo establecido en la política de privacidad.</Box></Box>
+                                        <Box sx={{ fontSize: "12px", color: "#7E868E", fontWeight: 500 }}>Acepto los términos del <Box component="span" onClick={() => setOpen2(true)} sx={{ cursor: "pointer", color: "blue", fontWeight: 600 }}>Aviso legaly</Box> de la <Box onClick={() => setOpen(true)} component="span" sx={{ cursor: "pointer", color: "blue", fontWeight: 600 }}>Política de Privacidad</Box> para que ALTEL COMUNICACIONES XXI, SL trate mis datos con la finalidad de gestionar mi solicitud de información y recibir comunicaciones comerciales. También quedo informado que podré ejercitar los derechos que otorga la normativa de protección de datos siguiendo lo establecido en la política de privacidad.</Box></Box>
                                 </Box>
                             </Grid>
                         </Grid>
@@ -311,7 +320,7 @@ export default function Home() {
                         </Box>
                     </Box>
                     <Box sx={{ textAlign: "center" }}>
-                        <Typography sx={{ fontSize: "12px" }}>© dominio.com, 2021 | o el año que sea y algunos datos legales o fiscales para engañar</Typography>
+                        <Typography sx={{ fontSize: "12px" }}>ALTEL COMUNICACIONES XXI SL © {new Date().getFullYear()}</Typography>
                     </Box>
                 </Box>
                 <PrivacyPolicy open={open} setOpen={setOpen} />

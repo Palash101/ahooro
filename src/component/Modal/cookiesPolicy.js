@@ -109,7 +109,7 @@ export default function CookiesPolicy({ open, setOpen, scroll }) {
                 </DialogContent>
                 <DialogActions>
                     <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                        <Buttons onClick={handleClose} >Close</Buttons>
+                        <Buttons onClick={handleClose} >CERRAR??</Buttons>
                     </Box>
                 </DialogActions>
             </Dialog>

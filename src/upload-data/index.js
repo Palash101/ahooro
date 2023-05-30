@@ -179,7 +179,7 @@ function UploadData() {
                                         marginBottom: 2,
                                     }}>
                                         <Box>
-                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono</Typography>
+                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono”</Typography>
                                             <Box sx={{
                                                 border: "1px solid black",
                                                 borderRadius: "8px",
@@ -189,7 +189,7 @@ function UploadData() {
                                                 <StyledInputBase
                                                     type='search'
                                                     name='Search'
-                                                    placeholder='Introduce número de teléfono'
+                                                    placeholder='Introduce número de teléfono”'
                                                     onChange={(e) => setSearch(e.target.value)}
                                                     onKeyDown={handleKeyDown}
                                                 />

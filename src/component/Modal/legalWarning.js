@@ -107,7 +107,7 @@ export default function LegalWarning({ open, setOpen, scroll }) {
                 </DialogContent>
                 <DialogActions>
                     <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                        <Buttons onClick={handleClose} >CERRAR??</Buttons>
+                        <Buttons onClick={handleClose} >CERRAR</Buttons>
                     </Box>
                 </DialogActions>
             </Dialog>

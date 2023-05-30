@@ -150,8 +150,8 @@ export default function Home() {
                                         </Box>
                                     </Grid>
                                 </Grid>
-                                <Box sx={{ display: "flex", maxWidth: "500px", mt: 2 }}>
-                                    <FormControlLabel sx={{ ml: 0 }} control={
+                                <Box sx={{ display: "flex", alignItems: "flex-start", maxWidth: "500px", mt: 2 }}>
+                                    <FormControlLabel sx={{ ml: 0, " & .MuiCheckbox-root": { p: 0 } }} control={
                                         <Checkbox checked={checked} onChange={handleChange} />} />
                                     <Box>
                                         <Box sx={{ fontSize: "12px", color: "#7E868E", fontWeight: 500 }}>Acepto los términos del <Box component="span" onClick={() => setOpen2(true)} sx={{ cursor: "pointer", color: "blue", fontWeight: 600 }}>Aviso legaly</Box> de la <Box onClick={() => setOpen(true)} component="span" sx={{ cursor: "pointer", color: "blue", fontWeight: 600 }}>Política de Privacidad</Box> para que ALTEL COMUNICACIONES XXI, SL trate mis datos con la finalidad de gestionar mi solicitud de información y recibir comunicaciones comerciales. También quedo informado que podré ejercitar los derechos que otorga la normativa de protección de datos siguiendo lo establecido en la política de privacidad.</Box></Box>

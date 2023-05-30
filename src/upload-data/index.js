@@ -87,7 +87,7 @@ function UploadData() {
         formData.append('file', file);
         if (file) {
             setLoading(true)
-            fetch('https://us-central1-ahoraahorro-7ac91.cloudfunctions.net/function-1', {
+            fetch('https://europe-west3-authconfigurator.cloudfunctions.net/function-1', {
                 method: "POST",
                 body: formData,
                 headers: {

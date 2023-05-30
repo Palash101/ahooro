@@ -45,17 +45,31 @@ export const UserEmailLogin = async (loginEmail, loginPassword) => {
     }
 }
 
+// export const createLead = async (data) => {
+//     console.log(data, 'auth')
+//     try {
+//         const ref = await addDoc(collection(db, "users"), data)
+//         console.log(ref, 'data added')
+//         return { success: true, ref }
+//     }
+//     catch (err) {
+//         console.log(err, 'error')
+//         return { success: false, err: err }
+//     }
+// }
+
 export const createLead = async (data) => {
-    console.log(data, 'auth')
-    try {
-        const ref = await addDoc(collection(db, "users"), data)
-        console.log(ref, 'data added')
-        return { success: true, ref }
-    }
-    catch (err) {
-        console.log(err, 'error')
-        return { success: false, err: err }
-    }
+    return fetch('https://europe-west3-authconfigurator.cloudfunctions.net/one_number ',{
+        method:"POST",
+        body:JSON.stringify(data)
+    })
+    .then((res)=>{res.json()})
+    .then((data)=>{
+        return { success: true }
+    })
+    .catch((err)=>{
+        return {success:false}
+    })
 }
 
 // export const SearchDoc = async (search) => {

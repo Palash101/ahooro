@@ -32,36 +32,22 @@ export default function AddNumber({ addModalOpen, setAddModalOpen }) {
     const SavedData = async () => {
         if (phone) {
             setLoading(true)
-            fetch('https://api.ipify.org?format=json', {
-                method: "GET",
-                headers: {
-                }
-            })
-                .then((res) => res.json())
-                .then(async (data) => {
-                    const { city, region } = await getLocation(data.ip)
-                    console.log(region, "loc")
-                    const ts = new Date();
+            const ts = new Date();
 
-                    const d = {
-                        ip: data.ip,
-                        phone: phone,
-                        timeStamp: ts,
-                        city: city,
-                        region: region
-                    }
-                    const result = await createLead(d)
-                    if (result.success) {
-                        setLoading(false)
-                        setCheckedMsg("subido con éxito")
-                        setAlert(true)
-                        setPhone("")
-                        setAddModalOpen(false);
-                    }
-                    else {
-                        setLoading(false)
-                    }
-                })
+            const d = {
+                phone: phone,
+            }
+            const result = await createLead(d)
+            if (result.success) {
+                setLoading(false)
+                setCheckedMsg("subido con éxito")
+                setAlert(true)
+                setPhone("")
+                setAddModalOpen(false);
+            }
+            else {
+                setLoading(false)
+            }
         }
         else {
             setCheckedMsg("Por favor ingrese un número de teléfono válido")
@@ -117,7 +103,7 @@ export default function AddNumber({ addModalOpen, setAddModalOpen }) {
                             <TextField
                                 size='small'
                                 type='number'
-                                placeholder='Add a new number'
+                                placeholder='Agregar un nuevo número'
                                 onChange={(e) => setPhone(e.target.value)}
                             />
                         </Box>

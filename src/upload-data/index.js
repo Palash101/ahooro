@@ -58,6 +58,7 @@ function UploadData() {
     console.log("file: ", file);
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
+
     const handleChange = event => {
         setFile(event.target.files[0]);
     };
@@ -87,7 +88,7 @@ function UploadData() {
         formData.append('file', file);
         if (file) {
             setLoading(true)
-            fetch('https://europe-west3-authconfigurator.cloudfunctions.net/function-1', {
+            fetch('https://europe-west3-authconfigurator.cloudfunctions.net/slicer', {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -212,7 +213,7 @@ function UploadData() {
                             }}>
                                 <img src="/assets/image/cloudUpload.png" alt='file' width="80px" />
                                 <Buttons sx={{ position: "relative", width: "60%" }} variant='contained'>
-                                    <input accept=".csv,.xls,.xlsx"
+                                    <input accept=".csv"
                                         style={{
                                             position: "absolute",
                                             top: 0,
@@ -240,7 +241,10 @@ function UploadData() {
                                     <Typography sx={{ fontSize: "15px", color: "red" }}>Elige un archivo</Typography>
                                 }
                                 <Typography sx={{ fontSize: "15px" }}>o arrastra y suéltalos aquí</Typography>
-                                <Typography sx={{ fontSize: "15px", fontWeight: 600 }}>.csv or .xlsx</Typography>
+                                <Typography sx={{ fontSize: "15px", fontWeight: 600 }}>.csv </Typography>
+                            </Box>
+                            <Box>
+                                <Typography sx={{fontSize:"12px"}}>El límite es de 50.000 números</Typography>
                             </Box>
                             <Box sx={{
                                 display: "flex",

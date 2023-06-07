@@ -17,6 +17,8 @@ import PageLoader from '../component/pageLoader'
 import CookieBot from 'react-cookiebot'
 import LegalWarning from '../component/Modal/legalWarning'
 import CookiesPolicy from '../component/Modal/cookiesPolicy'
+import { useNavigate } from 'react-router-dom'
+
 export default function Home() {
     const [phone, setPhone] = useState("")
     const [open, setOpen] = useState(false);
@@ -26,6 +28,8 @@ export default function Home() {
     const [loading, setLoading] = useState(false)
     const [checked, setChecked] = useState(false);
     const [checkedMsg, setCheckedMsg] = useState("")
+
+    const navigate = useNavigate()
     const getLocation = (ip) => {
         return fetch(`https://ipapi.co/${ip}/json/`, {
             method: "GET",
@@ -316,7 +320,7 @@ export default function Home() {
                         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                             <Button onClick={() => setOpen2(true)} sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Aviso Legal</Button>
                             <Button onClick={() => setOpen(true)} sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Política de Privacidad</Button>
-                            <Button onClick={() => setOpen3(true)} sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Política de Cookies</Button>
+                            <Button onClick={() => navigate("/politicadecookies")} sx={{ color: "black", textTransform: "none", fontSize: "12px" }} variant='text'>Política de Cookies</Button>
                         </Box>
                     </Box>
                     <Box sx={{ textAlign: "center" }}>

@@ -18,7 +18,7 @@ import {
 // import ProjectEdit from "../screens/user/project/edit";
 // import SignIn from "../sign-in";
 import Home from "../Home";
-// import UploadData from "../upload-data";
+import PoliticaDeCookies from "../politicadecookies";
 
 const PrivateRoutes = () => {
   const user = localStorage.getItem("user");
@@ -45,7 +45,7 @@ const AppRoutes = () => {
         {/* <Route exact path="/sign-in" element={<SignIn />} /> */}
         <Route exact path="/" element={<Home />} />
         <Route element={<PrivateRoutes />}>
-          {/* <Route exact path="/upload-data" element={<UploadData />} /> */}
+          <Route exact path="/politicadecookies" element={<PoliticaDeCookies />} />
         </Route>
       </Routes>
     </BrowserRouter>

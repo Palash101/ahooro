@@ -17,7 +17,43 @@ import PageLoader from '../component/pageLoader';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import AddNumber from '../component/Modal/addNumber';
+import { CircularProgress } from '@mui/material';
 
+
+function CircularProgressWithLabel(props) {
+    return (
+        <Box sx={{
+            position:'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            backgroundColor: '#00000085',
+            display: 'flex',
+            justifyContent: 'center',
+            zIndex: 9999}}>
+                <Box sx={{ position: 'relative', display: 'inline-flex',margin:'auto' }}>
+                    <CircularProgress variant="determinate" {...props} size={80} />
+                    <Box
+                    sx={{
+                        top: 0,
+                        left: 0,
+                        bottom: 0,
+                        right: 0,
+                        position: 'absolute',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                    >
+                    <Typography variant="caption" component="div" sx={{color: '#fff',fontSize: '18px'}}>
+                        {`${Math.round(props.value)}%`}
+                    </Typography>
+                    </Box>
+                </Box>
+        </Box>
+    );
+  }
 
 const Search = styled('div')(() => ({
     position: 'relative',
@@ -58,6 +94,7 @@ function UploadData() {
     console.log("file: ", file);
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
+    const [progress, setProgress] = useState(0)
 
     const handleChange = event => {
         setFile(event.target.files[0]);
@@ -87,6 +124,7 @@ function UploadData() {
         const formData = new FormData()
         formData.append('file', file);
         if (file) {
+            const interval = setInterval(startInterval,1200)
             setLoading(true)
             fetch('https://europe-west3-authconfigurator.cloudfunctions.net/slicer', {
                 method: "POST",
@@ -99,8 +137,10 @@ function UploadData() {
                     if (data) {
                         setMassage("Documento cargado exitosamente")
                         setOpen(true);
+                        stopInterval(interval)
                         setLoading(false)
                     }
+                    stopInterval(interval)
                     console.log(data)
                     setFile(undefined)
                 })
@@ -112,6 +152,20 @@ function UploadData() {
         }
 
     }
+
+
+    function startInterval() {
+        setProgress((prevProgress) => (prevProgress >= 99 ? 0 : prevProgress + 1));
+    
+  }
+  
+  function stopInterval(interval) {
+    setProgress(100);
+    setTimeout(()=> {
+        clearInterval(interval);
+    },1000)
+   
+  }
 
     const handleClose = (reason) => {
         setOpen(false);
@@ -137,6 +191,15 @@ function UploadData() {
     );
     return (
         <>
+
+            {(loading === true && progress > 0 && progress < 100) ? 
+                <CircularProgressWithLabel value={progress} />
+                :
+                <></>
+            }
+           
+
+
             <Box sx={{ height: "97vh", p: 1 }}>
                 <Box sx={{
                     borderRadius: "12px",
@@ -288,7 +351,7 @@ function UploadData() {
             />
             <ShowSearch data={data} setModalOpen={setModalOpen} modalOpen={modalOpen} />
             <AddNumber setAddModalOpen={setAddModalOpen} addModalOpen={addModalOpen} />
-            {loading && <PageLoader />}
+            {/* {loading && <PageLoader />} */}
         </>
     );
 }

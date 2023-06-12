@@ -13,6 +13,7 @@ import PrivacyPolicy from '../component/Modal/privacyPolicy'
 import { createLead } from '../controller/AuthController'
 import PageLoader from '../component/pageLoader'
 
+
 export default function Home() {
     const [phone, setPhone] = useState("")
     const [open, setOpen] = useState(false);
@@ -36,6 +37,8 @@ export default function Home() {
         if (phone && (phone.match('[0-9]{10}'))) {
             if (checked) {
                 setLoading(true)
+               
+
                 fetch('https://api.ipify.org?format=json', {
                     method: "GET",
                     headers: {
@@ -61,8 +64,10 @@ export default function Home() {
                             setAlert(true)
                             setPhone("")
                             setChecked(false)
+                           
                         }
                         else {
+                           
                             setLoading(false)
                         }
                     })
@@ -77,12 +82,18 @@ export default function Home() {
             setAlert(true)
         }
     };
+
+
+   
+  
     const handleChange = (event) => {
         setChecked(event.target.checked);
     };
 
     return (
         <>
+
+           
             <NavBar />
             <Box>
                 {/* Section1 */}

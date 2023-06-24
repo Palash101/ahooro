@@ -4,15 +4,15 @@ import {
     signInWithEmailAndPassword,
 
 } from "firebase/auth";
-import { db } from "../config/firebaseConfig";
+// import { db } from "../config/firebaseConfig";
 import {
-    addDoc,
-    collection,
-    where,
+    // addDoc,
+    // collection,
+    // where,
     // doc,
     // getDoc,
-    getDocs,
-    query,
+    // getDocs,
+    // query,
     // deleteDoc,
     // updateDoc,
     // setDoc,
@@ -59,17 +59,35 @@ export const UserEmailLogin = async (loginEmail, loginPassword) => {
 // }
 
 export const createLead = async (data) => {
-    return fetch('https://europe-west3-authconfigurator.cloudfunctions.net/one_number ',{
-        method:"POST",
-        body:JSON.stringify(data)
+    return fetch('https://europe-west3-authconfigurator.cloudfunctions.net/one_number ', {
+        method: "POST",
+        body: JSON.stringify(data)
     })
-    .then((res)=>{res.json()})
-    .then((data)=>{
-        return { success: true }
+        .then((res) => { res.json() })
+        .then((data) => {
+            return { success: true }
+        })
+        .catch((err) => {
+            return { success: false }
+        })
+}
+
+export const createBlackList = async (data) => {
+    console.log('adasdasdasd',data)
+    return fetch('https://europe-west3-authconfigurator.cloudfunctions.net/save_blackList ', {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+          },
     })
-    .catch((err)=>{
-        return {success:false}
-    })
+        .then((res) => { res.json() })
+        .then((data) => {
+            return { success: true }
+        })
+        .catch((err) => {
+            return { success: false }
+        })
 }
 
 // export const SearchDoc = async (search) => {
@@ -92,22 +110,44 @@ export const createLead = async (data) => {
 // }
 
 export const SearchDoc = async (search) => {
-    const url = 'https://europe-west3-authconfigurator.cloudfunctions.net/search?phone='+search
-    return fetch(url,{
-        method:"GET"
+    const url = 'https://europe-west3-authconfigurator.cloudfunctions.net/search?phone=' + search
+    return fetch(url, {
+        method: "GET"
     })
-    .then((res)=>res.json())
-    .then((data)=>{
-        if(data.length){
-            return { success: true, data: data }
-        }
-        else{
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.length) {
+                console.log(data, 'data added')
+                return { success: true, data: data }
+            }
+            else {
+                console.log(data, 'data error')
+                return { success: false }
+            }
+        })
+        .catch((err) => {
             return { success: false }
-        }
+        })
+
+}
+
+export const BlackListSearchDoc = async (blackListSearch) => {
+    const url = 'https://europe-west3-authconfigurator.cloudfunctions.net/blackList_search?phone=' + blackListSearch
+    return fetch(url, {
+        method: "GET"
     })
-    .catch((err)=>{
-        return { success: false }
-    })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.length) {
+                return { success: true, data: data }
+            }
+            else {
+                return { success: false }
+            }
+        })
+        .catch((err) => {
+            return { success: false }
+        })
 
 }
 

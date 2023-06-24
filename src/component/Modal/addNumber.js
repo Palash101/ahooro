@@ -103,6 +103,7 @@ export default function AddNumber({ addModalOpen, setAddModalOpen }) {
                             <TextField
                                 size='small'
                                 type='number'
+                                value={phone}
                                 placeholder='Agregar un nuevo número'
                                 onChange={(e) => setPhone(e.target.value)}
                             />

@@ -73,13 +73,13 @@ export const createLead = async (data) => {
 }
 
 export const createBlackList = async (data) => {
-    console.log('adasdasdasd',data)
+    console.log('adasdasdasd', data)
     return fetch('https://europe-west3-authconfigurator.cloudfunctions.net/save_blackList ', {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json'
-          },
+        },
     })
         .then((res) => { res.json() })
         .then((data) => {
@@ -150,6 +150,26 @@ export const BlackListSearchDoc = async (blackListSearch) => {
         })
 
 }
+
+export const DeleteBlackListNumber = async (blackListNumber) => {
+    console.log(blackListNumber, "data")
+    return fetch('https://europe-west3-authconfigurator.cloudfunctions.net/delete_blackList ', {
+        method: "POST",
+        body: JSON.stringify({
+            docId: blackListNumber
+        }),
+    })
+        .then((res) =>res.json())
+        .then((data) => {
+            return { success: true }
+        })
+        .catch((err) => {
+            return { success: false }
+        })
+
+}
+
+
 
 export const AddNewNumber = async (phone) => {
 

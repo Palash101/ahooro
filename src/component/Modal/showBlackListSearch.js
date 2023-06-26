@@ -10,11 +10,12 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Divider, Typography } from '@mui/material';
+import { Divider, IconButton } from '@mui/material';
+import { DeleteForever } from '@mui/icons-material';
+import Typography from '@mui/material/Typography';
 
 
-export default function ShowSearch({ modalOpen, setModalOpen, data }) {
-    console.log("data: ", data);
+export default function ShowBlackListSearch({ modalOpen, setModalOpen, data, DeleteNumber }) {
     const handleClose = () => {
         setModalOpen(false);
     };
@@ -46,21 +47,18 @@ export default function ShowSearch({ modalOpen, setModalOpen, data }) {
                             p: 2
                         }}>
                             <Box sx={{ height: "100%", overflowX: "auto" }}>
-                                <Typography sx={{ fontWeight: 600, mb: 2 }} variant='subtitle1'>Buscar número guardado</Typography>
+                                <Typography sx={{ fontWeight: 600, mb: 2 }} variant='subtitle1'>Buscar número de lista negra</Typography>
                                 <Divider />
-                                <TableContainer sx={{ width: "100%" }} component={Box}>
+                                <TableContainer sx={{ width: "100%", minWidth: "600px" }} component={Box}>
                                     <Table aria-label="simple table">
                                         <TableHead>
                                             <TableRow sx={{ ".MuiTableCell-root": { fontWeight: 600 } }}>
                                                 <TableCell>Phone</TableCell>
-                                                <TableCell align="left">City</TableCell>
-                                                <TableCell align="left">IP</TableCell>
-                                                <TableCell align="left">Regain</TableCell>
-                                                <TableCell align="left">Time</TableCell>
+                                                <TableCell align="left">Delete</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {data.map((row ,index) => (
+                                            {data.map((row, index) => (
                                                 <TableRow
                                                     key={index}
                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -68,10 +66,11 @@ export default function ShowSearch({ modalOpen, setModalOpen, data }) {
                                                     <TableCell component="th" scope="row">
                                                         {row.phone}
                                                     </TableCell>
-                                                    <TableCell align="left">{row.city}</TableCell>
-                                                    <TableCell align="left">{row.ip}</TableCell>
-                                                    <TableCell align="left">{row.region}</TableCell>
-                                                    <TableCell align="left">{Date(row.timestamp)}</TableCell>
+                                                    <TableCell align="left">
+                                                        <IconButton onClick={() => DeleteNumber(row.id)}>
+                                                            <DeleteForever color='error' />
+                                                        </IconButton>
+                                                    </TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>

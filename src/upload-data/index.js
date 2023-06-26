@@ -1,6 +1,4 @@
 import Box from '@mui/material/Box';
-// import Switch from '@mui/material/Switch';
-// import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState } from 'react';
 import Buttons from '../component/Button';
 import Typography from '@mui/material/Typography';
@@ -11,13 +9,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SearchIcon from '@mui/icons-material/Search';
-import { SearchDoc } from '../controller/AuthController';
+import { DeleteBlackListNumber, SearchDoc } from '../controller/AuthController';
 import ShowSearch from '../component/Modal/showSearch';
 import AddIcon from '@mui/icons-material/Add';
 import { CircularProgress, Grid, TextField } from '@mui/material';
 import { createLead } from '../controller/AuthController';
 import { createBlackList } from '../controller/AuthController';
 import { BlackListSearchDoc } from '../controller/AuthController';
+import ShowBlackListSearch from '../component/Modal/showBlackListSearch';
+import PageLoader from '../component/pageLoader';
 
 
 function CircularProgressWithLabel(props) {
@@ -89,8 +89,12 @@ function UploadData() {
     const [blackListSearch, setBlackListSearch] = useState("")
     console.log("search: ", search);
     const [data, setData] = useState("")
+    const [blackListNumber, setBlackListNumber] = useState("")
+    console.log("blackListNumber: ", blackListNumber);
     const [loading, setLoading] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
+    const [blackListModalOpen, setBlackListModalOpen] = useState(false)
+    console.log("modalOpen: ", modalOpen);
     const [massage, setMassage] = useState("")
     console.log("file: ", file);
     const navigate = useNavigate()
@@ -133,8 +137,8 @@ function UploadData() {
             setLoading(true)
             const value = await BlackListSearchDoc(blackListSearch)
             if (value.success) {
-                setData(value.data)
-                setModalOpen(true)
+                setBlackListNumber(value.data)
+                setBlackListModalOpen(true)
             }
             else {
                 console.log("wrong search")
@@ -148,6 +152,21 @@ function UploadData() {
             setOpen(true);
         }
     }
+
+    // delete blackList Number
+
+    const DeleteNumber = async (data) => {
+        setLoading(true)
+        const deleteNumber = await DeleteBlackListNumber(data)
+        console.log("deleteNumber: ", deleteNumber);
+        if (deleteNumber.success === true) {
+            setBlackListModalOpen(false);
+            setLoading(false)
+            setMassage("Eliminar el número de la lista negra de la lista")
+            setOpen(true);
+        }
+    }
+
 
     // add phone No
 
@@ -341,7 +360,7 @@ function UploadData() {
                                                 </Search>
                                                 {/* <FontAwesomeIcon className='search-icon' icon={faSearch} size="1x"/> */}
                                             </Box>
-                                            <Box sx={{ px: {md:"50px",xs:"0"} }}>
+                                            <Box sx={{ px: { md: "50px", xs: "0" } }}>
                                                 <Box sx={{
                                                     display: "flex",
                                                     flexDirection: "column",
@@ -384,8 +403,11 @@ function UploadData() {
                                                     <Typography sx={{ fontSize: "15px" }}>o arrastra y suéltalos aquí</Typography>
                                                     <Typography sx={{ fontSize: "15px", fontWeight: 600 }}>.csv </Typography>
                                                 </Box>
-                                                <Box>
+                                                <Box mb={2}>
                                                     <Typography sx={{ fontSize: "12px" }}>El límite es de 50.000 números</Typography>
+                                                </Box>
+                                                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                                                    <Buttons onClick={handleClick} sx={{ my: 1 }} variant='contained'>Subir archivo</Buttons>
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -519,9 +541,7 @@ function UploadData() {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        columnGap: "20px"
                     }}>
-                        <Buttons onClick={handleClick} sx={{ my: 1 }} variant='contained'>Subir archivo</Buttons>
                         {/* <Button onClick={() => navigate('/')} sx={{ mt: 1, textTransform: "none" }} variant='text'>Volver a la página de inicio</Button> */}
                         <Buttons onClick={() => {
                             localStorage.clear()
@@ -539,7 +559,8 @@ function UploadData() {
                 action={action}
             />
             <ShowSearch data={data} setModalOpen={setModalOpen} modalOpen={modalOpen} />
-            {/* {loading && <PageLoader />} */}
+            <ShowBlackListSearch DeleteNumber={DeleteNumber} data={blackListNumber} setModalOpen={setBlackListModalOpen} modalOpen={blackListModalOpen} />
+            {loading && <PageLoader />}
         </>
     );
 }

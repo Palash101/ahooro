@@ -19,6 +19,12 @@ import {
     // getStorage,
 } from "firebase/firestore";
 
+// tool api
+// const apiPath = "https://europe-west3-authconfigurator.cloudfunctions.net/"
+
+// toolNew api
+const apiPath = "https://europe-west3-config-project-ac16f.cloudfunctions.net/"
+
 export const UserEmailLogin = async (loginEmail, loginPassword) => {
     if (loginEmail === "" || loginPassword === "") {
         return { success: false, msg: "Please enter valid details" };
@@ -58,8 +64,27 @@ export const UserEmailLogin = async (loginEmail, loginPassword) => {
 //     }
 // }
 
+// add csv file
+
+export const saveCsvFile = async (data) => {
+    return fetch(apiPath + 'slicer', {
+        method: "POST",
+        body: data,
+        headers: {
+        }
+    })
+        .then((res) => res.text())
+        .then(data => {
+            if (data) {
+                return { success: true, data: data }
+            }
+            return { success: false }
+        })
+        .catch(err => console.log(err))
+}
+
 export const createLead = async (data) => {
-    return fetch('https://europe-west3-config-project-ac16f.cloudfunctions.net/save_number ', {
+    return fetch(apiPath + 'save_number ', {
         method: "POST",
         body: JSON.stringify(data)
     })
@@ -74,7 +99,7 @@ export const createLead = async (data) => {
 
 export const createBlackList = async (data) => {
     console.log('adasdasdasd', data)
-    return fetch('https://europe-west3-config-project-ac16f.cloudfunctions.net/save_blackList ', {
+    return fetch(apiPath + 'save_blackList ', {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -110,7 +135,7 @@ export const createBlackList = async (data) => {
 // }
 
 export const SearchDoc = async (search) => {
-    const url = 'https://europe-west3-config-project-ac16f.cloudfunctions.net/search?phone=' + search
+    const url = apiPath + 'search?phone=' + search
     return fetch(url, {
         method: "GET"
     })
@@ -132,7 +157,7 @@ export const SearchDoc = async (search) => {
 }
 
 export const BlackListSearchDoc = async (blackListSearch) => {
-    const url = 'https://europe-west3-config-project-ac16f.cloudfunctions.net/blackList_search?phone=' + blackListSearch
+    const url = apiPath + 'blackList_search?phone=' + blackListSearch
     return fetch(url, {
         method: "GET"
     })
@@ -153,13 +178,13 @@ export const BlackListSearchDoc = async (blackListSearch) => {
 
 export const DeleteBlackListNumber = async (blackListNumber) => {
     console.log(blackListNumber, "data")
-    return fetch('https://europe-west3-config-project-ac16f.cloudfunctions.net/delete_blackList ', {
+    return fetch(apiPath + 'delete_blackList ', {
         method: "POST",
         body: JSON.stringify({
             docId: blackListNumber
         }),
     })
-        .then((res) =>res.json())
+        .then((res) => res.json())
         .then((data) => {
             return { success: true }
         })

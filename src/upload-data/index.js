@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SearchIcon from '@mui/icons-material/Search';
-import { DeleteBlackListNumber, SearchDoc } from '../controller/AuthController';
+import { DeleteBlackListNumber, SearchDoc, saveCsvFile } from '../controller/AuthController';
 import ShowSearch from '../component/Modal/showSearch';
 import AddIcon from '@mui/icons-material/Add';
 import { CircularProgress, Grid, TextField } from '@mui/material';
@@ -226,25 +226,18 @@ function UploadData() {
         if (file) {
             const interval = setInterval(startInterval, 1200)
             setLoading(true)
-            fetch('https://europe-west3-config-project-ac16f.cloudfunctions.net/slicer', {
-                method: "POST",
-                body: formData,
-                headers: {
-                }
-            })
-                .then((res) => res.text())
-                .then(data => {
-                    if (data) {
-                        setMassage("Documento cargado exitosamente")
-                        setOpen(true);
-                        stopInterval(interval)
-                        setLoading(false)
-                    }
+            const saveData = saveCsvFile(formData)
+            saveData.then(data => {
+                if (data.success) {
+                    setMassage("Documento cargado exitosamente")
+                    setOpen(true);
                     stopInterval(interval)
-                    console.log(data)
-                    setFile(undefined)
-                })
-                .catch(err => console.log(err))
+                    setLoading(false)
+                }
+                stopInterval(interval)
+                console.log(data)
+                setFile(undefined)
+            })
         }
         else {
             setMassage("Seleccione un archivo")

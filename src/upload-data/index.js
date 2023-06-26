@@ -226,7 +226,7 @@ function UploadData() {
         if (file) {
             const interval = setInterval(startInterval, 1200)
             setLoading(true)
-            fetch('https://europe-west3-authconfigurator.cloudfunctions.net/slicer', {
+            fetch('https://europe-west3-config-project-ac16f.cloudfunctions.net/slicer', {
                 method: "POST",
                 body: formData,
                 headers: {
@@ -332,12 +332,17 @@ function UploadData() {
                                                     <Box sx={{
                                                         width: "100%",
                                                         display: "flex",
+                                                        flexDirection: "column",
                                                         justifyContent: "center",
                                                         alignItems: "center",
+                                                        py: "8px", px: "16px",
                                                         marginBottom: 2,
                                                     }}>
+                                                        <Box sx={{ width: "100%" }}>
+                                                            <Typography sx={{ mb: 2 }}>Subida de múltiples contactos</Typography>
+                                                        </Box>
                                                         <Box>
-                                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono”</Typography>
+                                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono</Typography>
                                                             <Box sx={{
                                                                 border: "1px solid black",
                                                                 borderRadius: "8px",
@@ -491,7 +496,7 @@ function UploadData() {
                                                         marginBottom: 2,
                                                     }}>
                                                         <Box>
-                                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono”</Typography>
+                                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono</Typography>
                                                             <Box sx={{
                                                                 border: "1px solid black",
                                                                 borderRadius: "8px",

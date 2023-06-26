@@ -59,7 +59,7 @@ export const UserEmailLogin = async (loginEmail, loginPassword) => {
 // }
 
 export const createLead = async (data) => {
-    return fetch('https://europe-west3-authconfigurator.cloudfunctions.net/one_number ', {
+    return fetch('https://europe-west3-config-project-ac16f.cloudfunctions.net/save_number ', {
         method: "POST",
         body: JSON.stringify(data)
     })
@@ -74,7 +74,7 @@ export const createLead = async (data) => {
 
 export const createBlackList = async (data) => {
     console.log('adasdasdasd', data)
-    return fetch('https://europe-west3-authconfigurator.cloudfunctions.net/save_blackList ', {
+    return fetch('https://europe-west3-config-project-ac16f.cloudfunctions.net/save_blackList ', {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -110,7 +110,7 @@ export const createBlackList = async (data) => {
 // }
 
 export const SearchDoc = async (search) => {
-    const url = 'https://europe-west3-authconfigurator.cloudfunctions.net/search?phone=' + search
+    const url = 'https://europe-west3-config-project-ac16f.cloudfunctions.net/search?phone=' + search
     return fetch(url, {
         method: "GET"
     })
@@ -132,7 +132,7 @@ export const SearchDoc = async (search) => {
 }
 
 export const BlackListSearchDoc = async (blackListSearch) => {
-    const url = 'https://europe-west3-authconfigurator.cloudfunctions.net/blackList_search?phone=' + blackListSearch
+    const url = 'https://europe-west3-config-project-ac16f.cloudfunctions.net/blackList_search?phone=' + blackListSearch
     return fetch(url, {
         method: "GET"
     })
@@ -153,7 +153,7 @@ export const BlackListSearchDoc = async (blackListSearch) => {
 
 export const DeleteBlackListNumber = async (blackListNumber) => {
     console.log(blackListNumber, "data")
-    return fetch('https://europe-west3-authconfigurator.cloudfunctions.net/delete_blackList ', {
+    return fetch('https://europe-west3-config-project-ac16f.cloudfunctions.net/delete_blackList ', {
         method: "POST",
         body: JSON.stringify({
             docId: blackListNumber

@@ -4,14 +4,13 @@ import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAtZ6ffWBTRxNsYKDnOzloUJ8tpU-nGvf8",
-  authDomain: "config-project-ac16f.firebaseapp.com",
-  databaseURL: "https://config-project-ac16f-default-rtdb.firebaseio.com",
-  projectId: "config-project-ac16f",
-  storageBucket: "config-project-ac16f.appspot.com",
-  messagingSenderId: "377905512113",
-  appId: "1:377905512113:web:6adbc80e90ec8293562c90",
-  measurementId: "G-V8D8TS0867"
+  apiKey: "AIzaSyAMFw2zYBB2-Dg6O4mQsE3ic5_6ak9ng5c",
+  authDomain: "authconfigurator.firebaseapp.com",
+  projectId: "authconfigurator",
+  storageBucket: "authconfigurator.appspot.com",
+  messagingSenderId: "684204730695",
+  appId: "1:684204730695:web:a1a3bfb509fe873f238462",
+  measurementId: "G-NWXX104YW8"
 };
 
 

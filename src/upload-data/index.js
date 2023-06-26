@@ -332,12 +332,18 @@ function UploadData() {
                                                     <Box sx={{
                                                         width: "100%",
                                                         display: "flex",
+                                                        flexDirection: "column",
                                                         justifyContent: "center",
                                                         alignItems: "center",
+                                                        py: "8px",
+                                                        px: { md: "16px", xs: 0 },
                                                         marginBottom: 2,
                                                     }}>
+                                                        <Box sx={{ width: "100%", display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
+                                                            <Typography sx={{ mb: 2 }}>Subida de múltiples contactos</Typography>
+                                                        </Box>
                                                         <Box>
-                                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono”</Typography>
+                                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono</Typography>
                                                             <Box sx={{
                                                                 border: "1px solid black",
                                                                 borderRadius: "8px",
@@ -491,7 +497,7 @@ function UploadData() {
                                                         marginBottom: 2,
                                                     }}>
                                                         <Box>
-                                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono”</Typography>
+                                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono</Typography>
                                                             <Box sx={{
                                                                 border: "1px solid black",
                                                                 borderRadius: "8px",

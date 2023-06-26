@@ -335,14 +335,15 @@ function UploadData() {
                                                         flexDirection: "column",
                                                         justifyContent: "center",
                                                         alignItems: "center",
-                                                        py: "8px", px: "16px",
+                                                        py: "8px",
+                                                        px: { md: "16px", xs: 0 },
                                                         marginBottom: 2,
                                                     }}>
-                                                        <Box sx={{ width: "100%" }}>
+                                                        <Box sx={{ width: "100%", display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
                                                             <Typography sx={{ mb: 2 }}>Subida de múltiples contactos</Typography>
                                                         </Box>
                                                         <Box>
-                                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono</Typography>
+                                                            <Typography sx={{ fontSize: "14px", pb: "5px", textAlign: { xs: "center", md: "left" } }}>Buscar por número de teléfono</Typography>
                                                             <Box sx={{
                                                                 border: "1px solid black",
                                                                 borderRadius: "8px",
@@ -436,7 +437,7 @@ function UploadData() {
                                     height: "100%",
                                     width: "100%",
                                 }}>
-                                    <Typography sx={{ mb: 2 }}>Subida de 1 contacto</Typography>
+                                    <Typography sx={{ mb: 2, textAlign: { xs: "center", md: "left" } }}>Subida de 1 contacto</Typography>
                                     <Box sx={{
                                         position: { md: "absolute", xs: "relative" },
                                         width: "100%",
@@ -477,7 +478,7 @@ function UploadData() {
                                     height: "100%",
                                     width: "100%",
                                 }}>
-                                    <Typography sx={{ mb: 2 }}>Lista negra de contactos</Typography>
+                                    <Typography sx={{ mb: 2, textAlign: { xs: "center", md: "left" } }}>Lista negra de contactos</Typography>
                                     <Box sx={{
                                         position: { md: "absolute", xs: "relative" },
                                         width: "100%",
@@ -496,7 +497,7 @@ function UploadData() {
                                                         marginBottom: 2,
                                                     }}>
                                                         <Box>
-                                                            <Typography sx={{ fontSize: "14px", pb: "5px" }}>Buscar por número de teléfono</Typography>
+                                                            <Typography sx={{ fontSize: "14px", pb: "5px", textAlign: { xs: "center", md: "left" } }}>Buscar por número de teléfono</Typography>
                                                             <Box sx={{
                                                                 border: "1px solid black",
                                                                 borderRadius: "8px",

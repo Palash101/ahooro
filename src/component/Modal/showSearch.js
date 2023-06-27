@@ -52,11 +52,11 @@ export default function ShowSearch({ modalOpen, setModalOpen, data }) {
                                     <Table aria-label="simple table">
                                         <TableHead>
                                             <TableRow sx={{ ".MuiTableCell-root": { fontWeight: 600 } }}>
-                                                <TableCell>Phone</TableCell>
-                                                <TableCell align="left">City</TableCell>
+                                                <TableCell>Teléfono</TableCell>
+                                                <TableCell align="left">Ciudad</TableCell>
                                                 <TableCell align="left">IP</TableCell>
-                                                <TableCell align="left">Regain</TableCell>
-                                                <TableCell align="left">Time</TableCell>
+                                                <TableCell align="left">Región</TableCell>
+                                                <TableCell align="left">Fecha</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -82,7 +82,7 @@ export default function ShowSearch({ modalOpen, setModalOpen, data }) {
                     </DialogContent>
                     <DialogActions>
                         <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                            <Buttons onClick={handleClose} >Close</Buttons>
+                            <Buttons onClick={handleClose} >Cerrar</Buttons>
                         </Box>
                     </DialogActions>
                 </Dialog>

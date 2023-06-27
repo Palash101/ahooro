@@ -53,8 +53,8 @@ export default function ShowBlackListSearch({ modalOpen, setModalOpen, data, Del
                                     <Table aria-label="simple table">
                                         <TableHead>
                                             <TableRow sx={{ ".MuiTableCell-root": { fontWeight: 600 } }}>
-                                                <TableCell>Phone</TableCell>
-                                                <TableCell align="left">Delete</TableCell>
+                                                <TableCell>Teléfono</TableCell>
+                                                <TableCell align="left">Borrar</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -81,7 +81,7 @@ export default function ShowBlackListSearch({ modalOpen, setModalOpen, data, Del
                     </DialogContent>
                     <DialogActions>
                         <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
-                            <Buttons onClick={handleClose} >Close</Buttons>
+                            <Buttons onClick={handleClose} >Cerrar</Buttons>
                         </Box>
                     </DialogActions>
                 </Dialog>

@@ -84,7 +84,7 @@ export const saveCsvFile = async (data) => {
 }
 
 export const createLead = async (data) => {
-    return fetch(apiPath + 'save_number ', {
+    return fetch(apiPath + 'one_number', {
         method: "POST",
         body: JSON.stringify(data)
     })

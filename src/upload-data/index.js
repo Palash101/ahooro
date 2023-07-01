@@ -12,7 +12,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { DeleteBlackListNumber, SearchDoc, saveCsvFile } from '../controller/AuthController';
 import ShowSearch from '../component/Modal/showSearch';
 import AddIcon from '@mui/icons-material/Add';
-import { CircularProgress, Grid, TextField } from '@mui/material';
+import { CircularProgress, Grid, InputLabel, TextField } from '@mui/material';
 import { createLead } from '../controller/AuthController';
 import { createBlackList } from '../controller/AuthController';
 import { BlackListSearchDoc } from '../controller/AuthController';
@@ -87,20 +87,17 @@ function UploadData() {
     const [file, setFile] = useState(undefined)
     const [search, setSearch] = useState("")
     const [blackListSearch, setBlackListSearch] = useState("")
-    console.log("search: ", search);
     const [data, setData] = useState("")
     const [blackListNumber, setBlackListNumber] = useState("")
-    console.log("blackListNumber: ", blackListNumber);
     const [loading, setLoading] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
     const [blackListModalOpen, setBlackListModalOpen] = useState(false)
-    console.log("modalOpen: ", modalOpen);
     const [massage, setMassage] = useState("")
-    console.log("file: ", file);
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const [progress, setProgress] = useState(0)
     const [phone, setPhone] = useState("")
+    const [service, setService] = useState("")
     const [blackList, setBlackList] = useState("")
 
 
@@ -177,6 +174,7 @@ function UploadData() {
 
             const d = {
                 phone: phone,
+                service: service
             }
             const result = await createLead(d)
             if (result.success) {
@@ -184,6 +182,7 @@ function UploadData() {
                 setMassage("subido con éxito")
                 setOpen(true)
                 setPhone("")
+                setService("")
             }
             else {
                 setLoading(false)
@@ -437,23 +436,41 @@ function UploadData() {
                                         left: { md: "50%", xs: 0 },
                                         transform: { md: "translate(-50%, -50%)", xs: "none" },
                                     }}>
-                                        <Box sx={{ display: "flex", alignItems: "center", columnGap: "20px", justifyContent: "center" }}>
-                                            <TextField
-                                                type='number'
-                                                size='small'
-                                                value={phone}
-                                                onChange={(e) => setPhone(e.target.value)}
-                                            />
-                                            <Buttons
-                                                sx={{ display: "flex", borderRadius: "20px" }}
-                                                onClick={SavePhoneNo}
-                                            >
-                                                <AddIcon sx={{ mr: 1 }} />
-                                                <Typography sx={{ fontSize: "10px" }}>
-                                                    Añadir número
-                                                </Typography>
-                                            </Buttons>
-                                        </Box>
+                                        <Grid container sx={{ alignItems: "flex-end", gap: "20px", justifyContent: "center", }}>
+                                            <Grid item xs={12} md={3}>
+                                                <InputLabel>Contacto</InputLabel>
+                                                <TextField
+                                                    type='number'
+                                                    fullWidth
+                                                    size='small'
+                                                    value={phone}
+                                                    onChange={(e) => setPhone(e.target.value)}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} md={3}>
+                                                <InputLabel>Servicio</InputLabel>
+                                                <TextField
+                                                    type='text'
+                                                    fullWidth
+                                                    size='small'
+                                                    value={service}
+                                                    onChange={(e) => setService(e.target.value)}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} md={3}>
+                                                <Box sx={{display:"flex" ,justifyContent:"center"}}>
+                                                    <Buttons
+                                                        sx={{ display: "flex", borderRadius: "20px", width: "200px", mb: 0.4 }}
+                                                        onClick={SavePhoneNo}
+                                                    >
+                                                        <AddIcon sx={{ mr: 0.5 }} />
+                                                        <Typography sx={{ fontSize: "10px" }}>
+                                                            Añadir número
+                                                        </Typography>
+                                                    </Buttons>
+                                                </Box>
+                                            </Grid>
+                                        </Grid>
                                     </Box>
                                 </Box>
                             </Box>

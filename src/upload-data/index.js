@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import Buttons from '../component/Button';
 import Typography from '@mui/material/Typography';
@@ -9,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SearchIcon from '@mui/icons-material/Search';
-import { DeleteBlackListNumber, SearchDoc, saveCsvFile } from '../controller/AuthController';
+import { DeleteBlackListNumber, SearchDoc, downloadData, saveCsvFile } from '../controller/AuthController';
 import ShowSearch from '../component/Modal/showSearch';
 import AddIcon from '@mui/icons-material/Add';
 import { CircularProgress, Grid, InputLabel, TextField } from '@mui/material';
@@ -99,6 +100,36 @@ function UploadData() {
     const [phone, setPhone] = useState("")
     const [service, setService] = useState("")
     const [blackList, setBlackList] = useState("")
+    const [download, setDownload] = useState("all_document")
+    console.log("download: ", download);
+    const [downloadSearch, setDownloadSearch] = useState("")
+
+
+    // download documents
+
+    const handleDownload = async () => {
+        setLoading(true)
+        const data = {
+            downloadType: download === "all_document" || download === "all_record" ? 'multiple' : 'single',
+            type: download === "all_document" || download === "one_document" ? 'pdf' : 'csv',
+            query: downloadSearch
+        }
+        // console.log("data: ", data);
+        const DownloadDocuments = await downloadData(data)
+        // console.log("DownloadDocuments: ", DownloadDocuments.success);
+        if (DownloadDocuments.success) {
+            const link = document.createElement('a');
+            link.href = DownloadDocuments.data;
+            link.download = "file";
+            link.click();
+            setLoading(false)
+        }
+        else {
+            setMassage("archivo no disponible");
+            setLoading(false)
+            setOpen(true);
+        }
+    }
 
 
     const handleChange = event => {
@@ -164,9 +195,7 @@ function UploadData() {
         }
     }
 
-
     // add phone No
-
     const SavePhoneNo = async () => {
         if (phone) {
             setLoading(true)
@@ -319,7 +348,7 @@ function UploadData() {
                                             left: { md: "50%", xs: 0 },
                                             transform: { md: "translate(-50%, -50%)", xs: "none" },
                                         }}>
-                                            <Box component="Box">
+                                            <Box>
                                                 <Search>
                                                     <Box sx={{
                                                         width: "100%",
@@ -417,7 +446,7 @@ function UploadData() {
                                 sx={{
                                     borderRadius: "12px",
                                     border: "1px solid #FE545C",
-                                    height: { md: "30%", xs: "auto" },
+                                    height: { md: "25%", xs: "auto" },
                                 }}
                             >
                                 <Box sx={{
@@ -458,7 +487,7 @@ function UploadData() {
                                                 />
                                             </Grid>
                                             <Grid item xs={12} md={3}>
-                                                <Box sx={{display:"flex" ,justifyContent:"center"}}>
+                                                <Box sx={{ display: "flex", justifyContent: "center" }}>
                                                     <Buttons
                                                         sx={{ display: "flex", borderRadius: "20px", width: "200px", mb: 0.4 }}
                                                         onClick={SavePhoneNo}
@@ -478,7 +507,7 @@ function UploadData() {
                                 position: "relative",
                                 borderRadius: "12px",
                                 border: "1px solid #FE545C",
-                                height: { md: "70%", xs: "auto" },
+                                height: { md: "50%", xs: "auto" },
                             }}>
                                 <Box sx={{
                                     boxSizing: "border-box",
@@ -546,6 +575,69 @@ function UploadData() {
                                                 </Buttons>
                                             </Box>
                                         </Box>
+                                    </Box>
+                                </Box>
+                            </Box>
+                            <Box
+                                sx={{
+                                    borderRadius: "12px",
+                                    border: "1px solid #FE545C",
+                                    height: { md: "25%", xs: "auto" },
+                                }}
+                            >
+                                <Box sx={{
+                                    position: "relative",
+                                    boxSizing: "border-box",
+                                    background: " rgba(255, 255, 255, 0.5)",
+                                    py: "8px", px: "16px",
+                                    height: "100%",
+                                    width: "100%",
+                                }}>
+                                    <Typography sx={{ mb: 2, textAlign: { xs: "center", md: "left" } }}>descargar documento</Typography>
+                                    <Box sx={{
+                                        position: { md: "absolute", xs: "relative" },
+                                        width: "100%",
+                                        top: { md: "50%", xs: 0 },
+                                        left: { md: "50%", xs: 0 },
+                                        transform: { md: "translate(-50%, -50%)", xs: "none" },
+                                    }}>
+                                        <Grid container sx={{ alignItems: "flex-end", gap: "20px", justifyContent: "center", }}>
+                                            <Grid item xs={12} md={5}>
+                                                <TextField
+                                                    select
+                                                    fullWidth
+                                                    size='small'
+                                                    value={download}
+                                                    onChange={(e) => setDownload(e.target.value)}
+                                                >
+                                                    <MenuItem value={"all_document"}>Descargar todos los documentos</MenuItem>
+                                                    <MenuItem value={"one_document"}>Descargar solo un documento</MenuItem>
+                                                    <MenuItem value={"all_record"}>Descargar todos los registros</MenuItem>
+                                                    <MenuItem value={"one_records"}>Descargar solo un registro</MenuItem>
+                                                </TextField>
+                                            </Grid>
+                                            <Grid item xs={12} md={3}>
+                                                <TextField
+                                                    disabled={download === "all_document" || download === "all_record"}
+                                                    placeholder={download === "all_document" || download === "all_record" ? "todo el archivo" : "Entrar en Buscar"}
+                                                    type='text'
+                                                    fullWidth
+                                                    size='small'
+                                                    value={download === "all_document" || download === "all_record" ? "todo el archivo" : downloadSearch}
+                                                    onChange={(e) => setDownloadSearch(e.target.value)}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} md={2}>
+                                                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                                                    <Buttons
+                                                        sx={{ display: "flex", fontSize: "12px", borderRadius: "20px", width: "200px", mb: 0.4 }}
+                                                        onClick={handleDownload}
+                                                    >
+                                                        Descargar
+                                                    </Buttons>
+                                                </Box>
+                                            </Grid>
+                                        </Grid>
                                     </Box>
                                 </Box>
                             </Box>

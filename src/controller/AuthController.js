@@ -199,3 +199,35 @@ export const DeleteBlackListNumber = async (blackListNumber) => {
 export const AddNewNumber = async (phone) => {
 
 }
+
+export const downloadData = async (data) => {
+    //    return Promise.resolve({success:true,url:'https://storage.googleapis.com/authconfigurator.appspot.com/document/7224901r7824.pdf'})
+    const url = 'https://europe-west3-config-project-ac16f.cloudfunctions.net/download'
+    return fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data)
+    })
+        .then((res) => {
+            if(res.ok){
+               return res.blob()   
+            }
+            else{
+                return { success: false }
+            }
+            
+           })
+        .then((myBlob) => {
+            const objectURL = URL.createObjectURL(myBlob);
+            if (objectURL) {
+                return { success: true, data: objectURL }
+            }
+            else {
+                return { success: false }
+            }
+        })
+    .catch((err) => {
+        console.log("err: ", err);
+        return { success: false }
+    })
+
+}

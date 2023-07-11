@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SearchIcon from '@mui/icons-material/Search';
-import { DeleteBlackListNumber, SearchDoc, saveCsvFile } from '../controller/AuthController';
+import { DeleteBlackListNumber, GetCsvList, SearchDoc, saveCsvFile } from '../controller/AuthController';
 import ShowSearch from '../component/Modal/showSearch';
 import AddIcon from '@mui/icons-material/Add';
 import { CircularProgress, Grid, TextField } from '@mui/material';
@@ -18,6 +18,7 @@ import { createBlackList } from '../controller/AuthController';
 import { BlackListSearchDoc } from '../controller/AuthController';
 import ShowBlackListSearch from '../component/Modal/showBlackListSearch';
 import PageLoader from '../component/pageLoader';
+import GetCsvListModal from '../component/Modal/getCsvList';
 
 
 function CircularProgressWithLabel(props) {
@@ -94,15 +95,14 @@ function UploadData() {
     const [loading, setLoading] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
     const [blackListModalOpen, setBlackListModalOpen] = useState(false)
-    console.log("modalOpen: ", modalOpen);
+    const [csvListData, setCsvListData] = useState("")
+    const [getCsvModalOpen, setGetCsvModalOpen] = useState(false)
     const [massage, setMassage] = useState("")
-    console.log("file: ", file);
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const [progress, setProgress] = useState(0)
     const [phone, setPhone] = useState("")
     const [blackList, setBlackList] = useState("")
-
 
     const handleChange = event => {
         setFile(event.target.files[0]);
@@ -127,6 +127,25 @@ function UploadData() {
         else {
             setMassage("Por favor ingrese el valor para la búsqueda")
             setOpen(true);
+        }
+    }
+
+
+    // get csv list
+
+    const getCsv = async () => {
+        setLoading(true)
+        setGetCsvModalOpen(true)
+        const csv = await GetCsvList()
+        if (csv.success) {
+            setCsvListData(csv.data.list)
+            console.log(csv.data.list)
+            setLoading(false)
+        }
+        else {
+            setMassage("Documento no encontrado")
+            setOpen(true);
+            setLoading(false)
         }
     }
 
@@ -224,15 +243,13 @@ function UploadData() {
         const formData = new FormData()
         formData.append('file', file);
         if (file) {
-            const interval = setInterval(startInterval, 1200)
-            setLoading(true)
+            const interval = setInterval(startInterval, 600000)
             const saveData = saveCsvFile(formData)
             saveData.then(data => {
                 if (data.success) {
                     setMassage("Documento cargado exitosamente")
                     setOpen(true);
                     stopInterval(interval)
-                    setLoading(false)
                 }
                 stopInterval(interval)
                 console.log(data)
@@ -418,7 +435,7 @@ function UploadData() {
                                 sx={{
                                     borderRadius: "12px",
                                     border: "1px solid #FE545C",
-                                    height: { md: "30%", xs: "auto" },
+                                    height: { md: "25%", xs: "auto" },
                                 }}
                             >
                                 <Box sx={{
@@ -461,7 +478,7 @@ function UploadData() {
                                 position: "relative",
                                 borderRadius: "12px",
                                 border: "1px solid #FE545C",
-                                height: { md: "70%", xs: "auto" },
+                                height: { md: "50%", xs: "auto" },
                             }}>
                                 <Box sx={{
                                     boxSizing: "border-box",
@@ -532,6 +549,37 @@ function UploadData() {
                                     </Box>
                                 </Box>
                             </Box>
+                            <Box
+                                sx={{
+                                    borderRadius: "12px",
+                                    border: "1px solid #FE545C",
+                                    height: { md: "25%", xs: "auto" },
+                                }}
+                            >
+                                <Box sx={{
+                                    position: "relative",
+                                    boxSizing: "border-box",
+                                    background: " rgba(255, 255, 255, 0.5)",
+                                    py: "8px", px: "16px",
+                                    height: "100%",
+                                    width: "100%",
+                                }}>
+                                    <Typography sx={{ mb: 2, textAlign: { xs: "center", md: "left" } }}>descargar documento</Typography>
+                                    <Box sx={{
+                                        position: { md: "absolute", xs: "relative" },
+                                        width: "100%",
+                                        top: { md: "50%", xs: 0 },
+                                        left: { md: "50%", xs: 0 },
+                                        transform: { md: "translate(-50%, -50%)", xs: "none" },
+                                    }}>
+                                        <Grid container sx={{ alignItems: "flex-end", gap: "20px", justifyContent: "center", }}>
+                                            <Box>
+                                                <Buttons onClick={getCsv}>Descargar</Buttons>
+                                            </Box>
+                                        </Grid>
+                                    </Box>
+                                </Box>
+                            </Box>
                         </Grid>
                     </Grid>
                     <Box sx={{
@@ -557,6 +605,7 @@ function UploadData() {
             />
             <ShowSearch data={data} setModalOpen={setModalOpen} modalOpen={modalOpen} />
             <ShowBlackListSearch DeleteNumber={DeleteNumber} data={blackListNumber} setModalOpen={setBlackListModalOpen} modalOpen={blackListModalOpen} />
+            <GetCsvListModal data={csvListData} setModalOpen={setGetCsvModalOpen} modalOpen={getCsvModalOpen} />
             {loading && <PageLoader />}
         </>
     );

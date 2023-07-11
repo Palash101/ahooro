@@ -176,6 +176,46 @@ export const BlackListSearchDoc = async (blackListSearch) => {
 
 }
 
+export const GetCsvList = async () => {
+    const url = apiPath + 'getCsvList'
+    return fetch(url, {
+        method: "GET"
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data) {
+                return { success: true, data: data }
+            }
+            else {
+                return { success: false }
+            }
+        })
+        .catch((err) => {
+            return { success: false }
+        })
+
+}
+
+export const DownloadCsv = async (csv_name) => {
+    console.log("csv_name: ", csv_name);
+    return fetch(apiPath + 'getCsv', {
+        method: "POST",
+        body: JSON.stringify({ data: csv_name }),
+    })
+        .then((res) => res.blob())
+        .then((data) => {
+            // console.log("data: ", data);
+            const objectURL = URL.createObjectURL(data);
+            return { success: true, data: objectURL }
+        })
+        .catch((err) => {
+            console.log("err: ", err);
+            return { success: false }
+        })
+
+}
+
+
 export const DeleteBlackListNumber = async (blackListNumber) => {
     console.log(blackListNumber, "data")
     return fetch(apiPath + 'delete_blackList ', {

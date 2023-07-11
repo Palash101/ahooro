@@ -19,6 +19,7 @@ import { BlackListSearchDoc } from '../controller/AuthController';
 import ShowBlackListSearch from '../component/Modal/showBlackListSearch';
 import PageLoader from '../component/pageLoader';
 import GetCsvListModal from '../component/Modal/getCsvList';
+import { DownloadCsv, DeleteCsv } from '../controller/AuthController';
 
 
 function CircularProgressWithLabel(props) {
@@ -143,6 +144,33 @@ function UploadData() {
         else {
             setMassage("Documento no encontrado")
             setOpen(true);
+            setLoading(false)
+        }
+    }
+
+
+    // delete and download csv
+
+    const downloadCsv = async (index) => {
+        setLoading(true)
+        const getDownload = await DownloadCsv(csvListData[index])
+        console.log("data: ", csvListData[index]);
+        console.log("getDownload: ", getDownload);
+        if (getDownload.success) {
+            const link = document.createElement('a');
+            link.href = getDownload.data;
+            link.download = csvListData[index];
+            link.click();
+            setLoading(false)
+        }
+    }
+
+    const DeleteCsvList = async (index) => {
+        console.log(csvListData[index])
+        setLoading(true)
+        const getDelete = await DeleteCsv(csvListData[index])
+        if (getDelete.success) {
+            getCsv()
             setLoading(false)
         }
     }
@@ -610,7 +638,7 @@ function UploadData() {
             />
             <ShowSearch data={data} setModalOpen={setModalOpen} modalOpen={modalOpen} />
             <ShowBlackListSearch DeleteNumber={DeleteNumber} data={blackListNumber} setModalOpen={setBlackListModalOpen} modalOpen={blackListModalOpen} />
-            <GetCsvListModal setLoading={setLoading} data={csvListData} setModalOpen={setGetCsvModalOpen} modalOpen={getCsvModalOpen} />
+            <GetCsvListModal downloadCsv={downloadCsv} DeleteCsvList={DeleteCsvList} data={csvListData} setModalOpen={setGetCsvModalOpen} modalOpen={getCsvModalOpen} />
             {loading && <PageLoader />}
         </>
     );

@@ -14,34 +14,12 @@ import { Divider, IconButton } from '@mui/material';
 import { DeleteForever } from '@mui/icons-material';
 import DownloadIcon from '@mui/icons-material/Download';
 import Typography from '@mui/material/Typography';
-import { DeleteCsv, DownloadCsv } from '../../controller/AuthController';
 
-export default function GetCsvListModal({ modalOpen, setModalOpen, data, setLoading }) {
+export default function GetCsvListModal({ modalOpen, setModalOpen, data, downloadCsv, DeleteCsvList }) {
     const handleClose = () => {
         setModalOpen(false);
     };
 
-    const downloadCsv = async (index) => {
-        setLoading(true)
-        const getDownload = await DownloadCsv(data[index])
-        console.log("getDownload: ", getDownload);
-        if (getDownload.success) {
-            const link = document.createElement('a');
-            link.href = getDownload.data;
-            link.download = data[index];
-            link.click();
-            setLoading(false)
-        }
-    }
-
-    const DeleteCsvList = async (index) => {
-        console.log(data[index])
-        setLoading(true)
-        const getDelete = await DeleteCsv(data[index])
-        console.log("getDelete: ", getDelete);
-        setLoading(false)
-        handleClose()
-    }
     return (
         <>
             {data &&

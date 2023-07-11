@@ -88,10 +88,8 @@ function UploadData() {
     const [file, setFile] = useState(undefined)
     const [search, setSearch] = useState("")
     const [blackListSearch, setBlackListSearch] = useState("")
-    console.log("search: ", search);
     const [data, setData] = useState("")
     const [blackListNumber, setBlackListNumber] = useState("")
-    console.log("blackListNumber: ", blackListNumber);
     const [loading, setLoading] = useState(false)
     const [modalOpen, setModalOpen] = useState(false)
     const [blackListModalOpen, setBlackListModalOpen] = useState(false)
@@ -243,17 +241,22 @@ function UploadData() {
         const formData = new FormData()
         formData.append('file', file);
         if (file) {
-            const interval = setInterval(startInterval, 600000)
+            const interval = setInterval(startInterval, 6000)
+          //  setLoading(true)
             const saveData = saveCsvFile(formData)
             saveData.then(data => {
                 if (data.success) {
                     setMassage("Documento cargado exitosamente")
                     setOpen(true);
                     stopInterval(interval)
+                    setFile(undefined)
+                   // setLoading(false)
                 }
-                stopInterval(interval)
-                console.log(data)
-                setFile(undefined)
+                else{
+                    stopInterval(interval)
+                    console.log(data)
+                    setFile(undefined)
+                }
             })
         }
         else {
@@ -266,7 +269,6 @@ function UploadData() {
 
     function startInterval() {
         setProgress((prevProgress) => (prevProgress >= 99 ? 0 : prevProgress + 1));
-
     }
 
     function stopInterval(interval) {
@@ -302,7 +304,7 @@ function UploadData() {
     return (
         <>
 
-            {(loading === true && progress > 0 && progress < 100) ?
+            {(progress > 0 && progress < 100) ?
                 <CircularProgressWithLabel value={progress} />
                 :
                 <></>

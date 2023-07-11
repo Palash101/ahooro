@@ -14,15 +14,15 @@ import { Divider, IconButton } from '@mui/material';
 import { DeleteForever } from '@mui/icons-material';
 import DownloadIcon from '@mui/icons-material/Download';
 import Typography from '@mui/material/Typography';
-import { DownloadCsv } from '../../controller/AuthController';
+import { DeleteCsv, DownloadCsv } from '../../controller/AuthController';
 
-export default function GetCsvListModal({ modalOpen, setModalOpen, data }) {
+export default function GetCsvListModal({ modalOpen, setModalOpen, data, setLoading }) {
     const handleClose = () => {
         setModalOpen(false);
     };
 
     const downloadCsv = async (index) => {
-        console.log(data[index])
+        setLoading(true)
         const getDownload = await DownloadCsv(data[index])
         console.log("getDownload: ", getDownload);
         if (getDownload.success) {
@@ -30,7 +30,17 @@ export default function GetCsvListModal({ modalOpen, setModalOpen, data }) {
             link.href = getDownload.data;
             link.download = data[index];
             link.click();
+            setLoading(false)
         }
+    }
+
+    const DeleteCsvList = async (index) => {
+        console.log(data[index])
+        setLoading(true)
+        const getDelete = await DeleteCsv(data[index])
+        console.log("getDelete: ", getDelete);
+        setLoading(false)
+        handleClose()
     }
     return (
         <>
@@ -88,7 +98,7 @@ export default function GetCsvListModal({ modalOpen, setModalOpen, data }) {
                                                     </TableCell>
                                                     <TableCell align="left">
                                                         <IconButton
-                                                        // onClick={() => DeleteNumber(row.id)}
+                                                            onClick={() => DeleteCsvList(index)}
                                                         >
                                                             <DeleteForever color='error' />
                                                         </IconButton>

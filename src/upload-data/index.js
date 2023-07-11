@@ -241,22 +241,25 @@ function UploadData() {
         const formData = new FormData()
         formData.append('file', file);
         if (file) {
+            startInterval();
             const interval = setInterval(startInterval, 6000)
-          //  setLoading(true)
+            //  setLoading(true)
             const saveData = saveCsvFile(formData)
             saveData.then(data => {
-                if (data.success) {
-                    setMassage("Documento cargado exitosamente")
-                    setOpen(true);
-                    stopInterval(interval)
-                    setFile(undefined)
-                   // setLoading(false)
-                }
-                else{
-                    stopInterval(interval)
-                    console.log(data)
-                    setFile(undefined)
-                }
+                setTimeout(() => {
+                    if (data.success) {
+                        setMassage("Documento cargado exitosamente")
+                        setOpen(true);
+                        stopInterval(interval)
+                        setFile(undefined)
+                        // setLoading(false)
+                    }
+                    else {
+                        stopInterval(interval)
+                        console.log(data)
+                        setFile(undefined)
+                    }
+                }, 12000);
             })
         }
         else {
@@ -607,7 +610,7 @@ function UploadData() {
             />
             <ShowSearch data={data} setModalOpen={setModalOpen} modalOpen={modalOpen} />
             <ShowBlackListSearch DeleteNumber={DeleteNumber} data={blackListNumber} setModalOpen={setBlackListModalOpen} modalOpen={blackListModalOpen} />
-            <GetCsvListModal data={csvListData} setModalOpen={setGetCsvModalOpen} modalOpen={getCsvModalOpen} />
+            <GetCsvListModal setLoading={setLoading} data={csvListData} setModalOpen={setGetCsvModalOpen} modalOpen={getCsvModalOpen} />
             {loading && <PageLoader />}
         </>
     );

@@ -215,6 +215,21 @@ export const DownloadCsv = async (csv_name) => {
 
 }
 
+export const DeleteCsv = async (csv_name) => {
+    return fetch(apiPath + 'delete_csv', {
+        method: "POST",
+        body: JSON.stringify({ file: csv_name, type: "document" }),
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return { success: true }
+        })
+        .catch((err) => {
+            return { success: false }
+        })
+
+}
+
 
 export const DeleteBlackListNumber = async (blackListNumber) => {
     console.log(blackListNumber, "data")

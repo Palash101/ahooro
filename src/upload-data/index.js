@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SearchIcon from '@mui/icons-material/Search';
-import { DeleteBlackListNumber, GetCsvList, SearchDoc, saveCsvFile } from '../controller/AuthController';
+import { DeleteBlackListNumber, GetCsvList, SearchDoc, SendMassage, saveCsvFile } from '../controller/AuthController';
 import ShowSearch from '../component/Modal/showSearch';
 import AddIcon from '@mui/icons-material/Add';
 import { CircularProgress, Grid, TextField } from '@mui/material';
@@ -102,7 +102,14 @@ function UploadData() {
     const [progress, setProgress] = useState(0)
     const [phone, setPhone] = useState("")
     const [blackList, setBlackList] = useState("")
+    const [msg, setMsg] = useState("")
 
+
+    // send msg
+    const PostMsg = async () => {
+        const sendMsg = await SendMassage(msg)
+        console.log("sendMsg: ", sendMsg);
+    }
     const handleChange = event => {
         setFile(event.target.files[0]);
     };
@@ -335,7 +342,7 @@ function UploadData() {
     return (
         <>
 
-            {(progress > 0 && progress < 100) ?
+            {(loading === true && progress > 0 && progress < 100) ?
                 <CircularProgressWithLabel value={progress} />
                 :
                 <></>
@@ -584,34 +591,71 @@ function UploadData() {
                             </Box>
                             <Box
                                 sx={{
-                                    borderRadius: "12px",
-                                    border: "1px solid #FE545C",
+                                    // borderRadius: "12px",
+                                    // border: "1px solid #FE545C",
                                     height: { md: "25%", xs: "auto" },
                                 }}
                             >
-                                <Box sx={{
-                                    position: "relative",
-                                    boxSizing: "border-box",
-                                    background: " rgba(255, 255, 255, 0.5)",
-                                    py: "8px", px: "16px",
-                                    height: "100%",
-                                    width: "100%",
-                                }}>
-                                    <Typography sx={{ mb: 2, textAlign: { xs: "center", md: "left" } }}>descargar documento</Typography>
-                                    <Box sx={{
-                                        position: { md: "absolute", xs: "relative" },
-                                        width: "100%",
-                                        top: { md: "50%", xs: 0 },
-                                        left: { md: "50%", xs: 0 },
-                                        transform: { md: "translate(-50%, -50%)", xs: "none" },
-                                    }}>
-                                        <Grid container sx={{ alignItems: "flex-end", gap: "20px", justifyContent: "center", }}>
-                                            <Box>
-                                                <Buttons onClick={getCsv}>Descargar</Buttons>
+                                <Grid container sx={{ height: "100%",rowGap:"20px" }}>
+                                    <Grid item xs={12} md={4}>
+                                        <Box
+                                            sx={{
+                                                borderRadius: "12px",
+                                                border: "1px solid #FE545C",
+                                                height: "100%",
+                                                mr: "10px"
+                                            }}
+                                        >
+                                            <Box sx={{
+                                                position: "relative",
+                                                boxSizing: "border-box",
+                                                background: " rgba(255, 255, 255, 0.5)",
+                                                py: "8px", px: "16px",
+                                                height: "100%",
+                                                width: "100%",
+                                            }}>
+                                                <Typography sx={{ mb: 2, textAlign: { xs: "center", md: "left" } }}>descargar documento</Typography>
+                                                <Box sx={{
+                                                    position: { md: "absolute", xs: "relative" },
+                                                    width: "100%",
+                                                    top: { md: "50%", xs: 0 },
+                                                    left: { md: "50%", xs: 0 },
+                                                    transform: { md: "translate(-50%, -50%)", xs: "none" },
+                                                }}>
+                                                    <Grid container sx={{ alignItems: "flex-end", gap: "20px", justifyContent: "center", }}>
+                                                        <Box>
+                                                            <Buttons onClick={getCsv}>Descargar</Buttons>
+                                                        </Box>
+                                                    </Grid>
+                                                </Box>
                                             </Box>
-                                        </Grid>
-                                    </Box>
-                                </Box>
+                                        </Box>
+                                    </Grid>
+                                    <Grid item xs={12} md={8}>
+                                        <Box
+                                            sx={{
+                                                borderRadius: "12px",
+                                                border: "1px solid #FE545C",
+                                                height: "100%",
+                                                ml: "10px"
+                                            }}
+                                        >
+                                            <Box sx={{ display: "flex", height: "100%", justifyContent: "center", alignItems: "center", gap: "20px" }}>
+                                                <Box>
+                                                    <TextField
+                                                        type='text'
+                                                        size='small'
+                                                        value={msg}
+                                                        onChange={(e) => setMsg(e.target.value)}
+                                                    />
+                                                </Box>
+                                                <Box>
+                                                    <Buttons onClick={PostMsg}>Send Msg</Buttons>
+                                                </Box>
+                                            </Box>
+                                        </Box>
+                                    </Grid>
+                                </Grid>
                             </Box>
                         </Grid>
                     </Grid>

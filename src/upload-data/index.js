@@ -650,7 +650,7 @@ function UploadData() {
                                                     />
                                                 </Box>
                                                 <Box>
-                                                    <Buttons onClick={PostMsg}>Send Msg</Buttons>
+                                                    <Buttons onClick={PostMsg}>Enviar SMS</Buttons>
                                                 </Box>
                                             </Box>
                                         </Box>

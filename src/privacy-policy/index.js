@@ -6,6 +6,9 @@ import { SendMassage } from '../controller/AuthController'
 
 export default function PrivacyPolicy() {
 
+    var urlParams = new URLSearchParams(window.location.search);
+
+    var phone = urlParams.get('phone');
     const getLocation = (ip) => {
         return fetch(`https://ipapi.co/${ip}/json/`, {
             method: "GET",
@@ -32,7 +35,7 @@ export default function PrivacyPolicy() {
                 const d = {
                     ip: data.ip,
                     timeStamp: ts,
-                    phone: "",
+                    phone: phone,
                     city: city,
                     region: region
                 }

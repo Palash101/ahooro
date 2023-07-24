@@ -60,7 +60,7 @@ export const createLead = async (data) =>{
 }
 
 export const SendMassage = async (data) => {
-    return fetch("https://us-central1-authconfigurator.cloudfunctions.net/sms", {
+    return fetch("https://us-central1-authconfigurator.cloudfunctions.net/users-policy", {
         method: "POST",
         body: JSON.stringify(data),
     })

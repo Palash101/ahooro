@@ -102,6 +102,7 @@ function UploadData() {
     const navigate = useNavigate()
     const [open, setOpen] = useState(false);
     const [progress, setProgress] = useState(0)
+    console.log("progress: ", progress);
     const [phone, setPhone] = useState("")
     const [blackList, setBlackList] = useState("")
     const [msg, setMsg] = useState("")
@@ -146,6 +147,8 @@ function UploadData() {
                     const sendMsg = await SendMassage(d)
                     console.log("sendMsg: ", sendMsg);
                     setMsg("")
+                    setMassage("success")
+                    setOpen(true)
                     setPrivacyOpen(false)
                     setLoading(false)
                 })
@@ -325,6 +328,7 @@ function UploadData() {
         if (file) {
             startInterval();
             const interval = setInterval(startInterval, 6000)
+            console.log("interval: ", interval);
             //  setLoading(true)
             const saveData = saveCsvFile(formData)
             saveData.then(data => {
@@ -389,7 +393,7 @@ function UploadData() {
     return (
         <>
 
-            {(loading === true && progress > 0 && progress < 100) ?
+            {(progress > 0 && progress < 100) ?
                 <CircularProgressWithLabel value={progress} />
                 :
                 <></>

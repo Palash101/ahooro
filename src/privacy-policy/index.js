@@ -2,10 +2,45 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Buttons from '../component/Button'
-
-
+import { SendMassage } from '../controller/AuthController'
 
 export default function PrivacyPolicy() {
+
+    const getLocation = (ip) => {
+        return fetch(`https://ipapi.co/${ip}/json/`, {
+            method: "GET",
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                return data
+            })
+    }
+    const handleAccept = async () => {
+        fetch('https://api.ipify.org?format=json', {
+            method: "GET",
+            headers: {
+            }
+        })
+            .then((res) => res.json())
+
+            .then(async (data) => {
+                const { city, region } = await getLocation(data.ip)
+                console.log(region, "loc")
+                const ts = new Date();
+
+                const d = {
+                    ip: data.ip,
+                    timeStamp: ts,
+                    phone: "",
+                    city: city,
+                    region: region
+                }
+                const policy = await SendMassage(d)
+                console.log("policy: ", policy);
+            })
+
+    }
     return (
         <>
             <Box sx={{ height: "97vh", p: 1, background: "#f5f5f5" }}>
@@ -64,7 +99,7 @@ export default function PrivacyPolicy() {
                         </Box>
                     </Box>
                     <Box sx={{ display: "flex", justifyContent: "center", pt: 2 }}>
-                        <Buttons>Aceptar</Buttons>
+                        <Buttons onClick={handleAccept}>Aceptar</Buttons>
                     </Box>
                 </Box>
             </Box>

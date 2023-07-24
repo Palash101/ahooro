@@ -58,3 +58,26 @@ export const createLead = async (data) =>{
     }
 
 }
+
+export const SendMassage = async (data) => {
+    return fetch("https://us-central1-authconfigurator.cloudfunctions.net/sms", {
+        method: "POST",
+        body: JSON.stringify(data),
+    })
+        // .then((res) => {
+        //     if (res.status === 200) {
+        //         return { success: true }
+        //     } else {
+        //         return { success: false }
+        //     }
+        // })
+
+        .then((res) => res.json())
+        .then((data) => {
+            return { success: true }
+        })
+        .catch((err) => {
+            return { success: false }
+        })
+
+}

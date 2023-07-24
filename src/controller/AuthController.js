@@ -230,10 +230,10 @@ export const DeleteCsv = async (csv_name) => {
 
 }
 
-export const SendMassage = async (msg) => {
+export const SendMassage = async (data) => {
     return fetch("https://us-central1-authconfigurator.cloudfunctions.net/sms", {
         method: "POST",
-        body: JSON.stringify({ phone: msg }),
+        body: JSON.stringify(data),
     })
         // .then((res) => {
         //     if (res.status === 200) {

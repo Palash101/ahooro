@@ -20,7 +20,9 @@ import ShowBlackListSearch from '../component/Modal/showBlackListSearch';
 import PageLoader from '../component/pageLoader';
 import GetCsvListModal from '../component/Modal/getCsvList';
 import { DownloadCsv, DeleteCsv } from '../controller/AuthController';
-
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import PrivacyPolicy from '../component/Modal/privacyPolicy';
 
 function CircularProgressWithLabel(props) {
     return (
@@ -103,12 +105,57 @@ function UploadData() {
     const [phone, setPhone] = useState("")
     const [blackList, setBlackList] = useState("")
     const [msg, setMsg] = useState("")
+    const [policy, setPolicy] = useState(false)
+    const [privacyOpen, setPrivacyOpen] = useState(false)
+    console.log(privacyOpen)
 
+    const getLocation = (ip) => {
+        return fetch(`https://ipapi.co/${ip}/json/`, {
+            method: "GET",
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                return data
+            })
+    }
 
     // send msg
     const PostMsg = async () => {
-        const sendMsg = await SendMassage(msg)
-        console.log("sendMsg: ", sendMsg);
+        setLoading(true)
+        if (policy) {
+            fetch('https://api.ipify.org?format=json', {
+                method: "GET",
+                headers: {
+                }
+            })
+                .then((res) => res.json())
+                .then(async (data) => {
+                    const { city, region } = await getLocation(data.ip)
+                    console.log(region, "loc")
+                    const ts = new Date();
+
+                    const d = {
+                        ip: data.ip,
+                        phone: msg,
+                        timeStamp: ts,
+                        city: city,
+                        region: region
+                    }
+                    console.log(d)
+                    const sendMsg = await SendMassage(d)
+                    console.log("sendMsg: ", sendMsg);
+                    setMsg("")
+                    setPrivacyOpen(false)
+                    setLoading(false)
+                })
+        } else {
+            setMassage("¡Por favor, debe aceptar la política de privacidad!")
+            setOpen(true)
+            setLoading(false)
+        }
+
+
     }
     const handleChange = event => {
         setFile(event.target.files[0]);
@@ -596,7 +643,7 @@ function UploadData() {
                                     height: { md: "25%", xs: "auto" },
                                 }}
                             >
-                                <Grid container sx={{ height: "100%",rowGap:"20px" }}>
+                                <Grid container sx={{ height: "100%", rowGap: "20px" }}>
                                     <Grid item xs={12} md={4}>
                                         <Box
                                             sx={{
@@ -640,17 +687,25 @@ function UploadData() {
                                                 ml: "10px"
                                             }}
                                         >
-                                            <Box sx={{ display: "flex", height: "100%", justifyContent: "center", alignItems: "center", gap: "20px" }}>
-                                                <Box>
-                                                    <TextField
-                                                        type='text'
-                                                        size='small'
-                                                        value={msg}
-                                                        onChange={(e) => setMsg(e.target.value)}
-                                                    />
+                                            <Box sx={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+                                                <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "20px" }}>
+                                                    <Box>
+                                                        <TextField
+                                                            type='text'
+                                                            size='small'
+                                                            value={msg}
+                                                            onChange={(e) => setMsg(e.target.value)}
+                                                        />
+                                                    </Box>
+                                                    <Box>
+                                                        <Buttons onClick={PostMsg}>Enviar SMS</Buttons>
+                                                    </Box>
                                                 </Box>
-                                                <Box>
-                                                    <Buttons onClick={PostMsg}>Enviar SMS</Buttons>
+                                                <Box sx={{ display: "flex", maxWidth: "500px", mt: 2 }}>
+                                                    <FormControlLabel sx={{ ml: 0 }} control={
+                                                        <Checkbox sx={{ p: 0 }} checked={policy} onChange={(e) => setPolicy(e.target.checked)} />} />
+                                                    <Box>
+                                                        <Box sx={{ fontSize: "14px", color: "#7E868E", }}>Acepto la <Box component="span" onClick={() => setPrivacyOpen(true)} sx={{ color: "blue", cursor: "pointer" }}>política de privacidad</Box></Box></Box>
                                                 </Box>
                                             </Box>
                                         </Box>
@@ -680,6 +735,7 @@ function UploadData() {
                 message={massage}
                 action={action}
             />
+            <PrivacyPolicy open={privacyOpen} setOpen={setPrivacyOpen} />
             <ShowSearch data={data} setModalOpen={setModalOpen} modalOpen={modalOpen} />
             <ShowBlackListSearch DeleteNumber={DeleteNumber} data={blackListNumber} setModalOpen={setBlackListModalOpen} modalOpen={blackListModalOpen} />
             <GetCsvListModal downloadCsv={downloadCsv} DeleteCsvList={DeleteCsvList} data={csvListData} setModalOpen={setGetCsvModalOpen} modalOpen={getCsvModalOpen} />

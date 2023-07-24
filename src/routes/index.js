@@ -19,6 +19,7 @@ import {
 // import SignIn from "../sign-in";
 import Home from "../Home";
 import PoliticaDeCookies from "../politicadecookies";
+import PrivacyPolicy from "../privacy-policy";
 
 const PrivateRoutes = () => {
   const user = localStorage.getItem("user");
@@ -46,6 +47,7 @@ const AppRoutes = () => {
         <Route exact path="/" element={<Home />} />
         <Route element={<PrivateRoutes />}>
           <Route exact path="/politicadecookies" element={<PoliticaDeCookies />} />
+          <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         </Route>
       </Routes>
     </BrowserRouter>

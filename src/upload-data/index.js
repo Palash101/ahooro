@@ -20,8 +20,8 @@ import ShowBlackListSearch from '../component/Modal/showBlackListSearch';
 import PageLoader from '../component/pageLoader';
 import GetCsvListModal from '../component/Modal/getCsvList';
 import { DownloadCsv, DeleteCsv } from '../controller/AuthController';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 import PrivacyPolicy from '../component/Modal/privacyPolicy';
 
 function CircularProgressWithLabel(props) {
@@ -106,57 +106,47 @@ function UploadData() {
     const [phone, setPhone] = useState("")
     const [blackList, setBlackList] = useState("")
     const [msg, setMsg] = useState("")
-    const [policy, setPolicy] = useState(false)
+    // const [policy, setPolicy] = useState(false)
     const [privacyOpen, setPrivacyOpen] = useState(false)
     console.log(privacyOpen)
 
-    const getLocation = (ip) => {
-        return fetch(`https://ipapi.co/${ip}/json/`, {
-            method: "GET",
-        })
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                return data
-            })
-    }
+    // const getLocation = (ip) => {
+    //     return fetch(`https://ipapi.co/${ip}/json/`, {
+    //         method: "GET",
+    //     })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data)
+    //             return data
+    //         })
+    // }
 
     // send msg
     const PostMsg = async () => {
         setLoading(true)
-        if (policy) {
-            fetch('https://api.ipify.org?format=json', {
-                method: "GET",
-                headers: {
-                }
-            })
-                .then((res) => res.json())
-                .then(async (data) => {
-                    const { city, region } = await getLocation(data.ip)
-                    console.log(region, "loc")
-                    const ts = new Date();
+        // fetch('https://api.ipify.org?format=json', {
+        //     method: "GET",
+        //     headers: {
+        //     }
+        // })
+        //     .then((res) => res.json())
+        //     .then(async (data) => {
+        //         const { city, region } = await getLocation(data.ip)
+        //         console.log(region, "loc")
+        //         const ts = new Date();
 
-                    const d = {
-                        ip: data.ip,
-                        phone: msg,
-                        timeStamp: ts,
-                        city: city,
-                        region: region
-                    }
-                    console.log(d)
-                    const sendMsg = await SendMassage(d)
-                    console.log("sendMsg: ", sendMsg);
-                    setMsg("")
-                    setMassage("success")
-                    setOpen(true)
-                    setPrivacyOpen(false)
-                    setLoading(false)
-                })
-        } else {
-            setMassage("¡Por favor, debe aceptar la política de privacidad!")
-            setOpen(true)
-            setLoading(false)
+        const d = {
+            phone: msg,
         }
+        console.log(d)
+        const sendMsg = await SendMassage(d)
+        console.log("sendMsg: ", sendMsg);
+        setMsg("")
+        setMassage("success")
+        setOpen(true)
+        setPrivacyOpen(false)
+        setLoading(false)
+        // })
 
 
     }
@@ -705,12 +695,12 @@ function UploadData() {
                                                         <Buttons onClick={PostMsg}>Enviar SMS</Buttons>
                                                     </Box>
                                                 </Box>
-                                                <Box sx={{ display: "flex", maxWidth: "500px", mt: 2 }}>
+                                                {/* <Box sx={{ display: "flex", maxWidth: "500px", mt: 2 }}>
                                                     <FormControlLabel sx={{ ml: 0 }} control={
                                                         <Checkbox sx={{ p: 0 }} checked={policy} onChange={(e) => setPolicy(e.target.checked)} />} />
                                                     <Box>
                                                         <Box sx={{ fontSize: "14px", color: "#7E868E", }}>Acepto la <Box component="span" onClick={() => setPrivacyOpen(true)} sx={{ color: "blue", cursor: "pointer" }}>política de privacidad</Box></Box></Box>
-                                                </Box>
+                                                </Box> */}
                                             </Box>
                                         </Box>
                                     </Grid>

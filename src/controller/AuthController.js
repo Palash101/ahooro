@@ -4,18 +4,18 @@ import {
     signInWithEmailAndPassword,
 
 } from "firebase/auth";
-// import { db } from "../config/firebaseConfig";
+import { db } from "../config/firebaseConfig";
 import {
     // addDoc,
-    // collection,
+    collection,
     // where,
-    // doc,
+    doc,
     // getDoc,
     // getDocs,
     // query,
     // deleteDoc,
     // updateDoc,
-    // setDoc,
+    setDoc,
     // getStorage,
 } from "firebase/firestore";
 
@@ -273,6 +273,8 @@ export const DeleteBlackListNumber = async (blackListNumber) => {
 
 
 
-export const AddNewNumber = async (phone) => {
-
+export const AcceptPrivacy = async (data) => {
+    console.log(data, "data")
+    const Ref = doc(collection(db, "users_sms"));
+    await setDoc(Ref, data);
 }

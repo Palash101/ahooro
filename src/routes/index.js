@@ -16,6 +16,7 @@ import {
 // import Profile from "../screens/user/profile";
 // import ProjectCreate from "../screens/user/project/create";
 // import ProjectEdit from "../screens/user/project/edit";
+import PrivacyPolicy from "../privacy-policy";
 import SignIn from "../sign-in";
 // import Home from "../Home";
 import UploadData from "../upload-data";
@@ -46,6 +47,7 @@ const AppRoutes = () => {
         {/* <Route exact path="/" element={<Home />} /> */}
         <Route element={<PrivateRoutes />}>
           <Route exact path="/upload-data" element={<UploadData />} />
+          <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -275,6 +275,6 @@ export const DeleteBlackListNumber = async (blackListNumber) => {
 
 export const AcceptPrivacy = async (data) => {
     console.log(data, "data")
-    const Ref = doc(collection(db, "users_sms"));
-    await setDoc(Ref, data);
+    // const Ref = doc(collection(db, "users_sms"));
+    // await setDoc(Ref, data);
 }

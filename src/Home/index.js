@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import NavBar from '../component/NavBar'
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
@@ -11,13 +11,13 @@ import Checkbox from '@mui/material/Checkbox'
 import Buttons from '../component/Button'
 import { Button } from '@mui/material'
 import Snackbar from '@mui/material/Snackbar';
-import PrivacyPolicy from '../component/Modal/privacyPolicy'
+import PrivacyPolicyModal from '../component/Modal/privacyPolicy'
 import { createLead } from '../controller/AuthController'
 import PageLoader from '../component/pageLoader'
 import CookieBot from 'react-cookiebot'
 import LegalWarning from '../component/Modal/legalWarning'
 import CookiesPolicy from '../component/Modal/cookiesPolicy'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function Home() {
     const [phone, setPhone] = useState("")
@@ -30,6 +30,18 @@ export default function Home() {
     const [checkedMsg, setCheckedMsg] = useState("")
 
     const navigate = useNavigate()
+    // const { state } = useLocation();
+    // console.log("state: ", state);
+
+    // useEffect(() => {
+    //     if (state) {
+    //         setCheckedMsg("Policy Accepted")
+    //         setAlert(true)
+    //     } else {
+    //         console.log("no", state);
+    //     }
+    // }, [])
+
     const getLocation = (ip) => {
         return fetch(`https://ipapi.co/${ip}/json/`, {
             method: "GET",
@@ -327,7 +339,7 @@ export default function Home() {
                         <Typography sx={{ fontSize: "12px" }}>ALTEL COMUNICACIONES XXI SL © {new Date().getFullYear()}</Typography>
                     </Box>
                 </Box>
-                <PrivacyPolicy open={open} setOpen={setOpen} />
+                <PrivacyPolicyModal open={open} setOpen={setOpen} />
                 <LegalWarning open={open2} setOpen={setOpen2} />
                 <CookiesPolicy open={open3} setOpen={setOpen3} />
                 <CookieBot domainGroupId='6be1ca9c-e0da-4b9c-8ace-c65228feaf1b' />

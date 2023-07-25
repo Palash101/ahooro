@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 
-export default function PrivacyPolicy({ open, setOpen, scroll }) {
+export default function PrivacyPolicyModal({ open, setOpen, scroll }) {
 
     const handleClose = () => {
         setOpen(false);

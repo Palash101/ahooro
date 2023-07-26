@@ -8,20 +8,23 @@ import LegalWarning from '../component/Modal/legalWarning'
 import Snackbar from '@mui/material/Snackbar'
 import PageLoader from '../component/pageLoader'
 import { useNavigate } from 'react-router-dom'
-
+import { OutlinedInput } from '@mui/material'
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function PrivacyPolicy() {
+    const navigate = useNavigate()
+    const urlParams = new URLSearchParams(window.location.search);
+    const phone = urlParams.get('phone');
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
     const [alert, setAlert] = useState(false)
     const [loading, setLoading] = useState(false)
     const [checkedMsg, setCheckedMsg] = useState("")
+    const [changePhone, setChangePhone] = useState(phone)
+    const [editPhone, setEditPhone] = useState(false)
 
-    const navigate = useNavigate()
-
-    var urlParams = new URLSearchParams(window.location.search);
-
-    var phone = urlParams.get('phone');
     const getLocation = (ip) => {
         return fetch(`https://ipapi.co/${ip}/json/`, {
             method: "GET",
@@ -52,6 +55,9 @@ export default function PrivacyPolicy() {
                     phone: phone,
                     city: city,
                     region: region
+                }
+                if (phone !== changePhone) {
+                    d["sms_phone"] = changePhone
                 }
                 const policy = await SendMassage(d)
                 console.log("policy: ", policy.success);
@@ -85,6 +91,26 @@ export default function PrivacyPolicy() {
                     p: 2
                 }}>
                     <Box>
+                        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+                            <OutlinedInput
+                                readOnly={editPhone ? false : true}
+                                size='small'
+                                value={changePhone}
+                                onChange={(e) => setChangePhone(e.target.value)}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={() => setEditPhone(!editPhone)}
+                                            // onMouseDown={handleMouseDownPassword}
+                                            edge="end"
+                                        >
+                                            {editPhone ? <EditIcon /> : <EditIcon />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        </Box>
                         <Box sx={{ fontSize: "20px", color: "#7E868E", fontWeight: 500 }}>Acepto los términos del <Box component="span" onClick={() => setOpen2(true)} sx={{ cursor: "pointer", color: "blue", fontWeight: 600 }}>Aviso legal</Box> y de la <Box onClick={() => setOpen(true)} component="span" sx={{ cursor: "pointer", color: "blue", fontWeight: 600 }}>Política de Privacidad</Box> para que ALTEL COMUNICACIONES XXI, SL trate mis datos con la finalidad de gestionar mi solicitud de información y recibir comunicaciones comerciales. También quedo informado que podré ejercitar los derechos que otorga la normativa de protección de datos siguiendo lo establecido en la política de privacidad.</Box>
                         {/* <Typography variant='body2'>Plantilla de Política de Privacidad</Typography>
                         <Typography variant='body2'>TITULAR te informa sobre su Política de Privacidad respecto del tratamiento y protección de los datos de carácter personal de los usuarios y clientes que puedan ser recabados por la navegación o contratación de servicios a través del sitio Web DIRECCIÓN-WEB.</Typography>

@@ -30,6 +30,7 @@ import { DownloadCsv, DeleteCsv } from "../controller/AuthController";
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
 import PrivacyPolicy from "../component/Modal/privacyPolicy";
+import { SearchSms } from "../controller/AuthController";
 
 function CircularProgressWithLabel(props) {
   return (
@@ -194,7 +195,7 @@ function UploadData() {
   const HandlePhoneSearch = async () => {
     if (phoneSearch) {
         setLoading(true);
-        const value = await SearchDoc(phoneSearch);
+        const value = await SearchSms(phoneSearch);
         if (value.success) {
           setBlackListNumber(value.data);
           setPhoneModalOpen(true);

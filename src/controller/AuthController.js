@@ -156,6 +156,28 @@ export const SearchDoc = async (search) => {
 
 }
 
+export const SearchSms= async (search) => {
+    const url = apiPath + 'search-user-sms?phone=' + search
+    return fetch(url, {
+        method: "GET"
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.length) {
+                console.log(data, 'data added')
+                return { success: true, data: data }
+            }
+            else {
+                console.log(data, 'data error')
+                return { success: false }
+            }
+        })
+        .catch((err) => {
+            return { success: false }
+        })
+
+}
+
 export const BlackListSearchDoc = async (blackListSearch) => {
     const url = apiPath + 'blackList_search?phone=' + blackListSearch
     return fetch(url, {

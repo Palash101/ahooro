@@ -11,6 +11,7 @@ import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
 import {
   DeleteBlackListNumber,
+  DownloadPhoneSms,
   GetCsvList,
   SearchDoc,
   SendMassage,
@@ -124,6 +125,7 @@ function UploadData() {
   const [blackList, setBlackList] = useState("");
   const [msg, setMsg] = useState("");
   const [phoneSearch, setPhoneSearch] = useState("");
+  const [phoneSmsData, setPhoneSmsData] = useState([]);
   // const [policy, setPolicy] = useState(false)
   const [privacyOpen, setPrivacyOpen] = useState(false);
   console.log(privacyOpen);
@@ -194,20 +196,20 @@ function UploadData() {
 
   const HandlePhoneSearch = async () => {
     if (phoneSearch) {
-        setLoading(true);
-        const value = await SearchSms(phoneSearch);
-        if (value.success) {
-          setBlackListNumber(value.data);
-          setPhoneModalOpen(true);
-        } else {
-          setMassage("Datos no encontrados");
-          setOpen(true);
-        }
-        setLoading(false);
+      setLoading(true);
+      const value = await SearchSms(phoneSearch);
+      if (value.success) {
+        setPhoneSmsData(value.data);
+        setPhoneModalOpen(true);
       } else {
-        setMassage("Por favor ingrese el valor para la búsqueda");
+        setMassage("Datos no encontrados");
         setOpen(true);
       }
+      setLoading(false);
+    } else {
+      setMassage("Por favor ingrese el valor para la búsqueda");
+      setOpen(true);
+    }
   };
 
   // get csv list
@@ -242,6 +244,18 @@ function UploadData() {
       setLoading(false);
     }
   };
+
+  const DownloadSms = async (data) => {
+    const result = await DownloadPhoneSms(data)
+    console.log("result: ", result);
+    if (result.success) {
+      const link = document.createElement("a");
+      link.href = result.data;
+      link.download = "data";
+      link.click();
+      setLoading(false);
+    }
+  }
 
   const DeleteCsvList = async (index) => {
     console.log(csvListData[index]);
@@ -954,9 +968,10 @@ function UploadData() {
         modalOpen={blackListModalOpen}
       />
       <ShowPhoneSearch
-        data={blackListNumber}
+        data={phoneSmsData}
         setModalOpen={setPhoneModalOpen}
         modalOpen={phoneModalOpen}
+        DownloadSms={DownloadSms}
       />
       <GetCsvListModal
         downloadCsv={downloadCsv}

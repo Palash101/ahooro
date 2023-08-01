@@ -4,18 +4,18 @@ import {
     signInWithEmailAndPassword,
 
 } from "firebase/auth";
-import { db } from "../config/firebaseConfig";
+// import { db } from "../config/firebaseConfig";
 import {
     // addDoc,
-    collection,
+    // collection,
     // where,
-    doc,
+    // doc,
     // getDoc,
     // getDocs,
     // query,
     // deleteDoc,
     // updateDoc,
-    setDoc,
+    // setDoc,
     // getStorage,
 } from "firebase/firestore";
 
@@ -156,14 +156,14 @@ export const SearchDoc = async (search) => {
 
 }
 
-export const SearchSms= async (search) => {
+export const SearchSms = async (search) => {
     const url = apiPath + 'search-user-sms?phone=' + search
     return fetch(url, {
         method: "GET"
     })
         .then((res) => res.json())
         .then((data) => {
-            if (data.length) {
+            if (data) {
                 console.log(data, 'data added')
                 return { success: true, data: data }
             }
@@ -291,6 +291,26 @@ export const DeleteBlackListNumber = async (blackListNumber) => {
             return { success: false }
         })
 
+}
+
+export const DownloadPhoneSms = async (data) => {
+
+    return fetch(apiPath + 'create_csv_one_number_sms', {
+        method: "POST",
+        body: JSON.stringify({docId: data}),
+        headers: {
+        }
+    })
+        .then((res) => res.blob())
+        .then((data) => {
+            // console.log("data: ", data);
+            const objectURL = URL.createObjectURL(data);
+            return { success: true, data: objectURL }
+        })
+        .catch((err) => {
+            console.log("err: ", err);
+            return { success: false }
+        })
 }
 
 

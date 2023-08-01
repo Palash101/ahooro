@@ -10,10 +10,11 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Divider, Typography } from '@mui/material';
+import { Divider, IconButton, Typography } from '@mui/material';
+import DownloadIcon from '@mui/icons-material/Download';
 
 
-export default function ShowPhoneSearch({ modalOpen, setModalOpen, data }) {
+export default function ShowPhoneSearch({ modalOpen, setModalOpen, data, DownloadSms }) {
     console.log("data: ", data);
     const handleClose = () => {
         setModalOpen(false);
@@ -57,23 +58,38 @@ export default function ShowPhoneSearch({ modalOpen, setModalOpen, data }) {
                                                 <TableCell align="left">IP</TableCell>
                                                 <TableCell align="left">Región</TableCell>
                                                 <TableCell align="left">Fecha</TableCell>
+                                                {data.sms_phone &&
+                                                    <TableCell align="left">User sms</TableCell>
+                                                }
+                                                <TableCell align="left">download</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {data.map((row ,index) => (
+                                            {/* {data.map((row, index) => ( */}
+                                            {data ?
                                                 <TableRow
-                                                    key={index}
                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                 >
                                                     <TableCell component="th" scope="row">
-                                                        {row.phone}
+                                                        {data.phone}
                                                     </TableCell>
-                                                    <TableCell align="left">{row.city}</TableCell>
-                                                    <TableCell align="left">{row.ip}</TableCell>
-                                                    <TableCell align="left">{row.region}</TableCell>
-                                                    <TableCell align="left">{Date(row.timestamp)}</TableCell>
+                                                    <TableCell align="left">{data.city}</TableCell>
+                                                    <TableCell align="left">{data.ip}</TableCell>
+                                                    <TableCell align="left">{data.region}</TableCell>
+                                                    <TableCell align="left">{Date(data.timestamp)}</TableCell>
+                                                    {data.sms_phone &&
+                                                        <TableCell align="left">{data.sms_phone}</TableCell>
+                                                    }
+                                                    <TableCell align="center">
+                                                        <IconButton onClick={() => DownloadSms(data.id)}>
+                                                            <DownloadIcon color='primary' />
+                                                        </IconButton>
+                                                    </TableCell>
                                                 </TableRow>
-                                            ))}
+                                                :
+                                                <></>
+                                            }
+                                            {/* ))} */}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>

@@ -246,6 +246,7 @@ function UploadData() {
   };
 
   const DownloadSms = async (data) => {
+    setLoading(true)
     const result = await DownloadPhoneSms(data)
     console.log("result: ", result);
     if (result.success) {

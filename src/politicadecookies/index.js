@@ -78,7 +78,7 @@ export default function PoliticaDeCookies() {
                                 </Box>
                                 <Typography>En cambio, si se desea bloquear las cookies analíticas de Google, se puede instalar un complemento en el navegador siguiendo las instrucciones indicadas en el siguiente enlace: <Link href='https://tools.google.com/dlpage/gaoptout.'>https://tools.google.com/dlpage/gaoptout.</Link></Typography>
                                 <Box component="li" sx={{ fontWeight: 700, py: 1 }}>MÁS INFORMACIÓN</Box>
-                                <Typography>Para obtener más información sobre el tratamiento de datos, recomendamos visitar nuestra política de privacidad. Además, Cualquier usuario que tenga cualquier duda acerca de estas tecnologías puede remitirnos la consulta a la dirección electrónica info@hartodepagar.com</Typography>
+                                <Typography>Para obtener más información sobre el tratamiento de datos, recomendamos visitar nuestra política de privacidad. Además, Cualquier usuario que tenga cualquier duda acerca de estas tecnologías puede remitirnos la consulta a la dirección electrónica <a href='mailto:info@hartodepagar.com'>info@hartodepagar.com</a></Typography>
                             </Box>
                         </Box>
                     </Box>

@@ -46,8 +46,8 @@ const AppRoutes = () => {
         {/* <Route exact path="/sign-in" element={<SignIn />} /> */}
         <Route exact path="/" element={<Home />} />
         <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route element={<PrivateRoutes />}>
           <Route exact path="/politicadecookies" element={<PoliticaDeCookies />} />
+        <Route element={<PrivateRoutes />}>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -61,7 +61,7 @@ export default function PrivacyPolicyModal({ open, setOpen, scroll }) {
                                     <Box sx={{ listStyle: "none", fontWeight: 700, py: 1 }} component="li">- Por el envío de formularios de contacto o correos electrónicos:</Box>
                                 </Box>
                                 <Box sx={{ listStyle: "disc", pb: 1 }} component="ul">
-                                    <Box component="li">Finalidad: Poder responder a las consultas planteadas y ponerse en contacto con el usuario para remitirle información comercial sobre tarifas de servicios de telefonía y conexión a internet.</Box>
+                                    <Box component="li">Finalidad: Poder responder a las consultas planteadas y ponerse en contacto con el usuario a través de llamadas telefónicas para remitirle información comercial sobre tarifas de servicios de telefonía y conexión a internet.</Box>
                                     <Box component="li">Legitimación: La base legítima con la que se tratarán los datos reside en la ejecución de las medidas precontractuales solicitadas y/o el consentimiento prestado.</Box>
                                     <Box component="li">Plazos de conservación: Los datos serán conservados durante el tiempo necesario para responder a las cuestiones planteadas, durante un plazo máximo de un año para aquellos supuestos que no deriven en una acción comercial.</Box>
                                 </Box>

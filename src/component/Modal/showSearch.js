@@ -14,10 +14,20 @@ import { Divider, Typography } from '@mui/material';
 
 
 export default function ShowSearch({ modalOpen, setModalOpen, data }) {
-    console.log("data: ", data);
     const handleClose = () => {
         setModalOpen(false);
     };
+
+    const HandleTimeStamp = (val) => {
+        console.log("value: ", val);
+        const seconds = val._seconds;
+        const nanoseconds = val._nanoseconds;
+
+        const milliseconds = seconds * 1000 + nanoseconds / 1e6;
+        const date = new Date(milliseconds);
+
+        return date.toString()
+    }
 
     return (
         <>
@@ -60,7 +70,7 @@ export default function ShowSearch({ modalOpen, setModalOpen, data }) {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {data.map((row ,index) => (
+                                            {data.map((row, index) => (
                                                 <TableRow
                                                     key={index}
                                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -71,7 +81,7 @@ export default function ShowSearch({ modalOpen, setModalOpen, data }) {
                                                     <TableCell align="left">{row.city}</TableCell>
                                                     <TableCell align="left">{row.ip}</TableCell>
                                                     <TableCell align="left">{row.region}</TableCell>
-                                                    <TableCell align="left">{Date(row.timestamp)}</TableCell>
+                                                    <TableCell align="left">{HandleTimeStamp(row.timestamp)}</TableCell>
                                                 </TableRow>
                                             ))}
                                         </TableBody>

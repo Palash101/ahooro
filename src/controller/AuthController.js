@@ -45,16 +45,31 @@ export const UserEmailLogin = async (loginEmail, loginPassword) => {
     }
 }
 
-export const createLead = async (data) =>{
-    console.log(data,'auth')
-    try{
-        const ref = await  addDoc(collection(db,"users"),data)
-        console.log(ref,'data added')
-        return {success:true, ref}
+export const createLead = async (data) => {
+    console.log(data, 'auth')
+    try {
+        // const ref = await  addDoc(collection(db,"users"),data)
+        // console.log(ref,'data added')
+        // return {success:true, ref}
+        const response = await fetch("https://europe-west3-authconfigurator.cloudfunctions.net/save-user-frontend", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        console.log("data: ", responseData);
+        return { success: true };
     }
-    catch(err){
-        console.log(err,'error')
-        return{success:false,err:err}
+    catch (err) {
+        console.error(err, 'error');
+        return { success: false, err: err.message };
     }
 
 }
@@ -64,14 +79,6 @@ export const SendMassage = async (data) => {
         method: "POST",
         body: JSON.stringify(data),
     })
-        // .then((res) => {
-        //     if (res.status === 200) {
-        //         return { success: true }
-        //     } else {
-        //         return { success: false }
-        //     }
-        // })
-
         .then((res) => res.json())
         .then((data) => {
             return { success: true }

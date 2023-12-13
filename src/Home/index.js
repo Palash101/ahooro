@@ -65,7 +65,6 @@ export default function Home() {
                     .then((res) => res.json())
                     .then(async (data) => {
                         const { city, region } = await getLocation(data.ip)
-                        console.log(region, "loc")
                         const ts = new Date();
 
                         const d = {
@@ -75,6 +74,8 @@ export default function Home() {
                             city: city,
                             region: region
                         }
+                        console.log("d: ", d);
+                        setLoading(false)
                         const result = await createLead(d)
                         console.log(result, "lead")
                         if (result.success) {

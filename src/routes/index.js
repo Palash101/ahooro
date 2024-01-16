@@ -20,24 +20,25 @@ import PrivacyPolicy from "../privacy-policy";
 import SignIn from "../sign-in";
 // import Home from "../Home";
 import UploadData from "../upload-data";
+import Payments from "../payments";
 
 const PrivateRoutes = () => {
   const user = localStorage.getItem("user");
+
   if (!user) {
     return <Navigate to="/" />;
   }
+
   return <Outlet />;
 };
 
-// const OtherRoutes = () =>{
-
-//   const user = useRecoilValue(userState);
-//   if(user){
-//     console.log(user,'other route')
-//     return <Navigate to="/" />;
-//   }
-//   return <Outlet />;
-// }
+const PaymentRoute = () => {
+  const paymentsPermission = localStorage.getItem('accessedPayments');
+  if (!paymentsPermission) {
+    return <Navigate to="/upload-data" />;
+  }
+  return <Outlet />;
+};
 
 const AppRoutes = () => {
   return (
@@ -48,6 +49,9 @@ const AppRoutes = () => {
         <Route element={<PrivateRoutes />}>
           <Route exact path="/upload-data" element={<UploadData />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
+        </Route>
+        <Route element={<PaymentRoute />}>
+          <Route exact path="/payments" element={<Payments />} />
         </Route>
       </Routes>
     </BrowserRouter>

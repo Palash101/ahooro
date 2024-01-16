@@ -297,7 +297,7 @@ export const DownloadPhoneSms = async (data) => {
 
     return fetch(apiPath + 'create_csv_one_number_sms', {
         method: "POST",
-        body: JSON.stringify({docId: data}),
+        body: JSON.stringify({ docId: data }),
         headers: {
         }
     })
@@ -319,4 +319,22 @@ export const AcceptPrivacy = async (data) => {
     console.log(data, "data")
     // const Ref = doc(collection(db, "users_sms"));
     // await setDoc(Ref, data);
+}
+
+export const PasswordCheck = async (value) => {
+    console.log(JSON.stringify({ password: value }))
+    return fetch("http://127.0.0.1:5001/learning-react-5b450/us-central1/helloWorld", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password: value }),
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            return data
+        })
+        .catch((err) => {
+            return { success: false }
+        })
 }

@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Buttons from "../component/Button";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
@@ -9,17 +9,19 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import SearchIcon from "@mui/icons-material/Search";
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   DeleteBlackListNumber,
   DownloadPhoneSms,
   GetCsvList,
+  PasswordCheck,
   SearchDoc,
   SendMassage,
   saveCsvFile,
 } from "../controller/AuthController";
 import ShowSearch from "../component/Modal/showSearch";
 import AddIcon from "@mui/icons-material/Add";
-import { CircularProgress, Grid, TextField } from "@mui/material";
+import { CircularProgress, Grid, Menu, MenuItem, TextField } from "@mui/material";
 import { createLead } from "../controller/AuthController";
 import { createBlackList } from "../controller/AuthController";
 import { BlackListSearchDoc } from "../controller/AuthController";
@@ -32,6 +34,7 @@ import { DownloadCsv, DeleteCsv } from "../controller/AuthController";
 // import Checkbox from '@mui/material/Checkbox';
 import PrivacyPolicy from "../component/Modal/privacyPolicy";
 import { SearchSms } from "../controller/AuthController";
+import CheckPasswordModal from "../component/Modal/checkPassword";
 
 function CircularProgressWithLabel(props) {
   return (
@@ -116,11 +119,12 @@ function UploadData() {
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
   const [csvListData, setCsvListData] = useState("");
   const [getCsvModalOpen, setGetCsvModalOpen] = useState(false);
+  const [passwordCheckModal, setPasswordCheckModal] = useState(false);
+  const [checkedPassword, setCheckedPassword] = useState("");
   const [massage, setMassage] = useState("");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
-  console.log("progress: ", progress);
   const [phone, setPhone] = useState("");
   const [blackList, setBlackList] = useState("");
   const [msg, setMsg] = useState("");
@@ -128,7 +132,13 @@ function UploadData() {
   const [phoneSmsData, setPhoneSmsData] = useState([]);
   // const [policy, setPolicy] = useState(false)
   const [privacyOpen, setPrivacyOpen] = useState(false);
-  console.log(privacyOpen);
+  const [menuHeight, setMenuHeight] = useState(0)
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const menuRef = useRef()
+
+  useEffect(() => {
+    setMenuHeight(menuRef.current.clientHeight)
+  }, [menuRef])
 
   // const getLocation = (ip) => {
   //     return fetch(`https://ipapi.co/${ip}/json/`, {
@@ -168,6 +178,7 @@ function UploadData() {
     setLoading(false);
     // })
   };
+
   const handleChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -351,6 +362,7 @@ function UploadData() {
       setOpen(true);
     }
   };
+
   const handleClick = () => {
     const formData = new FormData();
     formData.append("file", file);
@@ -414,6 +426,30 @@ function UploadData() {
       </IconButton>
     </>
   );
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleOpenList = async () => {
+    const result = await PasswordCheck(checkedPassword)
+    if (result.valid) {
+      console.log("resulttrue: ", result);
+      localStorage.setItem('accessedPayments', true);
+      navigate("/payments")
+    } else {
+      console.log("resultFalse: ", result);
+    }
+  }
+
+  useEffect(() => {
+    localStorage.removeItem('accessedPayments');
+  }, []);
+
   return (
     <>
       {progress > 0 && progress < 100 ? (
@@ -421,7 +457,36 @@ function UploadData() {
       ) : (
         <></>
       )}
-      <Box sx={{ height: { md: "97vh", xs: "auto" }, p: 1 }}>
+      <Box sx={{ height: { md: `calc(97vh - ${menuHeight}px)`, xs: "auto" }, p: 1 }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }} ref={menuRef}>
+          <IconButton onClick={handleOpenUserMenu}>
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            sx={{ mt: "45px" }}
+            id="menu-appbar"
+            anchorEl={anchorElUser}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorElUser)}
+            onClose={handleCloseUserMenu}
+          >
+            {/* const settings = ["Profile", "Logout"]; */}
+            <MenuItem onClick={() => {
+              setPasswordCheckModal(true)
+              handleCloseUserMenu()
+            }}>
+              <Typography textAlign="center">Pagos</Typography>
+            </MenuItem>
+          </Menu>
+        </Box>
         <Box
           sx={{
             borderRadius: "12px",
@@ -429,11 +494,11 @@ function UploadData() {
             height: "100%",
           }}
         >
-          <Grid sx={{ height: "90%" }} container>
+          <Grid sx={{ height: "95%", p: "20px" }} spacing={"20px"} container>
             <Grid
-              sx={{
-                padding: "20px 10px 20px 20px",
-              }}
+              // sx={{
+              //   padding: "20px 10px 20px 20px",
+              // }}
               item
               xs={12}
               md={6}
@@ -462,6 +527,9 @@ function UploadData() {
                         top: { md: "50%", xs: 0 },
                         left: { md: "50%", xs: 0 },
                         transform: { md: "translate(-50%, -50%)", xs: "none" },
+                        display: "flex",
+                        flexDirection: "column",
+                        rowGap: 2
                       }}
                     >
                       <Box component="Box">
@@ -473,9 +541,9 @@ function UploadData() {
                               flexDirection: "column",
                               justifyContent: "center",
                               alignItems: "center",
+                              rowGap: 1,
                               py: "8px",
                               px: { md: "16px", xs: 0 },
-                              marginBottom: 2,
                             }}
                           >
                             <Box
@@ -488,7 +556,7 @@ function UploadData() {
                                 },
                               }}
                             >
-                              <Typography sx={{ mb: 2 }}>
+                              <Typography>
                                 Subida de múltiples contactos
                               </Typography>
                             </Box>
@@ -532,7 +600,8 @@ function UploadData() {
                             flexDirection: "column",
                             alignItems: "center",
                             border: "1px dashed black",
-                            padding: "50px",
+                            paddingY: "20px",
+                            paddingX: "50px",
                             rowGap: 1,
                           }}
                         >
@@ -611,7 +680,7 @@ function UploadData() {
             <Grid
               item
               sx={{
-                padding: "20px 20px 20px 10px",
+                // padding: "20px 20px 20px 10px",
                 display: "flex",
                 flexDirection: "column",
                 rowGap: "20px",
@@ -934,9 +1003,9 @@ function UploadData() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              height: "5%"
             }}
           >
-            {/* <Button onClick={() => navigate('/')} sx={{ mt: 1, textTransform: "none" }} variant='text'>Volver a la página de inicio</Button> */}
             <Buttons
               onClick={() => {
                 localStorage.clear();
@@ -980,6 +1049,13 @@ function UploadData() {
         data={csvListData}
         setModalOpen={setGetCsvModalOpen}
         modalOpen={getCsvModalOpen}
+      />
+      <CheckPasswordModal
+        open={passwordCheckModal}
+        handleClose={() => setPasswordCheckModal(false)}
+        password={checkedPassword}
+        setPassword={setCheckedPassword}
+        handleClick={handleOpenList}
       />
       {loading && <PageLoader />}
     </>

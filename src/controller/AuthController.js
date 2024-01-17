@@ -83,6 +83,24 @@ export const saveCsvFile = async (data) => {
         .catch(err => console.log(err))
 }
 
+export const saveXlxsFile = async (data) => {
+    return fetch('https://europe-west3-authconfigurator.cloudfunctions.net/xlsx_to_csv', {
+        method: "POST",
+        body: data,
+        headers: {
+        }
+    })
+        .then((res) => res.json())
+        .then(data => {
+            if (data) {
+                return { success: true, data: data }
+            }
+            return { success: false }
+        })
+        .catch(err => console.log(err))
+}
+
+
 export const createLead = async (data) => {
     return fetch(apiPath + 'one_number ', {
         method: "POST",
@@ -323,7 +341,7 @@ export const AcceptPrivacy = async (data) => {
 
 export const PasswordCheck = async (value) => {
     console.log(JSON.stringify({ password: value }))
-    return fetch("http://127.0.0.1:5001/learning-react-5b450/us-central1/helloWorld", {
+    return fetch("https://us-central1-authconfigurator.cloudfunctions.net/password", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',

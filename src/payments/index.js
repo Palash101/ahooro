@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PageLoader from '../component/pageLoader';
 import { Box, CircularProgress, Divider, Grid, IconButton, InputBase, Menu, MenuItem, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import { GetCsvList, saveCsvFile } from '../controller/AuthController';
+import { GetCsvList, saveCsvFile,saveXlxsFile } from '../controller/AuthController';
 import styled from '@emotion/styled';
 import MenuIcon from '@mui/icons-material/Menu';
 import Buttons from '../component/Button';
@@ -115,7 +115,7 @@ export default function Payments() {
             startInterval();
             const interval = setInterval(startInterval, 6000);
             //  setLoading(true)
-            const saveData = saveCsvFile(formData);
+            const saveData = saveXlxsFile(file);
             saveData.then((data) => {
                 setTimeout(() => {
                     if (data.success) {
@@ -291,7 +291,7 @@ export default function Payments() {
                                                         variant="contained"
                                                     >
                                                         <input
-                                                            accept=".csv"
+                                                            // accept=".csv"
                                                             style={{
                                                                 position: "absolute",
                                                                 top: 0,

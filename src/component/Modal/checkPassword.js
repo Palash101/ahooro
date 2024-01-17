@@ -2,20 +2,28 @@ import React, { useState } from 'react'
 import Dialog from '@mui/material/Dialog';
 import Buttons from '../Button';
 import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import CloseIcon from '@mui/icons-material/Close';
+import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
-import Snackbar from '@mui/material/Snackbar';
-import { createLead } from '../../controller/AuthController';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import PageLoader from '../pageLoader';
 import { Typography } from '@mui/material';
 
 
 export default function CheckPasswordModal({ open, handleClose, password, setPassword, handleClick }) {
     const [alert, setAlert] = useState(false)
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     return (
         <>
@@ -36,10 +44,24 @@ export default function CheckPasswordModal({ open, handleClose, password, setPas
                     <Typography sx={{ pb: 1 }}>Contraseña:</Typography>
                     <TextField
                         fullWidth
-                        type="text"
+                        type={showPassword ? 'text' : 'password'}
                         size="small"
+                        autoComplete="new-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={togglePasswordVisibility}
+                                        edge="end"
+                                    >
+                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                 </Box>
                 <DialogActions>
@@ -55,9 +77,9 @@ export default function CheckPasswordModal({ open, handleClose, password, setPas
                 message={checkedMsg}
                 onClose={() => setAlert(false)}
             /> */}
-            {loading &&
+            {/* {loading &&
                 <PageLoader />
-            }
+            } */}
         </>
     )
 }

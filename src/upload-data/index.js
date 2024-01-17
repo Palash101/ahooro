@@ -121,6 +121,7 @@ function UploadData() {
   const [getCsvModalOpen, setGetCsvModalOpen] = useState(false);
   const [passwordCheckModal, setPasswordCheckModal] = useState(false);
   const [checkedPassword, setCheckedPassword] = useState("");
+  console.log("checkedPassword: ", checkedPassword);
   const [massage, setMassage] = useState("");
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -139,6 +140,23 @@ function UploadData() {
   useEffect(() => {
     setMenuHeight(menuRef.current.clientHeight)
   }, [menuRef])
+
+
+  // dreg and drop file
+
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      setFile(e.dataTransfer.files[0]);
+      e.dataTransfer.clearData();
+    }
+  };
 
   // const getLocation = (ip) => {
   //     return fetch(`https://ipapi.co/${ip}/json/`, {
@@ -436,15 +454,38 @@ function UploadData() {
   };
 
   const handleOpenList = async () => {
-    const result = await PasswordCheck(checkedPassword)
-    if (result.valid) {
-      console.log("resulttrue: ", result);
-      localStorage.setItem('accessedPayments', true);
-      navigate("/payments")
+    setLoading(true);
+    if (checkedPassword) {
+      const result = await PasswordCheck(checkedPassword)
+      if (result.valid) {
+        localStorage.setItem('accessedPayments', true);
+        navigate("/payments")
+        setLoading(false);
+      } else {
+        console.log("resultFalse: ", result);
+        setMassage("La contraseña es incorrecta.");
+        setOpen(true);
+        setLoading(false);
+      }
     } else {
-      console.log("resultFalse: ", result);
+      setMassage("La contraseña no puede estar vacía.");
+      setOpen(true);
+      setLoading(false);
     }
   }
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' && passwordCheckModal) {
+      handleOpenList();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [checkedPassword]);
 
   useEffect(() => {
     localStorage.removeItem('accessedPayments');
@@ -604,6 +645,8 @@ function UploadData() {
                             paddingX: "50px",
                             rowGap: 1,
                           }}
+                          onDragOver={handleDrag}
+                          onDrop={handleDrop}
                         >
                           <img
                             src="/assets/image/cloudUpload.png"
@@ -654,7 +697,7 @@ function UploadData() {
                           <Typography
                             sx={{ fontSize: "15px", fontWeight: 600 }}
                           >
-                            .csv{" "}
+                            .csv
                           </Typography>
                         </Box>
                         <Box mb={2}>
@@ -1052,7 +1095,10 @@ function UploadData() {
       />
       <CheckPasswordModal
         open={passwordCheckModal}
-        handleClose={() => setPasswordCheckModal(false)}
+        handleClose={() => {
+          setPasswordCheckModal(false)
+          setCheckedPassword("")
+        }}
         password={checkedPassword}
         setPassword={setCheckedPassword}
         handleClick={handleOpenList}

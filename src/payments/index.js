@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PageLoader from '../component/pageLoader';
 import { Box, CircularProgress, Divider, Grid, IconButton, InputBase, Menu, MenuItem, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import { GetCsvList, saveCsvFile,saveXlxsFile } from '../controller/AuthController';
+import { GetCsvList, saveCsvFile, saveXlxsFile } from '../controller/AuthController';
 import styled from '@emotion/styled';
 import MenuIcon from '@mui/icons-material/Menu';
 import Buttons from '../component/Button';
@@ -85,6 +85,20 @@ export default function Payments() {
     const [csvListData, setCsvListData] = useState("");
     const navigate = useNavigate();
     const menuRef = useRef()
+
+    const handleDrag = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            setFile(e.dataTransfer.files[0]);
+            e.dataTransfer.clearData();
+        }
+    };
 
 
 
@@ -171,9 +185,9 @@ export default function Payments() {
         }
     };
 
-    useEffect(() => {
-        getCsv()
-    }, [])
+    // useEffect(() => {
+    //     getCsv()
+    // }, [])
 
 
     return (
@@ -280,6 +294,8 @@ export default function Payments() {
                                                         paddingX: "50px",
                                                         rowGap: 1,
                                                     }}
+                                                    onDragOver={handleDrag}
+                                                    onDrop={handleDrop}
                                                 >
                                                     <img
                                                         src="/assets/image/cloudUpload.png"
@@ -330,7 +346,7 @@ export default function Payments() {
                                                     <Typography
                                                         sx={{ fontSize: "15px", fontWeight: 600 }}
                                                     >
-                                                        .csv{" "}
+                                                        .xlsx
                                                     </Typography>
                                                 </Box>
                                                 <Box mb={2}>
@@ -374,7 +390,7 @@ export default function Payments() {
                                 }}
                             >
                                 <Box sx={{ mb: 1 }}>
-                                    <Typography sx={{ fontWeight: 600, mb: 1 }} variant='subtitle1'>Buscar número de lista negra</Typography>
+                                    <Typography sx={{ fontWeight: 600, mb: 1 }} variant='subtitle1'>Listado de documentos</Typography>
                                     <Divider />
                                 </Box>
                                 <TableContainer component={Box} sx={{ flexGrow: 1, height: "150px", overflowY: 'auto' }}> {/* TableContainer grows to fill available space and is scrollable */}

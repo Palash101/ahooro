@@ -236,6 +236,26 @@ export const GetCsvList = async () => {
 
 }
 
+export const GetPaymentList = async () => {
+    const url = apiPath + 'listPayment'
+    return fetch(url, {
+        method: "GET"
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data) {
+                return { success: true, data: data }
+            }
+            else {
+                return { success: false }
+            }
+        })
+        .catch((err) => {
+            return { success: false }
+        })
+
+}
+
 export const DownloadCsv = async (csv_name) => {
     console.log("csv_name: ", csv_name);
     return fetch(apiPath + 'getCsv', {
@@ -259,6 +279,39 @@ export const DeleteCsv = async (csv_name) => {
     return fetch(apiPath + 'delete_csv', {
         method: "POST",
         body: JSON.stringify({ file: csv_name, type: "document" }),
+    })
+        .then((res) => {
+            if (res.status === 200) {
+                return { success: true }
+            } else {
+                return { success: false }
+            }
+        })
+
+}
+
+export const DownloadXlsx = async (name) => {
+    return fetch(apiPath + 'getCsv-1', {
+        method: "POST",
+        body: JSON.stringify({ data: name }),
+    })
+        .then((res) => res.blob())
+        .then((data) => {
+            // console.log("data: ", data);
+            const objectURL = URL.createObjectURL(data);
+            return { success: true, data: objectURL }
+        })
+        .catch((err) => {
+            console.log("err: ", err);
+            return { success: false }
+        })
+
+}
+
+export const DeleteXlsx = async (name) => {
+    return fetch(apiPath + 'delete_csv-1', {
+        method: "POST",
+        body: JSON.stringify({ file: name, type: "document" }),
     })
         .then((res) => {
             if (res.status === 200) {

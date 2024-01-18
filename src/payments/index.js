@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PageLoader from '../component/pageLoader';
 import { Box, CircularProgress, Divider, Grid, IconButton, InputBase, Menu, MenuItem, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
-import { GetCsvList, saveCsvFile, saveXlxsFile } from '../controller/AuthController';
+import { DeleteXlsx, DownloadXlsx, GetCsvList, GetPaymentList, saveCsvFile, saveXlxsFile } from '../controller/AuthController';
 import styled from '@emotion/styled';
 import MenuIcon from '@mui/icons-material/Menu';
 import Buttons from '../component/Button';
@@ -79,10 +79,12 @@ export default function Payments() {
     const [progress, setProgress] = useState(0);
     const [open, setOpen] = useState(false);
     const [file, setFile] = useState(undefined);
+    const [loading, setLoading] = useState(false);
     const [massage, setMassage] = useState("");
     const [menuHeight, setMenuHeight] = useState(0)
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [csvListData, setCsvListData] = useState("");
+    const [xlsxListData, setXlsxListData] = useState("");
+    console.log("xlsxListData: ", xlsxListData);
     const navigate = useNavigate();
     const menuRef = useRef()
 
@@ -128,7 +130,7 @@ export default function Payments() {
         if (file) {
             startInterval();
             const interval = setInterval(startInterval, 6000);
-            //  setLoading(true)
+            setLoading(true)
             const saveData = saveXlxsFile(file);
             saveData.then((data) => {
                 setTimeout(() => {
@@ -137,10 +139,11 @@ export default function Payments() {
                         setOpen(true);
                         stopInterval(interval);
                         setFile(undefined);
-                        // setLoading(false)
+                        setLoading(false)
                     } else {
                         stopInterval(interval);
                         setFile(undefined);
+                        setLoading(false)
                     }
                 }, 12000);
             });
@@ -176,18 +179,45 @@ export default function Payments() {
     );
 
     const getCsv = async () => {
-        const csv = await GetCsvList();
-        if (csv.success) {
-            setCsvListData(csv.data.list);
+        setLoading(true)
+        const xlsx = await GetPaymentList();
+        console.log("xlsx: ", xlsx);
+        if (xlsx.success) {
+            setXlsxListData(xlsx.data.items);
+            setLoading(false)
         } else {
+            setLoading(false)
             setMassage("Documento no encontrado");
             setOpen(true);
         }
     };
 
-    // useEffect(() => {
-    //     getCsv()
-    // }, [])
+    useEffect(() => {
+        getCsv()
+    }, [])
+
+    const downloadXlsx = async (name) => {
+        setLoading(true);
+        const getDownload = await DownloadXlsx(name);
+        if (getDownload.success) {
+            const link = document.createElement("a");
+            link.href = getDownload.data;
+            link.download = name;
+            link.click();
+            setLoading(false);
+        } else {
+            setLoading(false);
+        }
+    }
+
+    const DeleteXlsxFile = async (name) => {
+        setLoading(true);
+        const getDelete = await DeleteXlsx(name);
+        if (getDelete.success) {
+            getCsv();
+            setLoading(false);
+        }
+    }
 
 
     return (
@@ -307,7 +337,7 @@ export default function Payments() {
                                                         variant="contained"
                                                     >
                                                         <input
-                                                            // accept=".csv"
+                                                            accept=".xlsx"
                                                             style={{
                                                                 position: "absolute",
                                                                 top: 0,
@@ -402,26 +432,26 @@ export default function Payments() {
                                                 <TableCell align="left">Borrar</TableCell>
                                             </TableRow>
                                         </TableHead>
-                                        {csvListData ?
+                                        {xlsxListData ?
                                             <TableBody>
-                                                {csvListData.map((row, index) => (
+                                                {xlsxListData.map((row, index) => (
                                                     <TableRow
                                                         key={index}
                                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                                     >
                                                         <TableCell component="th" scope="row">
-                                                            {row}
+                                                            {row.name}
                                                         </TableCell>
                                                         <TableCell align="left">
                                                             <IconButton
-                                                            // onClick={() => downloadCsv(index)}
+                                                                onClick={() => downloadXlsx(row.name)}
                                                             >
                                                                 <DownloadIcon color='success' />
                                                             </IconButton>
                                                         </TableCell>
                                                         <TableCell align="left">
                                                             <IconButton
-                                                            // onClick={() => DeleteCsvList(index)}
+                                                                onClick={() => DeleteXlsxFile(row.name)}
                                                             >
                                                                 <DeleteForever color='error' />
                                                             </IconButton>
@@ -464,6 +494,7 @@ export default function Payments() {
                 message={massage}
                 action={action}
             />
+            {loading && <PageLoader />}
         </>
     )
 }

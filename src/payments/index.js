@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { DeleteForever } from '@mui/icons-material';
 import DownloadIcon from '@mui/icons-material/Download';
+import CachedIcon from '@mui/icons-material/Cached';
 
 
 
@@ -420,7 +421,12 @@ export default function Payments() {
                                 }}
                             >
                                 <Box sx={{ mb: 1 }}>
-                                    <Typography sx={{ fontWeight: 600, mb: 1 }} variant='subtitle1'>Listado de documentos</Typography>
+                                    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                                        <Typography sx={{ fontWeight: 600, mb: 1 }} variant='subtitle1'>Listado de documentos</Typography>
+                                        <IconButton onClick={() => getCsv()} size='small'>
+                                            <CachedIcon />
+                                        </IconButton>
+                                    </Box>
                                     <Divider />
                                 </Box>
                                 <TableContainer component={Box} sx={{ flexGrow: 1, height: "150px", overflowY: 'auto' }}> {/* TableContainer grows to fill available space and is scrollable */}

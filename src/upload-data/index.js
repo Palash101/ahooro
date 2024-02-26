@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import SearchIcon from '@mui/icons-material/Search';
-import { DeleteBlackListNumber, SearchDoc, downloadData, saveCsvFile } from '../controller/AuthController';
+import { DeleteBlackListNumber, SearchDoc, downloadData, saveBlackListCsvFile, saveCsvFile } from '../controller/AuthController';
 import ShowSearch from '../component/Modal/showSearch';
 import AddIcon from '@mui/icons-material/Add';
 import { CircularProgress, Grid, InputLabel, TextField } from '@mui/material';
@@ -86,6 +86,7 @@ const StyledInputBase = styled(InputBase)(() => ({
 
 function UploadData() {
     const [file, setFile] = useState(undefined)
+    const [blacklistFile, setBlacklistFile] = useState(undefined)
     const [search, setSearch] = useState("")
     const [blackListSearch, setBlackListSearch] = useState("")
     const [data, setData] = useState("")
@@ -223,6 +224,8 @@ function UploadData() {
         }
     };
 
+
+    // save blacklist No.
     const SaveBlackListNo = async () => {
         if (blackList) {
             setLoading(true)
@@ -248,6 +251,59 @@ function UploadData() {
             setOpen(true)
         }
     };
+
+    const handleBlackListChange = event => {
+        setBlacklistFile(event.target.files[0]);
+    };
+
+    // const saveBlackListFile = async () => {
+    //     const formData = new FormData()
+    //     formData.append('file', blacklistFile);
+    //     if (blacklistFile) {
+    //         console.log("blacklistFile: ", blacklistFile);
+    //         const saveData = await saveBlackListCsvFile(formData)
+    //         console.log("saveData: ", saveData);
+
+    //     }
+    //     else {
+    //         setMassage("Seleccione un archivo")
+    //         setOpen(true);
+    //     }
+    // }
+
+    const saveBlackListFile = () => {
+        const formData = new FormData()
+        formData.append('file', blacklistFile);
+        if (blacklistFile) {
+            const interval = setInterval(startInterval, 1200)
+            setLoading(true)
+            const saveData = saveBlackListCsvFile(formData)
+            saveData.then(data => {
+                if (data.success) {
+                    setMassage("Documento cargado exitosamente")
+                    setOpen(true);
+                    stopInterval(interval)
+                    setLoading(false)
+                }
+                else {
+                    console.log("data: ", data);
+                    setMassage(data.error)
+                    setOpen(true);
+                    stopInterval(interval)
+                    setLoading(false)
+                }
+                stopInterval(interval)
+                console.log(data)
+                setFile(undefined)
+            })
+        }
+        else {
+            setMassage("Seleccione un archivo")
+            setOpen(true);
+        }
+    }
+
+
     const handleClick = () => {
         const formData = new FormData()
         formData.append('file', file);
@@ -327,7 +383,7 @@ function UploadData() {
                     <Grid sx={{ height: "90%" }} container>
                         <Grid sx={{
                             padding: "20px 10px 20px 20px"
-                        }} item xs={12} md={6}>
+                        }} item xs={12} md={5}>
                             <Box sx={{
                                 borderRadius: "12px",
                                 border: "1px solid #FE545C",
@@ -441,7 +497,10 @@ function UploadData() {
                                 </Box>
                             </Box>
                         </Grid>
-                        <Grid item sx={{ padding: "20px 20px 20px 10px", display: "flex", flexDirection: "column", rowGap: "20px" }} xs={12} md={6}>
+                        <Grid item sx={{ padding: "20px 20px 20px 10px", display: "flex", flexDirection: "column", rowGap: "20px" }}
+                            xs={12}
+                            md={7}
+                        >
                             <Box
                                 sx={{
                                     borderRadius: "12px",
@@ -516,66 +575,119 @@ function UploadData() {
                                     height: "100%",
                                     width: "100%",
                                 }}>
-                                    <Typography sx={{ mb: 2, textAlign: { xs: "center", md: "left" } }}>Lista negra de contactos</Typography>
-                                    <Box sx={{
-                                        position: { md: "absolute", xs: "relative" },
-                                        width: "100%",
-                                        top: { md: "50%", xs: 0 },
-                                        left: { md: "50%", xs: 0 },
-                                        transform: { md: "translate(-50%, -50%)", xs: "none" },
-                                    }}>
-                                        <Box>
-                                            <Box sx={{ pb: { xs: "0px", md: "40px" } }}>
-                                                <Search>
-                                                    <Box sx={{
-                                                        width: "100%",
-                                                        display: "flex",
-                                                        justifyContent: "center",
-                                                        alignItems: "center",
-                                                        marginBottom: 2,
-                                                    }}>
-                                                        <Box>
-                                                            <Typography sx={{ fontSize: "14px", pb: "5px", textAlign: { xs: "center", md: "left" } }}>Buscar por número de teléfono</Typography>
-                                                            <Box sx={{
-                                                                border: "1px solid black",
-                                                                borderRadius: "8px",
-                                                                px: 1,
-                                                                py: "2px"
-                                                            }}>
-                                                                <StyledInputBase
-                                                                    type='search'
-                                                                    name='Search'
-                                                                    onChange={(e) => setBlackListSearch(e.target.value)}
-                                                                    onKeyDown={handleKeyDown}
-                                                                />
-                                                                <IconButton onClick={HandleBlackListSearch} size='small'>
-                                                                    <SearchIcon />
-                                                                </IconButton>
+                                    <Grid sx={{ height: "100%" }} container>
+                                        <Grid sx={{ position: "relative" }} item xs={12} md={5}>
+                                            <Typography sx={{ mb: 2, textAlign: { xs: "center", md: "left" } }}>Lista negra de contactos</Typography>
+                                            <Box sx={{
+                                                position: { md: "absolute", xs: "relative" },
+                                                width: "100%",
+                                                top: { md: "50%", xs: 0 },
+                                                left: { md: "50%", xs: 0 },
+                                                transform: { md: "translate(-50%, -50%)", xs: "none" },
+                                            }}>
+                                                <Box>
+                                                    <Search>
+                                                        <Box sx={{
+                                                            width: "100%",
+                                                            display: "flex",
+                                                            justifyContent: "center",
+                                                            alignItems: "center",
+                                                            marginBottom: 2,
+                                                        }}>
+                                                            <Box>
+                                                                <Typography sx={{ fontSize: "14px", pb: "5px", textAlign: { xs: "center", md: "left" } }}>Buscar por número de teléfono</Typography>
+                                                                <Box sx={{
+                                                                    border: "1px solid black",
+                                                                    borderRadius: "8px",
+                                                                    px: 1,
+                                                                    py: "2px"
+                                                                }}>
+                                                                    <StyledInputBase
+                                                                        type='search'
+                                                                        name='Search'
+                                                                        onChange={(e) => setBlackListSearch(e.target.value)}
+                                                                        onKeyDown={handleKeyDown}
+                                                                    />
+                                                                    <IconButton onClick={HandleBlackListSearch} size='small'>
+                                                                        <SearchIcon />
+                                                                    </IconButton>
+                                                                </Box>
                                                             </Box>
                                                         </Box>
+                                                    </Search>
+                                                </Box>
+                                            </Box>
+                                        </Grid>
+                                        <Grid sx={{ display: "flex", flexDirection: "column" }} item xs={12} md={7}>
+                                            <Typography sx={{ mb: 1, textAlign: { xs: "center", md: "left" } }}>Subir solo 1 número</Typography>
+                                            <Box sx={{ display: "flex", justifyContent: "space-between", flexDirection: "column", flexGrow: 1 }}>
+                                                <Box sx={{ display: "flex", alignItems: "center", columnGap: "20px", justifyContent: "center" }}>
+                                                    <TextField
+                                                        type='number'
+                                                        size='small'
+                                                        value={blackList}
+                                                        onChange={(e) => setBlackList(e.target.value)}
+                                                    />
+                                                    <Buttons
+                                                        sx={{ display: "flex", borderRadius: "20px" }}
+                                                        onClick={SaveBlackListNo}
+                                                    >
+                                                        <AddIcon sx={{ mr: 1 }} />
+                                                        <Typography sx={{ fontSize: "10px" }}>
+                                                            Añadir número
+                                                        </Typography>
+                                                    </Buttons>
+                                                </Box>
+                                                <Box className="phone upload">
+                                                    <Typography sx={{ fontSize: "12px" }}>Subir múltiples números</Typography>
+                                                    <Box sx={{
+                                                        display: "flex",
+                                                        flexDirection: "column",
+                                                        alignItems: "center",
+                                                        border: "1px dashed black",
+                                                        paddingX: 1,
+                                                    }}>
+                                                        <img src="/assets/image/cloudUpload.png" alt='file' width="40px" />
+                                                        <Buttons size={"small"} sx={{ position: "relative", width: "100%" }} variant='contained'>
+                                                            <input accept=".csv"
+                                                                style={{
+                                                                    position: "absolute",
+                                                                    top: 0,
+                                                                    right: 0,
+                                                                    width: "100%",
+                                                                    height: "100%",
+                                                                    margin: 0,
+                                                                    fontSize: "23px",
+                                                                    cursor: "pointer",
+                                                                    opacity: 0,
+                                                                    direction: "ltr",
+                                                                }}
+                                                                className="input"
+                                                                id="icon-button-file"
+                                                                type="file"
+                                                                name='...'
+                                                                onChange={handleBlackListChange}
+                                                                onClick={event => event.target.value = null}
+                                                            />
+                                                            <Typography>
+                                                                Selecciona archivo
+                                                            </Typography>
+                                                        </Buttons>
+                                                        {blacklistFile ?
+                                                            <Typography sx={{ fontSize: "15px", color: "green" }}>{blacklistFile.name}</Typography>
+                                                            :
+                                                            <Typography sx={{ fontSize: "15px", color: "red" }}>Elige un archivo</Typography>
+                                                        }
+                                                        <Typography sx={{ fontSize: "15px" }}>o arrastra y suéltalos aquí</Typography>
+                                                        <Typography sx={{ fontSize: "15px", fontWeight: 600 }}>.csv </Typography>
                                                     </Box>
-                                                </Search>
-                                                {/* <FontAwesomeIcon className='search-icon' icon={faSearch} size="1x"/> */}
+                                                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                                                        <Buttons onClick={saveBlackListFile} size={"small"} sx={{ my: 1 }} variant='contained'>Subir archivo</Buttons>
+                                                    </Box>
+                                                </Box>
                                             </Box>
-                                            <Box sx={{ display: "flex", alignItems: "center", columnGap: "20px", justifyContent: "center" }}>
-                                                <TextField
-                                                    type='number'
-                                                    size='small'
-                                                    value={blackList}
-                                                    onChange={(e) => setBlackList(e.target.value)}
-                                                />
-                                                <Buttons
-                                                    sx={{ display: "flex", borderRadius: "20px" }}
-                                                    onClick={SaveBlackListNo}
-                                                >
-                                                    <AddIcon sx={{ mr: 1 }} />
-                                                    <Typography sx={{ fontSize: "10px" }}>
-                                                        Añadir número
-                                                    </Typography>
-                                                </Buttons>
-                                            </Box>
-                                        </Box>
-                                    </Box>
+                                        </Grid>
+                                    </Grid>
                                 </Box>
                             </Box>
                             <Box

@@ -115,6 +115,27 @@ export const createBlackList = async (data) => {
         })
 }
 
+export const saveBlackListCsvFile = async (data) => {
+    try {
+        const response = await fetch(apiPath + 'save_multiBlackList', {
+            method: "POST",
+            body: data,
+            headers: {}
+        });
+
+        const responseData = await response.text();
+        if (response.ok) {
+            return { success: true, data: responseData };
+        } else {
+            throw new Error('Failed to save the blacklist. HTTP status: ' + response.status);
+        }
+    } catch (err) {
+        console.error(err);
+        return { success: false, error: err.message };
+    }
+};
+
+
 // export const SearchDoc = async (search) => {
 //     console.log(search, 'search')
 //     const ref = collection(db, "users")
@@ -208,14 +229,14 @@ export const downloadData = async (data) => {
         body: JSON.stringify(data)
     })
         .then((res) => {
-            if(res.ok){
-               return res.blob()   
+            if (res.ok) {
+                return res.blob()
             }
-            else{
+            else {
                 return { success: false }
             }
-            
-           })
+
+        })
         .then((myBlob) => {
             const objectURL = URL.createObjectURL(myBlob);
             if (objectURL) {
@@ -225,9 +246,9 @@ export const downloadData = async (data) => {
                 return { success: false }
             }
         })
-    .catch((err) => {
-        console.log("err: ", err);
-        return { success: false }
-    })
+        .catch((err) => {
+            console.log("err: ", err);
+            return { success: false }
+        })
 
 }

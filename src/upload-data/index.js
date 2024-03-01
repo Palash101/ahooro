@@ -496,7 +496,7 @@ function UploadData() {
                             flexDirection: "column",
                             alignItems: "center",
                             border: "1px dashed black",
-                            padding: "50px",
+                            padding: { md: "50px", xs: "0" },
                             rowGap: 1,
                           }}
                           onDragOver={handleDragFile}
@@ -707,8 +707,8 @@ function UploadData() {
                           justifyContent: "center",
                           flexDirection: "column",
                           flexGrow: 1,
-                          px: 2,
-                          py: 2,
+                          px: { md: 2, xs: 0 },
+                          py: 3,
                         }}
                       >
                         <Box className="phone upload">
@@ -722,8 +722,8 @@ function UploadData() {
                               alignItems: "center",
                               border: "1px dashed black",
                               paddingX: 1,
-                              paddingY: 2,
-                              rowGap: 1,
+                              paddingY: 0.5,
+                              // rowGap: 0.5,
                             }}
                             onDragOver={handleDragBlacklist}
                             onDrop={handleDropBlacklist}
@@ -787,7 +787,7 @@ function UploadData() {
                           >
                             <Buttons
                               onClick={saveBlackListFile}
-                              sx={{ my: 2 }}
+                              sx={{ my: 1 }}
                               variant="contained"
                             >
                               Subir archivo
@@ -804,7 +804,8 @@ function UploadData() {
                           left: { md: "50%", xs: 0 },
                           display: "flex",
                           flexDirection: "column",
-                          rowGap: 4,
+                          width: "100%",
+                          rowGap: { md: 4, xs: 1 },
                           transform: {
                             md: "translate(-50%, -50%)",
                             xs: "none",
@@ -822,7 +823,7 @@ function UploadData() {
                                 marginBottom: 2,
                               }}
                             >
-                              <Box>
+                              <Box sx={{ width: { md: "auto", xs: "100%" } }}>
                                 <Typography
                                   sx={{
                                     fontSize: "14px",
@@ -860,37 +861,45 @@ function UploadData() {
                           </Search>
                         </Box>
                         <Box>
-                          <Typography
-                            sx={{
-                              mb: 1,
-                              textAlign: { xs: "center", md: "left" },
-                            }}
-                          >
-                            Subir solo 1 número
-                          </Typography>
                           <Box
                             sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              columnGap: "20px",
-                              justifyContent: "center",
+                              px: { md: 4, xs: 0 },
                             }}
                           >
-                            <TextField
-                              type="number"
-                              size="small"
-                              value={blackList}
-                              onChange={(e) => setBlackList(e.target.value)}
-                            />
-                            <Buttons
-                              sx={{ display: "flex", borderRadius: "20px" }}
-                              onClick={SaveBlackListNo}
+                            <Typography
+                              sx={{
+                                mb: 1,
+                                textAlign: { xs: "center", md: "left" },
+                              }}
                             >
-                              <AddIcon sx={{ mr: 1 }} />
-                              <Typography sx={{ fontSize: "10px" }}>
-                                Añadir número
-                              </Typography>
-                            </Buttons>
+                              Subir solo 1 número
+                            </Typography>
+                            <Grid container spacing={2}>
+                              <Grid item xs={12} md={7}>
+                                <TextField
+                                  type="number"
+                                  fullWidth
+                                  size="small"
+                                  value={blackList}
+                                  onChange={(e) => setBlackList(e.target.value)}
+                                />
+                              </Grid>
+                              <Grid item xs={12} md={5}>
+                                <Buttons
+                                  sx={{
+                                    display: "flex",
+                                    borderRadius: "20px",
+                                    width: "100%",
+                                  }}
+                                  onClick={SaveBlackListNo}
+                                >
+                                  <AddIcon sx={{ mr: 1 }} />
+                                  <Typography sx={{ fontSize: "10px" }}>
+                                    Añadir número
+                                  </Typography>
+                                </Buttons>
+                              </Grid>
+                            </Grid>
                           </Box>
                         </Box>
                       </Box>
@@ -1014,7 +1023,6 @@ function UploadData() {
               mb: { md: 0, xs: 1 },
             }}
           >
-            {/* <Button onClick={() => navigate('/')} sx={{ mt: 1, textTransform: "none" }} variant='text'>Volver a la página de inicio</Button> */}
             <Buttons
               onClick={() => {
                 localStorage.clear();
